@@ -14,13 +14,21 @@
 # define MINISHELL_H
 
 # include "../lib/libft/src/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
-enum e_token_type
+typedef struct s_token
+{
+	char	*value;
+	char	next_char;
+	int		type;
+
+}			t_token;
+
+enum		e_token_type
 {
 	AND,
 	OR,
@@ -31,7 +39,7 @@ enum e_token_type
 	REDIR_APPEND,
 	REDIR_HEREDOC,
 	SPACES, //" ", \t, \n, \v, \f, \r
-	WORD, //alphanum, minus, quotes
+	WORD,   // alphanum, minus, quotes
 	NOK,
 };
 
