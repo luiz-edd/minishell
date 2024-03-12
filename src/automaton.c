@@ -7,7 +7,10 @@
 
 int	**get_true_table(void)
 {
-	static int	true_table[5][4] = {{2, 5, 3, 200}, {201, 101, 101, 101}, {4, 4,
+	static int	true_table[5][4] = {
+		{2, 5, 3, 200}, 
+		{201, 101, 101, 101}, 
+		{4, 4,
 			-2, -1}, {4, 4, 202, -1}, {102, 5, 102, 102}};
 
 	return (true_table);
@@ -88,8 +91,6 @@ t_list	automaton(char *str, t_list **token_list)
 		}
 		if (state = 1 && str[i] == ' ')
 			start = i + 1;
-		else
-			start++;
 		i++;
 	}
 }
