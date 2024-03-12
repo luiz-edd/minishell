@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/07 18:42:34 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:08:33 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,12 @@ enum e_token_type
 	WORD, //alphanum, minus, quotes
 	NOK,
 };
+
+typedef struct s_token
+{
+	int 			type;
+	char 			*value;
+	struct s_token	*next;
+} t_token;
 
 #endif

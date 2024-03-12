@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/07 16:02:14 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:54:29 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,9 @@ int	main(void)
 		}
 		else
 			add_history(line);
-		if (ft_strncmp(line, "exit", 4) == 0)
-		{
-			printf("exit\n");
-			free(line);
-			exit(0);
-		}
-		else
-		{
-			printf("You typed: %s\n", line);
-			free(line);
+		
+		printf("You typed: %s\n", line);
+		free(line);
 		}
 	}
 	return (0);	
