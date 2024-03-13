@@ -6,14 +6,14 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/13 18:41:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:08:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../lib/libft/src/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -37,8 +37,7 @@ enum e_token_type
 	REDIR_IN,
 	REDIR_OUT,
 	SPACES, //" ", \t, \n, \v, \f, \r
-	END,
-	WORD //any other character
+	WORD, //alphanum, minus, quotes
 };
 
 #endif
