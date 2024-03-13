@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/13 15:08:25 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:00:40 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 		}
 		else
 		{
-			printf("You typed: %s\n", line);
+			// printf("You typed: %s\n", line);
 			lexer(line);
 			free(line);
 		}

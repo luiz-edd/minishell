@@ -6,7 +6,7 @@
 #    By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/03/13 16:41:32 by leduard2         ###   ########.fr        #
+#    Updated: 2024/03/13 16:43:26 by leduard2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS				= 	-I ./include -I $(LIBFT_PATH)
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
 SRCS_PATH			= 	./src/
-FILES				= 	 main.c, lexer.c, automaton.c token_lst_utils.c
+FILES				= 	 main.c automaton.c token_lst_utils.c
 OBJS				= 	$(FILES:%.c=%.o)
 
 .DEFAULT_GOAL = $(NAME)
