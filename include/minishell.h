@@ -30,39 +30,21 @@ typedef struct s_token
 enum				e_token_type
 {
 	OR = 100,
-	REDIR_OUT = 101,
-	REDIR_IN = 102,
+	APPEND = 101,
+	HERE_DOC = 102,
 	CLOSE_BRACKET = 103,
 	OPEN_BRACKET = 104,
 	AND = 105,
 	PIPE = 200,
-	APPEND = 201,
+	REDIR_OUT = 201,
 	WORD = 202,
-	HERE_DOC = 203,
-	
-	
-	
-	
-	
-
-
-	// AND = 100,
-	// OR,
-	// PIPE,
-	// DOLLAR,
-	// REDIR_IN,
-	// REDIR_OUT = 200,
-	// REDIR_APPEND,
-	// REDIR_HEREDOC,
-	// SPACES, //" ", \t, \n, \v, \f, \r
-	// WORD,   // alphanum, minus, quotes
-	// NOK,
+	REDIR_IN = 203,
 };
 
-//automaton
+// automaton
 void				lexer(char *str);
 
-//token lst
+// token lst
 t_token				*ft_lstnew_token(char *value, int type);
 void				ft_lstadd_back_token(t_token **lst, t_token *new);
 

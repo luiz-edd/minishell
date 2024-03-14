@@ -12,32 +12,35 @@
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	char *line;
-	
-	while (42)
-	{
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break;
-		}
-		else
-			add_history(line);
-		if (ft_strncmp(line, "exit", 4) == 0)
-		{
-			printf("exit\n");
-			free(line);
-			exit(0);
-		}
-		else
-		{
-			// printf("You typed: %s\n", line);
-			lexer(line);
-			free(line);
-		}
-	}
-	return (0);	
+	if(argc)
+	{}
+	lexer(argv[1]);
+	// char	*line;
+
+	// while (42)
+	// {
+	// 	line = readline("minishell> ");
+	// 	if (!line)
+	// 	{
+	// 		printf("exit\n");
+	// 		break ;
+	// 	}
+	// 	else
+	// 		add_history(line);
+	// 	if (ft_strncmp(line, "exit", 4) == 0)
+	// 	{
+	// 		printf("exit\n");
+	// 		free(line);
+	// 		exit(0);
+	// 	}
+	// 	else
+	// 	{
+	// 		printf("You typed: %s\n", line);
+	// 		lexer(line);
+	// 		free(line);
+	// 	}
+	// }
+	return (0);
 }

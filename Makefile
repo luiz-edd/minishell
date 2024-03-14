@@ -12,7 +12,7 @@
 
 NAME				=	minishell
 CC					=	cc
-CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3
+CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3 -fPIE 
 LIBFLAGS			=	-lreadline -lhistory
 HEADERS				= 	-I ./include -I $(LIBFT_PATH)
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
