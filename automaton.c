@@ -1,6 +1,7 @@
 
 
 #include "minishell.h"
+#define NULL_CHAR 106
 
 int	get_next_state(int state, int column)
 {
@@ -89,34 +90,24 @@ char	*get_type_str(int type)
 	return ("TYPE NOT FOUND");
 }
 
-void	automaton(char *str, t_token **token_list)
+void	automaton(char *str, t_token **token_list, int start, int state)
 {
 	int		i;
-	int		column;
-	int		start;
-	int		state;
 	char	*value;
 	int		size;
 
 	i = 0;
-	start = 0;
-	state = 0;
 	size = ft_strlen(str) + 1;
 	while (i < size)
 	{
-		column = get_column(str[i]);
 		if (state == 0)
 			start = i;
-		state = get_next_state(state, column);
-		if (is_end_state(state) && state != 106)
+		state = get_next_state(state, get_column(str[i]));
+		if (is_end_state(state) && state != NULL_CHAR)
 		{
 			if (is_back_state(state))
-			{
-				value = ft_substr(str, start, i - start);
 				i--;
-			}
-			else
-				value = ft_substr(str, start, (i - start) + 1);
+			value = ft_substr(str, start, (i - start) + 1);
 			ft_lstadd_back_token(token_list, ft_lstnew_token(value, state));
 			state = 0;
 		}
@@ -130,7 +121,7 @@ void	lexer(char *str)
 	t_token	*aux;
 
 	token_lst = NULL;
-	automaton(str, &token_lst);
+	automaton(str, &token_lst, 0, 0);
 	aux = token_lst;
 	while (aux)
 	{
@@ -156,6 +147,6 @@ void	lexer(char *str)
 
 // treat like a word:	;	&	`	\		[	#	~	% 	\"	\' \0	$
 
-//test ;	&			[	#	~	% 	\"	\' \0	$ | || > >> < << && ( )
-// ./minishell "test ;       &                       [ #     ~    %       \'\' \0 $ | || > >> < << && ( )"
-
+// test ;	&			[	#	~	% 	\"	\' \0	$ | || > >> < << && ( )
+// ./minishell "test ;       &                       [ #     ~
+// %       \'\' \0 $ | || > >> < << && ( )"
