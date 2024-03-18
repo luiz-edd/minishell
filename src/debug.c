@@ -1,54 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 21:12:51 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/17 13:07:08 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/03/17 18:28:32 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
-{
-	char	*line;
-	t_token	*list;
-
-	while (42)
-	{
-		list = NULL;
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		else
-			add_history(line);
-		printf("You typed: %s\n", line);
-		lexer(line, &list);
-		parser(list);
-		print_list(list);
-		free_list(list);
-		free(line);
-	}
-	return (0);
-}
-
-void	free_list(t_token *list)
+void	print_list(t_token *list)
 {
 	t_token	*current;
-	t_token	*next;
+	int		i;
 
 	current = list;
+	i = 0;
 	while (current)
 	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
+		printf("NODE %02i\t--->\tType: %02i\tValue: %s\t\tPrev: %p\tNext: \
+		%p\n", i, current->type, current->value, current->prev, current->next);
+		i++;
+		current = current->next;
 	}
 }
