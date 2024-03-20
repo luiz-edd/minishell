@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 21:11:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:40:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int	check_open_syntax(char *str)
 	while (str[index])
 	{
 		if (str[index] == '\'' || str[index] == '\"')
-			move_to_next_quote(&str[index], &index, &single_quote,
-				&double_quote);
+			move_to_next_quote(str, &index, &single_quote, &double_quote);
 		if (str[index] == '(')
 			brackets++;
 		if (str[index] == ')')
@@ -77,7 +76,7 @@ void	move_to_next_quote(char *str, int *index, int *single_quote,
 	{
 		(*single_quote)++;
 		(*index)++;
-		while (str[*index] != '\'' && str[*index])
+		while (str[*index] && str[*index] != '\'')
 			(*index)++;
 		if (str[*index] == '\'')
 			(*single_quote)--;
@@ -86,7 +85,7 @@ void	move_to_next_quote(char *str, int *index, int *single_quote,
 	{
 		(*double_quote)++;
 		(*index)++;
-		while (str[*index] != '\"' && str[*index])
+		while (str[*index] && str[*index] != '\"')
 			(*index)++;
 		if (str[*index] == '\"')
 			(*double_quote)--;
