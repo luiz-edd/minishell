@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 19:55:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:00:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parser(t_token *list)
 int	check_syntax(t_token *current)
 {
 	if (current->type == AND || current->type == OR || current->type == PIPE)
-		return (check_cmd_splitter_rule(current));
+		return (check_control_operator_rule(current));
 	else if (current->type >= REDIR_APPEND && current->type <= REDIR_OUT)
 		return (check_redirect_rule(current));
 	else if (current->type == OPEN_PAREN || current->type == CLOSE_PAREN)
@@ -37,7 +37,7 @@ int	check_syntax(t_token *current)
 	return (SUCCESS);
 }
 
-int	check_cmd_splitter_rule(t_token *token)
+int	check_control_operator_rule(t_token *token)
 {
 	if (token->prev == NULL || token->prev->type <= PIPE)
 		return (syntax_error(token->value));

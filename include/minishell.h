@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 21:12:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:59:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ typedef struct s_token
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_tree_node
+{
+	int					type;
+	t_token				*cmd;
+	t_token				*redir;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+}	t_tree_node;
 
 enum e_token_type
 {
@@ -63,7 +72,7 @@ void	move_to_next_quote(char *str, int *index, int *single_quote,
 //parser.c
 int		parser(t_token *list);
 int		check_syntax(t_token *current);
-int		check_cmd_splitter_rule(t_token *token);
+int		check_control_operator_rule(t_token *token);
 int		check_redirect_rule(t_token *token);
 int		check_parenthesis_rule(t_token *token);
 
