@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 21:12:51 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:15:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,12 @@ int	main(void)
 		else
 			add_history(line);
 		printf("You typed: %s\n", line);
-		lexer(line, &list);
-		parser(list);
+		if(lexer(line, &list) == SUCCESS)
+			parser(list);
 		print_list(list);
-		free_list(list);
 		free(line);
+		ft_free_memory();
 	}
 	return (0);
 }
 
-void	free_list(t_token *list)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = list;
-	while (current)
-	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
-	}
-}

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 14:59:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:11:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+
 typedef struct s_tree_node
 {
-	int					type;
 	t_token				*cmd;
 	t_token				*redir;
 	struct s_tree_node	*left;
@@ -81,7 +81,6 @@ int		syntax_error(char *token);
 int		handle_error(char *message);
 
 // main.c
-void	free_list(t_token *list);
 
 //debug.c
 void	print_list(t_token *list);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/19 21:40:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:11:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*create_token(char *value, int type)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
+	new = ft_dalloc(sizeof(t_token), 1);
 	if (!new)
 		return (NULL);
 	new->type = type;
