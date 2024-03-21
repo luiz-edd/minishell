@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/03/20 15:52:19 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/03/21 19:20:53 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
 SRCS_PATH			= 	./src/
-FILES				= 	$(addprefix $(SRCS_PATH), main.c lexer.c lexer_utils.c parser.c error.c debug.c)
+FILES				= 	$(addprefix $(SRCS_PATH), main.c lexer.c lexer_utils.c parser.c exec_tree.c tree_utils.c error.c debug.c)
 OBJS				= 	$(FILES:%.c=%.o)
 
 .DEFAULT_GOAL = $(NAME)
@@ -54,6 +54,6 @@ val: all
          --show-leak-kinds=all \
          --track-origins=yes \
          --log-file=valgrind-out.txt \
-		 ./$(EXE) $(ARG)
+		 ./$(NAME)
 
 .PHONY: all, clean, fclean, re, norm, val

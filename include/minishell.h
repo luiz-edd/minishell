@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 16:11:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:34:32 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ int		check_control_operator_rule(t_token *token);
 int		check_redirect_rule(t_token *token);
 int		check_parenthesis_rule(t_token *token);
 
+//create_tree.c
+t_tree_node *build_execution_tree(t_token *token_list);
+void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
+int	split_list(t_tree_node *tree_node, t_token *token_list,
+	t_token *token_to_cut);
+
+//tree_utils.c
+t_token *cut_token_list(t_token *token_list, t_token *token_to_cut);
+t_token	*search_and_or(t_token *token_list);
+t_token	*search_pipe(t_token *token_list);
+void	print_tree(t_tree_node *root);
+
 //error.c
 int		syntax_error(char *token);
 int		handle_error(char *message);
@@ -84,5 +96,7 @@ int		handle_error(char *message);
 
 //debug.c
 void	print_list(t_token *list);
+void 	print2DUtil(t_tree_node *root, int space);
+void 	print2D(t_tree_node *root);
 
 #endif
