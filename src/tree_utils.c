@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/22 21:38:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:53:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_token	*get_cmd_path(t_token *cmd)
 	t_token	*cmd_path;
 
 	cmd_path = ft_dalloc(sizeof(t_token), 1);
+	if (!cmd_path)
+		handle_error("failed to allocate memory");
 	if (is_builtin(cmd))
 	{
 		cmd->type = 13; //BUILTIN
@@ -88,4 +90,14 @@ t_token	*get_cmd_path(t_token *cmd)
 	else
 		cmd_path = search_in_path();
 	return (cmd_path);
+}
+
+char	*search_in_cur_dir(t_token *cmd)
+{
+
+}
+
+char	*search_in_path(t_token *cmd)
+{
+	
 }

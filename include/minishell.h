@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/22 19:39:43 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:58:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			check_control_operator_rule(t_token *token);
 int			check_redirect_rule(t_token *token);
 int			check_parenthesis_rule(t_token *token);
 
-//create_tree.c
+//exec_tree.c
 t_tree_node	*build_execution_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
 int			split_list(t_tree_node *tree_node, t_token *token_list,
@@ -86,7 +86,21 @@ t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
 //tree_utils.c
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
-void		redir_lst_add_back(t_token *redir_list, t_token *new);
+void		dbl_lst_add_back(t_token *redir_list, t_token *new);
+void		dbl_lst_add_front(t_token *token_list, t_token *new);
+t_token		*get_cmd_path(t_token *cmd);
+
+//executor.c
+int			executor(t_tree_node *root);
+int			execute_and(t_tree_node *left, t_tree_node *right);
+int			execute_or(t_tree_node *left, t_tree_node *right);
+int			execute_pipe(t_tree_node *left, t_tree_node *right);
+int			execute_command(t_tree_node *cmd_node);
+
+//executor_utils.c
+char		**get_cmd_and_args(t_tree_node *cmd_node);
+int			count_tokens(t_token *token_list);
+void		solve_redirections(t_tree_node *cmd_node);
 
 //error.c
 int			syntax_error(char *token);

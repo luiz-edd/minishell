@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:33:13 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 15:16:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:22:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	get_token_length(char *str, int type)
 	return (0);
 }
 
+//colocar checagem de open quotes aqui?
 int	get_word_length(char *str)
 {
 	int		len;
