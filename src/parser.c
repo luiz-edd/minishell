@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 15:00:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/22 21:36:48 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	parser(t_token *list)
 {
-	t_token	*current;
+	t_token		*current;
+	t_tree_node	*root;
 
 	current = list;
 	while (current)
@@ -23,6 +24,8 @@ int	parser(t_token *list)
 			return (FAILURE);
 		current = current->next;
 	}
+	root = build_execution_tree(list);
+	print_tree(root);
 	return (SUCCESS);
 }
 

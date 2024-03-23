@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 14:59:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:39:43 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,43 @@ enum e_token_type
 };
 
 // lexer.c
-int		lexer(char *str, t_token **list);
-int		get_token_length(char *str, int type);
-int		get_word_length(char *str);
-int		get_token_type(char *str);
+int			lexer(char *str, t_token **list);
+int			get_token_length(char *str, int type);
+int			get_word_length(char *str);
+int			get_token_type(char *str);
 
 //lexer_utils.c
-void	append_token(t_token *token, t_token **list);
-t_token	*create_token(char *value, int type);
-int		check_open_syntax(char *str);
-void	move_to_next_quote(char *str, int *index, int *single_quote,
-			int *double_quote);
+void		append_token(t_token *token, t_token **list);
+t_token		*create_token(char *value, int type);
+int			check_open_syntax(char *str);
+void		move_to_next_quote(char *str, int *index, int *single_quote,
+				int *double_quote);
 //parser.c
-int		parser(t_token *list);
-int		check_syntax(t_token *current);
-int		check_control_operator_rule(t_token *token);
-int		check_redirect_rule(t_token *token);
-int		check_parenthesis_rule(t_token *token);
+int			parser(t_token *list);
+int			check_syntax(t_token *current);
+int			check_control_operator_rule(t_token *token);
+int			check_redirect_rule(t_token *token);
+int			check_parenthesis_rule(t_token *token);
+
+//create_tree.c
+t_tree_node	*build_execution_tree(t_token *token_list);
+void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
+int			split_list(t_tree_node *tree_node, t_token *token_list,
+				t_token *token_to_cut);
+t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
+
+//tree_utils.c
+t_token		*search_and_or(t_token *token_list);
+t_token		*search_pipe(t_token *token_list);
+void		redir_lst_add_back(t_token *redir_list, t_token *new);
 
 //error.c
-int		syntax_error(char *token);
-int		handle_error(char *message);
-
-// main.c
-void	free_list(t_token *list);
+int			syntax_error(char *token);
+int			handle_error(char *message);
 
 //debug.c
-void	print_list(t_token *list);
+void		print_list(t_token *list);
+void		print_tree(t_tree_node *root);
+void		print_tree_util(t_tree_node *root, int space);
 
 #endif

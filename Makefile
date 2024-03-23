@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/03/20 15:19:18 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/03/22 21:35:00 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,6 @@ val: all
          --show-leak-kinds=all \
          --track-origins=yes \
          --log-file=valgrind-out.txt \
-		 ./$(EXE) $(ARG)
+		 ./$(NAME)
 
 .PHONY: all, clean, fclean, re, norm, val
