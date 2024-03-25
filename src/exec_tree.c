@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/22 21:38:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:30:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	parse_command(t_tree_node *tree_node)
 		handle_error("command not found");
 		return ;
 	}
-	dbl_lst_add_front(tree_node->cmd, cmd_path);
+	token_lst_add_front(tree_node->cmd, cmd_path);
 	current = tree_node->cmd;
 	while (current)
 	{
@@ -92,7 +92,7 @@ void	parse_command(t_tree_node *tree_node)
 			current->next->next->prev = current->prev;
 			current->next->next = NULL;
 			current->prev = NULL;
-			dbl_lst_add_back(tree_node->redir, current);
+			token_lst_add_back(tree_node->redir, current);
 		}
 		current = current->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/23 15:47:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:58:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,47 +26,83 @@ int	executor(t_tree_node *root)
 
 int	execute_and(t_tree_node *left, t_tree_node *right)
 {
-	//fork
-	//executor(left);
-	//wait return
-	//if return is 0 (SUCCESS)
-		//fork
-		//executor(right);
+	int	pid;
+	int	exit_status;
+
+	pid = fork();
+	if (pid == 0)
+		executor(left);
+	else
+		waitpid(pid, &exit_status, 0);
+	if (exit_status == SUCCESS)
+	{
+		pid = fork();
+		if (pid == 0)
+			executor(right);
+		else
+			waitpid(pid, &exit_status, 0);
+	}
+	return (exit_status);
 }
 
 int	execute_or(t_tree_node *left, t_tree_node *right)
 {
-	//fork
-	//executor(left);
-	//wait return
-	//if return is != 0 (FAILURE)
-		//fork
-		//executor(right);
+	int	pid;
+	int	exit_status;
+
+	pid = fork();
+	if (pid == 0)
+		executor(left);
+	else
+		waitpid(pid, &exit_status, 0);
+	if (exit_status != SUCCESS)
+	{
+		pid = fork();
+		if (pid == 0)
+			executor(right);
+		else
+			waitpid(pid, &exit_status, 0);
+	}
+	return (exit_status);
 }
 
 int	execute_pipe(t_tree_node *left, t_tree_node *right)
 {
-	//pipe
-	//fork
-	//left:
-		//close pipe[READ], dup2(STDOUT, pipe[WRITE])
-		//executor(left);
-	//fork
-	//right:
-		//close pipe[WRITE], dup2(STDIN, pipe[READ])
-		//executor(right);
+	int	pid;
+	int	pipe_fd[2];
+
+	pipe(pipe_fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipe_fd[READ]);
+		dup2(pipe_fd[WRITE], STDOUT_FILENO);
+		executor(left);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipe_fd[WRITE]);
+		dup2(pipe_fd[READ], STDIN_FILENO);
+		executor(right);
+	}
+	close(pipe_fd[READ]);
+	close(pipe_fd[WRITE]);
 }
 
 //colocar funcao de get_path para ser chamada direto aqui em vez de colocar na linked list?
+//usar copia do environ no execve
 int	execute_command(t_tree_node *cmd_node)
 {
 	char	**cmd_and_args;
 	char	*cmd_path;
 
 	cmd_path = cmd_node->cmd->value;
+	if (!cmd_path)
+		handle_error("Command not found");
 	cmd_node->cmd = cmd_node->cmd->next;
 	cmd_and_args = get_cmd_and_args(cmd_node);
 	if (cmd_node->redir)
 		solve_redirections(cmd_node->redir);
-	execve(cmd_path, cmd_and_args, environ);
+	execve(cmd_path, cmd_and_args, __environ);
 }

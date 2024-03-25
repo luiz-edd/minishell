@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/23 14:58:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:38:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <wait.h>
 
 # define SUCCESS 0
 # define FAILURE 1
+# define WRITE 1
+# define READ 0
 
 typedef struct s_token
 {
@@ -64,13 +67,11 @@ int			get_word_length(char *str);
 int			get_token_type(char *str);
 
 //lexer_utils.c
-void		append_token(t_token *token, t_token **list);
-t_token		*create_token(char *value, int type);
 int			check_open_syntax(char *str);
 void		move_to_next_quote(char *str, int *index, int *single_quote,
 				int *double_quote);
 //parser.c
-int			parser(t_token *list);
+int			parser(t_token *list, t_tree_node **root);
 int			check_syntax(t_token *current);
 int			check_control_operator_rule(t_token *token);
 int			check_redirect_rule(t_token *token);
@@ -83,11 +84,9 @@ int			split_list(t_tree_node *tree_node, t_token *token_list,
 				t_token *token_to_cut);
 t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
 
-//tree_utils.c
+//exec_tree_utils.c
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
-void		dbl_lst_add_back(t_token *redir_list, t_token *new);
-void		dbl_lst_add_front(t_token *token_list, t_token *new);
 t_token		*get_cmd_path(t_token *cmd);
 
 //executor.c
@@ -99,8 +98,14 @@ int			execute_command(t_tree_node *cmd_node);
 
 //executor_utils.c
 char		**get_cmd_and_args(t_tree_node *cmd_node);
-int			count_tokens(t_token *token_list);
 void		solve_redirections(t_tree_node *cmd_node);
+
+//token_list.c
+t_token		*token_lst_new(char *value, int type);
+void		token_lst_add_back(t_token *token_list, t_token *new);
+void		token_lst_add_front(t_token *token_list, t_token *new);
+int			token_lst_size(t_token *token_list);
+t_token		*token_lst_last(t_token *token_list);
 
 //error.c
 int			syntax_error(char *token);

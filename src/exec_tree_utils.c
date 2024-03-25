@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*   exec_tree_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/23 15:53:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:40:11 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// transformar funções em search_token_type(t_token *token_list, int type, ...)? Poderia procurar parenteses também no futuro
+// transformar funções de search em search_token_type(t_token *token_list, int type, ...)? Poderia procurar parenteses também no futuro
 t_token	*search_and_or(t_token *token_list)
 {
 	t_token	*current;
@@ -39,35 +39,6 @@ t_token	*search_pipe(t_token *token_list)
 		current = current->next;
 	}
 	return (NULL);
-}
-
-//colocar funções na libft junto com create_token (renomeado para dbl_lst_new) e append_token (dbl_lst_add_back) usando void* e dando cast durante o minishell?
-void	dbl_lst_add_back(t_token *token_list, t_token *new)
-{
-	t_token	*current;
-
-	if (!token_list)
-	{
-		token_list = new;
-		return ;
-	}
-	current = token_list;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-	new->prev = current;
-}
-
-void	dbl_lst_add_front(t_token *token_list, t_token *new)
-{
-	if (!token_list)
-	{
-		token_list = new;
-		return ;
-	}
-	token_list->prev = new;
-	new->next = token_list;
-	token_list = new;
 }
 
 //criar tipo novo de token BUILTIN para quando é builtin e possivelmente facilitar a execução?
@@ -100,4 +71,11 @@ char	*search_in_cur_dir(t_token *cmd)
 char	*search_in_path(t_token *cmd)
 {
 	
+}
+
+int	is_builtin(t_token *cmd)
+{
+	if (!ft_strcmp(cmd->value, "echo") || !ft_strcmp(cmd->value, "cd") || !ft_strcmp(cmd->value, "pwd") || !ft_strcmp(cmd->value, "export") || !ft_strcmp(cmd->value, "unset") || !ft_strcmp(cmd->value, "env") || !ft_strcmp(cmd->value, "exit"))
+		return (1);
+	return (0);
 }

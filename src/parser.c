@@ -6,16 +6,15 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/22 21:36:48 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:26:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parser(t_token *list)
+int	parser(t_token *list, t_tree_node **root)
 {
 	t_token		*current;
-	t_tree_node	*root;
 
 	current = list;
 	while (current)
@@ -24,8 +23,8 @@ int	parser(t_token *list)
 			return (FAILURE);
 		current = current->next;
 	}
-	root = build_execution_tree(list);
-	print_tree(root);
+	*root = build_execution_tree(list);
+	print_tree(*root);
 	return (SUCCESS);
 }
 

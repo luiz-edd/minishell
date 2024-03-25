@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_dlst_add_front.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 17:26:38 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/25 18:16:29 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/03/25 18:16:35 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_dlst_add_front(t_dlst *list, t_dlst *new)
 {
-	char	*line;
-	t_token	*list;
-	t_tree_node	*root;
-
-	while (42)
+	if (!list)
+		list = new;
+	else
 	{
-		list = NULL;
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		else
-			add_history(line);
-		if (lexer(line, &list) == SUCCESS)
-			if (parser(list, &root) == SUCCESS)
-				executor(root);
-		free(line);
+		list->prev = new;
+		new->next = list;
+		list = new;
 	}
-	return (0);
 }

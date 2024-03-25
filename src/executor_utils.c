@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/23 15:53:51 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:39:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**get_cmd_and_args(t_tree_node *cmd_node)
 	char	**cmd_and_args;
 	int		i;
 
-	cmd_and_args = ft_dalloc(sizeof(char *), (count_tokens(current) + 1));
+	cmd_and_args = ft_dalloc(sizeof(char *), (token_lst_size(current) + 1));
 	if (!cmd_and_args)
 		handle_error("failed to allocate memory");
 	i = 0;
@@ -31,22 +31,6 @@ char	**get_cmd_and_args(t_tree_node *cmd_node)
 	}
 	cmd_and_args[i] = NULL;
 	return (cmd_and_args);
-}
-
-//trocar por dbl_list_size e colocar na libft?
-int	count_tokens(t_token *token_list)
-{
-	t_token	*current;
-	int		count;
-
-	count = 0;
-	current = token_list;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	return (count);
 }
 
 //colocar handle_heredoc (se tiver heredoc) antes de chamar o executor a primeira vez

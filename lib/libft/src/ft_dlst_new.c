@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_dlst_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 17:26:38 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/25 18:15:48 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/03/25 18:15:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+t_dlst	*ft_dlst_new(void *content)
 {
-	char	*line;
-	t_token	*list;
-	t_tree_node	*root;
+	t_dlst	*new;
 
-	while (42)
-	{
-		list = NULL;
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		else
-			add_history(line);
-		if (lexer(line, &list) == SUCCESS)
-			if (parser(list, &root) == SUCCESS)
-				executor(root);
-		free(line);
-	}
-	return (0);
+	new = ft_dalloc(sizeof(t_dlst), 1);
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
 }

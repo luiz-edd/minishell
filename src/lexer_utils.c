@@ -6,41 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/19 21:40:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:32:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_token	*create_token(char *value, int type)
-{
-	t_token	*new;
-
-	new = malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->type = type;
-	new->value = value;
-	new->prev = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-void	append_token(t_token *token, t_token **list)
-{
-	t_token	*current;
-
-	if (*list == NULL)
-		*list = token;
-	else
-	{
-		current = *list;
-		while (current->next)
-			current = current->next;
-		current->next = token;
-		token->prev = current;
-	}
-}
 
 int	check_open_syntax(char *str)
 {
