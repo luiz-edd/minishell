@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:38:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:54:37 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,15 @@ void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
 int			split_list(t_tree_node *tree_node, t_token *token_list,
 				t_token *token_to_cut);
 t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
+void		parse_command(t_tree_node *tree_node);
 
 //exec_tree_utils.c
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
 t_token		*get_cmd_path(t_token *cmd);
+t_token		*search_in_cur_dir(t_token *cmd);
+t_token		*search_in_path(t_token *cmd);
+int			is_builtin(t_token *cmd);
 
 //executor.c
 int			executor(t_tree_node *root);

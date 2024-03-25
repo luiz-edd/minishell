@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/03/25 18:37:57 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/03/25 18:43:41 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME				=	minishell
 CC					=	cc
 CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3
 LIBFLAGS			=	-lreadline -lhistory
-HEADERS				= 	-I ./include -I $(LIBFT_PATH)
+HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
 SRCS_PATH			= 	./src/

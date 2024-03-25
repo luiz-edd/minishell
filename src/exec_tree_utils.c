@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:40:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:55:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,39 @@ t_token	*get_cmd_path(t_token *cmd)
 	else if (*(cmd->value) == '/')
 		cmd_path = cmd;
 	else if (ft_strchr(cmd->value, '/'))
-		cmd_path = search_in_cur_dir();
+		cmd_path = search_in_cur_dir(cmd);
 	else
-		cmd_path = search_in_path();
+		cmd_path = search_in_path(cmd);
 	return (cmd_path);
 }
 
-char	*search_in_cur_dir(t_token *cmd)
+//to do
+t_token	*search_in_cur_dir(t_token *cmd)
 {
+	t_token	*cmd_path;
 
+	(void)cmd;
+	cmd_path = ft_dalloc(sizeof(t_token), 1);
+	if (!cmd_path)
+		handle_error("failed to allocate memory");
+	return (cmd_path);
 }
 
-char	*search_in_path(t_token *cmd)
+//to do
+t_token	*search_in_path(t_token *cmd)
 {
-	
+	t_token	*cmd_path;
+
+	(void)cmd;
+	cmd_path = ft_dalloc(sizeof(t_token), 1);
+	if (!cmd_path)
+		handle_error("failed to allocate memory");
+	return (cmd_path);
 }
 
 int	is_builtin(t_token *cmd)
 {
-	if (!ft_strcmp(cmd->value, "echo") || !ft_strcmp(cmd->value, "cd") || !ft_strcmp(cmd->value, "pwd") || !ft_strcmp(cmd->value, "export") || !ft_strcmp(cmd->value, "unset") || !ft_strcmp(cmd->value, "env") || !ft_strcmp(cmd->value, "exit"))
+	if (!ft_strncmp(cmd->value, "echo", 4) || !ft_strncmp(cmd->value, "cd", 2) || !ft_strncmp(cmd->value, "pwd", 3) || !ft_strncmp(cmd->value, "export", 6) || !ft_strncmp(cmd->value, "unset", 5) || !ft_strncmp(cmd->value, "env", 3) || !ft_strncmp(cmd->value, "exit", 4))
 		return (1);
 	return (0);
 }
