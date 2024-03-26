@@ -14,7 +14,7 @@
 
 t_tree_node	*build_execution_tree(t_token *token_list)
 {
-	t_tree_node		*root;
+	t_tree_node	*root;
 
 	root = ft_dalloc(1, sizeof(t_tree_node));
 	if (!root)
@@ -28,16 +28,24 @@ t_tree_node	*build_execution_tree(t_token *token_list)
 
 void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 {
-	if (split_list(tree_node, token_list, search_and_or(token_list)))
-		return ;
-	if (split_list(tree_node, token_list, search_pipe(token_list)))
-		return ;
-	tree_node->cmd = token_list;
-	parse_command(tree_node);
+	t_token	*is_and_or;
+	t_token	*is_pipe;
+
+	is_and_or = search_and_or(token_list);
+	is_pipe = search_pipe(token_list);
+	if (is_and_or)
+		split_list(tree_node, token_list, is_and_or);
+	else if (is_pipe)
+		split_list(tree_node, token_list, is_pipe);
+	else
+	{
+		tree_node->cmd = token_list;
+		parse_command(tree_node);
+	}
 }
 
 int	split_list(t_tree_node *tree_node, t_token *token_list,
-	t_token *token_to_cut)
+		t_token *token_to_cut)
 {
 	t_token	*right;
 
@@ -75,14 +83,15 @@ void	parse_command(t_tree_node *tree_node)
 	t_token	*current;
 	t_token	*cmd_path;
 
-	cmd_path = get_cmd_path(tree_node->cmd);
+	current = tree_node->cmd;
+	cmd_path = get_cmd_path(current);
+	// se o comando nao existir, os redirects serao abertos mesmo assim
 	if (!cmd_path)
 	{
 		handle_error("command not found");
 		return ;
 	}
-	token_lst_add_front(tree_node->cmd, cmd_path);
-	current = tree_node->cmd;
+	token_lst_add_front(current, cmd_path);
 	while (current)
 	{
 		// solve_expansions(current);

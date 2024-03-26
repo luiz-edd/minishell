@@ -34,7 +34,7 @@ void	token_lst_add_back(t_token *token_list, t_token *new)
 		token_list = new;
 	else
 	{
-		last = token_lst_last(token_list);
+		last = token_lst_get_last(token_list);
 		last->next = new;
 		new->prev = last;
 	}
@@ -67,7 +67,7 @@ int	token_lst_size(t_token *token_list)
 	return (count);
 }
 
-t_token	*token_lst_last(t_token *token_list)
+t_token	*token_lst_get_last(t_token *token_list)
 {
 	t_token	*current;
 

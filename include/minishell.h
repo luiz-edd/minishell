@@ -108,8 +108,8 @@ void		solve_redirections(t_tree_node *cmd_node);
 t_token		*token_lst_new(char *value, int type);
 void		token_lst_add_back(t_token *token_list, t_token *new);
 void		token_lst_add_front(t_token *token_list, t_token *new);
-int			token_lst_size(t_token *token_list);
-t_token		*token_lst_last(t_token *token_list);
+int			token_lst_get_size(t_token *token_list);
+t_token		*token_lst_get_last(t_token *token_list);
 
 //error.c
 int			syntax_error(char *token);

@@ -25,14 +25,14 @@ int	lexer(char *str, t_token **list)
 		length = 0;
 		type = get_token_type(str);
 		if (type == SPACES)
-			length = 1;
+			str++;
 		else
 		{
 			length = get_token_length(str, type);
 			token = token_lst_new(ft_substr(str, 0, length), type);
 			token_lst_add_back(token, *list);
+			str += length;
 		}
-		str = str + length;
 	}
 	return (SUCCESS);
 }
@@ -78,10 +78,10 @@ int	get_token_length(char *str, int type)
 	return (0);
 }
 
-//colocar checagem de open quotes aqui?
+// colocar checagem de open quotes aqui?
 int	get_word_length(char *str)
 {
-	int		len;
+	int	len;
 
 	len = 0;
 	while (get_token_type(str + len) == WORD)
