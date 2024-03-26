@@ -6,14 +6,14 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:55:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:13:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // transformar funções de search em search_token_type(t_token *token_list,
-	int type, ...)? Poderia procurar parenteses também no futuro
+//	int type, ...)? Poderia procurar parenteses também no futuro
 t_token	*search_and_or(t_token *token_list)
 {
 	t_token	*current;
@@ -51,7 +51,6 @@ t_token	*get_cmd_path(t_token *cmd)
 	t_token	*cmd_path;
 
 	cmd_path = ft_dalloc(sizeof(t_token), 1);
-	
 	if (!cmd_path)
 		handle_error("failed to allocate memory");
 	if (is_builtin(cmd))
@@ -84,11 +83,25 @@ t_token	*search_in_cur_dir(t_token *cmd)
 t_token	*search_in_path(t_token *cmd)
 {
 	t_token	*cmd_path;
+	char	**paths;
+	int		i;
 
 	(void)cmd;
 	cmd_path = ft_dalloc(sizeof(t_token), 1);
 	if (!cmd_path)
 		handle_error("failed to allocate memory");
+	paths = ft_split(getenv("PATH"), ':');
+	if (!paths)
+		handle_error("failed to allocate memory");
+	i = 0;
+	while (paths[i])
+	{
+		cmd_path = ft_strjoin(paths[i], "/");
+		cmd_path = ft_strjoin(cmd_path, cmd->value);
+		if (access(cmd_path->value, F_OK) == 0)
+			return (cmd_path);
+	}
+	cmd_path = cmd->value;
 	return (cmd_path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:30:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:23:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,6 @@ void	parse_command(t_tree_node *tree_node)
 
 	current = tree_node->cmd;
 	cmd_path = get_cmd_path(current);
-	// se o comando nao existir, os redirects serao abertos mesmo assim
-	if (!cmd_path)
-	{
-		handle_error("command not found");
-		return ;
-	}
 	token_lst_add_front(current, cmd_path);
 	while (current)
 	{
