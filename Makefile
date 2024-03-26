@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/03/25 18:43:41 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/03/26 19:47:17 by leduard2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				=	minishell
 CC					=	cc
-CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3
+CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3 
 LIBFLAGS			=	-lreadline -lhistory 
 HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
@@ -51,9 +51,12 @@ norm:
 
 val: all
 	valgrind --leak-check=full \
-         --show-leak-kinds=all \
-         --track-origins=yes \
-         --log-file=valgrind-out.txt \
+		 --trace-children=yes \
+		 --track-fds=yes \
 		 ./$(NAME)
+		#  --show-leak-kinds=all \
+        #  --track-origins=yes \
+        #  --log-file=valgrind-out.txt \
 
 .PHONY: all, clean, fclean, re, norm, val
+
