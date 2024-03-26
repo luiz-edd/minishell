@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 15:23:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:08:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	parse_command(t_tree_node *tree_node)
 
 	current = tree_node->cmd;
 	cmd_path = get_cmd_path(current);
-	token_lst_add_front(current, cmd_path);
+	token_lst_add_front(&tree_node->cmd, cmd_path);
 	while (current)
 	{
 		// solve_expansions(current);
@@ -95,7 +95,7 @@ void	parse_command(t_tree_node *tree_node)
 			current->next->next->prev = current->prev;
 			current->next->next = NULL;
 			current->prev = NULL;
-			token_lst_add_back(tree_node->redir, current);
+			token_lst_add_back(&tree_node->redir, current);
 		}
 		current = current->next;
 	}

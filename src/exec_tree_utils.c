@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 17:13:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:02:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 t_token	*search_and_or(t_token *token_list)
 {
 	t_token	*current;
-	size_t	size;
 
 	current = token_lst_get_last(token_list);
 	while (current)
@@ -33,8 +32,7 @@ t_token	*search_pipe(t_token *token_list)
 {
 	t_token	*current;
 
-	current = current = token_lst_get_last(token_list);
-	;
+	current = token_lst_get_last(token_list);
 	while (current)
 	{
 		if (current->type == PIPE)
@@ -53,17 +51,17 @@ t_token	*get_cmd_path(t_token *cmd)
 	cmd_path = ft_dalloc(sizeof(t_token), 1);
 	if (!cmd_path)
 		handle_error("failed to allocate memory");
-	if (is_builtin(cmd))
-	{
-		cmd->type = 13; // BUILTIN
-		return (cmd);
-	}
-	else if (*(cmd->value) == '/')
-		cmd_path = cmd;
-	else if (ft_strchr(cmd->value, '/'))
-		cmd_path = search_in_cur_dir(cmd);
-	else
-		cmd_path = search_in_path(cmd);
+	//if (is_builtin(cmd))
+	//{
+	//	cmd->type = 13; // BUILTIN
+	//	return (cmd);
+	//}
+	//else if (*(cmd->value) == '/')
+	//	cmd_path = cmd;
+	//else if (ft_strchr(cmd->value, '/'))
+	//	cmd_path = search_in_cur_dir(cmd);
+	//else
+	cmd_path = search_in_path(cmd);
 	return (cmd_path);
 }
 
@@ -96,12 +94,13 @@ t_token	*search_in_path(t_token *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], "/");
-		cmd_path = ft_strjoin(cmd_path, cmd->value);
+		cmd_path->value = ft_strjoin(paths[i], "/");
+		cmd_path->value = ft_strjoin(cmd_path->value, cmd->value);
 		if (access(cmd_path->value, F_OK) == 0)
 			return (cmd_path);
+		i++;
 	}
-	cmd_path = cmd->value;
+	cmd_path->value = cmd->value;
 	return (cmd_path);
 }
 

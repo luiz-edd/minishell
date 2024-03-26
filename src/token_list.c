@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:30:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:37:14 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:59:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,33 @@ t_token	*token_lst_new(char *value, int type)
 	return (new);
 }
 
-void	token_lst_add_back(t_token *token_list, t_token *new)
+void	token_lst_add_back(t_token **token_list, t_token *new)
 {
 	t_token	*last;
 
-	if (!token_list)
-		token_list = new;
+	if (!(*token_list))
+		*token_list = new;
 	else
 	{
-		last = token_lst_get_last(token_list);
+		last = token_lst_get_last(*token_list);
 		last->next = new;
 		new->prev = last;
 	}
 }
 
-void	token_lst_add_front(t_token *token_list, t_token *new)
+void	token_lst_add_front(t_token **token_list, t_token *new)
 {
-	if (!token_list)
-		token_list = new;
+	if (!(*token_list))
+		*token_list = new;
 	else
 	{
-		token_list->prev = new;
-		new->next = token_list;
-		token_list = new;
+		(*token_list)->prev = new;
+		new->next = *token_list;
+		*token_list = new;
 	}
 }
 
-int	token_lst_size(t_token *token_list)
+int	token_lst_get_size(t_token *token_list)
 {
 	t_token	*current;
 	int		count;

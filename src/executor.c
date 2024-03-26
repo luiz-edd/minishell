@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 17:13:45 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:09:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	executor(t_tree_node *root)
 		execute_or(root->left, root->right);
 	else if (root->cmd->type == PIPE)
 		execute_pipe(root->left, root->right);
-	 else
+	else
 	 	execute_command(root);
 	return (SUCCESS);
 }
@@ -30,6 +30,7 @@ int	execute_and(t_tree_node *left, t_tree_node *right)
 	int	pid;
 	int	exit_status;
 
+	exit_status = SUCCESS;
 	pid = fork();
 	if (pid == 0)
 		executor(left);
@@ -51,6 +52,7 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 	int	pid;
 	int	exit_status;
 
+	exit_status = SUCCESS;
 	pid = fork();
 	if (pid == 0)
 		executor(left);
@@ -94,13 +96,13 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 
 // colocar funcao de get_path para ser chamada direto aqui em vez de colocar na linked list?
 // usar copia do environ no execve
- int	execute_command(t_tree_node *cmd_node)
+ void	execute_command(t_tree_node *cmd_node)
  {
  	char	**cmd_and_args;
  	char	*cmd_path;
 
- 	if (cmd_node->redir)
- 		solve_redirections(cmd_node->redir);
+ 	//if (cmd_node->redir)
+ 	//	solve_redirections(cmd_node->redir);
  	cmd_path = cmd_node->cmd->value;
  	cmd_and_args = get_cmd_and_args(cmd_node->cmd->next);
  	execve(cmd_path, cmd_and_args, __environ);

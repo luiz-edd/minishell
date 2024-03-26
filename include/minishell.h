@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:54:37 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:56:49 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,16 @@ int			executor(t_tree_node *root);
 int			execute_and(t_tree_node *left, t_tree_node *right);
 int			execute_or(t_tree_node *left, t_tree_node *right);
 int			execute_pipe(t_tree_node *left, t_tree_node *right);
-int			execute_command(t_tree_node *cmd_node);
+void		execute_command(t_tree_node *cmd_node);
 
 //executor_utils.c
-char		**get_cmd_and_args(t_tree_node *cmd_node);
-void		solve_redirections(t_tree_node *cmd_node);
+char		**get_cmd_and_args(t_token *cmd);
+void		solve_redirections(t_token *redir);
 
 //token_list.c
 t_token		*token_lst_new(char *value, int type);
-void		token_lst_add_back(t_token *token_list, t_token *new);
-void		token_lst_add_front(t_token *token_list, t_token *new);
+void		token_lst_add_back(t_token **token_list, t_token *new);
+void		token_lst_add_front(t_token **token_list, t_token *new);
 int			token_lst_get_size(t_token *token_list);
 t_token		*token_lst_get_last(t_token *token_list);
 

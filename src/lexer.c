@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:33:13 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:44:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:58:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	lexer(char *str, t_token **list)
 		{
 			length = get_token_length(str, type);
 			token = token_lst_new(ft_substr(str, 0, length), type);
-			token_lst_add_back(token, *list);
+			token_lst_add_back(list, token);
 			str += length;
 		}
 	}
