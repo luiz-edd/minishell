@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 19:15:06 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:25:28 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,20 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 
 int	execute_pipe(t_tree_node *left, t_tree_node *right)
 {
-	int	pid;
+	int	pid[2];
 	int	pipe_fd[2];
+	int status;
 
 	pipe(pipe_fd);
-	pid = fork();
-	if (pid == 0)
+	pid[0] = fork();
+	if (pid[0] == 0)
 	{
 		close(pipe_fd[READ]);
 		dup2(pipe_fd[WRITE], STDOUT_FILENO);
 		executor(left);
 	}
-	pid = fork();
-	if (pid == 0)
+	pid[1] = fork();
+	if (pid[1] == 0)
 	{
 		close(pipe_fd[WRITE]);
 		dup2(pipe_fd[READ], STDIN_FILENO);
@@ -91,7 +92,10 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	}
 	close(pipe_fd[READ]);
 	close(pipe_fd[WRITE]);
-	return (SUCCESS);
+	waitpid(pid[0], &status, 0);
+	waitpid(pid[1], &status, 0);
+	ft_free_memory();
+	exit(status);
 }
 
 // colocar funcao de get_path para ser chamada direto aqui em vez de colocar na linked list?

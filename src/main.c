@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 19:41:38 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:21:10 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	main(void)
 {
-	char	*line;
-	t_token	*list;
+	char		*line;
+	t_token		*list;
 	t_tree_node	*root;
-	int exit_status;
+	int			pid;
+	int			exit_status;
 
 	while (42)
 	{
@@ -32,8 +33,14 @@ int	main(void)
 			add_history(line);
 		if (lexer(line, &list) == SUCCESS)
 			if (parser(list, &root) == SUCCESS)
-				executor(root);
-		waitpid(-1, &exit_status, 0);
+			{
+				pid = fork();
+				if (pid == 0)
+					executor(root);
+				else
+					waitpid(pid, &exit_status, 0);
+			}
+		// waitpid(-1, &exit_status, 0);
 		free(line);
 	}
 	return (0);

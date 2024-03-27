@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 18:52:25 by leduard2          #+#    #+#             */
-/*   Updated: 2024/01/19 20:23:44 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:32:40 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	words = ft_countwords((char *)s, c);
-	arr = (char **)malloc((words + 1) * sizeof(char *));
+	arr = (char **)ft_dalloc((words + 1), sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	while (i < words)
 	{
 		while (*s == c)
 			s++;
-		arr[i] = (char *)malloc((ft_wordlen((char *)s, c) + 1));
+		arr[i] = (char *)ft_dalloc((ft_wordlen((char *)s, c) + 1),1);
 		if (arr[i] == NULL)
 			return (ft_rollback(arr));
 		ft_addword((char *)s, arr[i], c);
