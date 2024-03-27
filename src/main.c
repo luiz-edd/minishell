@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 16:21:10 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:50:22 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ int	main(void)
 			{
 				pid = fork();
 				if (pid == 0)
+				{
 					executor(root);
+					close(STDOUT_FILENO);
+					close(STDIN_FILENO);
+					close(STDERR_FILENO);
+				}
 				else
 					waitpid(pid, &exit_status, 0);
 			}

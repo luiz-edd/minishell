@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 16:25:28 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:46:00 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,22 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	{
 		close(pipe_fd[READ]);
 		dup2(pipe_fd[WRITE], STDOUT_FILENO);
+		close(pipe_fd[WRITE]);
 		executor(left);
+		close(STDOUT_FILENO);
+		close(STDIN_FILENO);
+		close(STDERR_FILENO);
 	}
 	pid[1] = fork();
 	if (pid[1] == 0)
 	{
 		close(pipe_fd[WRITE]);
 		dup2(pipe_fd[READ], STDIN_FILENO);
+		close(pipe_fd[READ]);
 		executor(right);
+		close(STDOUT_FILENO);
+		close(STDIN_FILENO);
+		close(STDERR_FILENO);
 	}
 	close(pipe_fd[READ]);
 	close(pipe_fd[WRITE]);

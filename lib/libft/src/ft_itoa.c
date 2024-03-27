@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 13:24:05 by leduard2          #+#    #+#             */
-/*   Updated: 2023/08/07 17:50:53 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:35:27 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_itoa(int n)
 	if (num == 0)
 		return (ft_strdup("0"));
 	i = ft_numlen(num);
-	s = (char *)malloc((i + 1) * sizeof(char));
+	s = (char *)ft_dalloc((i + 1), sizeof(char));
 	if (s == NULL)
 		return (NULL);
 	s[i--] = '\0';

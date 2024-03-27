@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:29:18 by leduard2          #+#    #+#             */
-/*   Updated: 2023/08/03 17:51:57 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:34:56 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (s_len - start < len)
 		len = s_len - start;
-	sub = (char *)malloc((len + 1) * sizeof(char));
+	sub = (char *)ft_dalloc((len + 1), sizeof(char));
 	if (sub == NULL)
 		return (NULL);
 	while (i < len)
