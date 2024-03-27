@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 17:28:27 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/27 19:12:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
  	return (cmd_and_args);
  }
 
-//colocar handle_heredoc (se tiver heredoc) antes de chamar o executor a primeira vez
-//para deixar os arquivos criados e escritos e só abrir para ler aqui nessa parte com open_here_doc()
  void	solve_redirections(t_token *redir)
  {
  	t_token	*current;
@@ -44,13 +42,16 @@
  	while (current)
  	{
  		if (current->type == REDIR_APPEND)
- 			fd = open(current->next->value, O_CREAT | O_APPEND, 0644);
- 		//else if (current->type == REDIR_HEREDOC)
- 		//	fd = open_here_doc();
- 		else if (current->type == REDIR_IN)
- 			fd = open(current->next->value, O_RDONLY, 0644);
+ 			fd = open(current->next->value, O_CREAT | O_APPEND, 0666);
+ 		else if (current->type == REDIR_HEREDOC || current->type == REDIR_IN)
+ 			fd = open(current->next->value, O_RDONLY, 0666);
  		else if (current->type == REDIR_OUT)
- 			fd = open(current->next->value, O_CREAT | O_TRUNC, 0644);
+ 			fd = open(current->next->value, O_CREAT | O_TRUNC, 0666);
+		if (fd == -1)
+		{
+            perror("open");
+            return ;
+        }
  		if (current->type == REDIR_APPEND || current->type == REDIR_OUT)
  			dup2(fd, STDOUT_FILENO);
  		else if (current->type == REDIR_HEREDOC || current->type == REDIR_IN)

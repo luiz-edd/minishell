@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 17:56:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:15:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			check_control_operator_rule(t_token *token);
 int			check_redirect_rule(t_token *token);
 int			check_parenthesis_rule(t_token *token);
 
-//exec_tree.c
+//bin_tree.c
 t_tree_node	*build_execution_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
 int			split_list(t_tree_node *tree_node, t_token *token_list,
@@ -85,7 +85,7 @@ int			split_list(t_tree_node *tree_node, t_token *token_list,
 t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
 void		parse_command(t_tree_node *tree_node);
 
-//exec_tree_utils.c
+//bin_tree_utils.c
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
 t_token		*get_cmd_path(t_token *cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 16:50:22 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 19:08:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,11 @@ int	main(void)
 			{
 				pid = fork();
 				if (pid == 0)
-				{
 					executor(root);
-					close(STDOUT_FILENO);
-					close(STDIN_FILENO);
-					close(STDERR_FILENO);
-				}
 				else
 					waitpid(pid, &exit_status, 0);
 			}
-		// waitpid(-1, &exit_status, 0);
 		free(line);
 	}
-	return (0);
+	return (SUCCESS);
 }

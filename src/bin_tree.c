@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_tree.c                                        :+:      :+:    :+:   */
+/*   bin_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 17:09:35 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:10:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ void	parse_command(t_tree_node *tree_node)
 		// solve_expansions(current);
 		if (current->type >= REDIR_APPEND && current->type <= REDIR_OUT)
 		{
-			current->prev->next = current->next->next;
-			current->next->next->prev = current->prev;
+			if (current->prev)
+				current->prev->next = current->next->next;
+			if (current->next->next)
+				current->next->next->prev = current->prev;
 			current->next->next = NULL;
 			current->prev = NULL;
 			token_lst_add_back(&tree_node->redir, current);

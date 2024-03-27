@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_tree_utils.c                                  :+:      :+:    :+:   */
+/*   bin_tree_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 18:02:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/27 19:10:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_token	*search_pipe(t_token *token_list)
 // criar tipo novo de token BUILTIN para quando é builtin e possivelmente facilitar a execução?
 t_token	*get_cmd_path(t_token *cmd)
 {
-	// colocar o type desse token como CMD_PATH, talvez numero 14
 	t_token	*cmd_path;
 
 	cmd_path = ft_dalloc(sizeof(t_token), 1);

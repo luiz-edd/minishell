@@ -100,7 +100,7 @@ $(NAME): $(OBJ_PATH)
 
 $(PATH_TO_OBJ)%.o: $(PATH_TO_SRC)%.c $(HEADERS)
 	@mkdir -p obj 
-	$(CC) $< -o $@ -c 
+	$(CC) $< -o $@ -c && printf "Compiling: $(notdir $<\n)"
 	@ar rcs $(NAME) $@ 
 	
 clean: 
