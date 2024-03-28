@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 19:10:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:50:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token	*search_pipe(t_token *token_list)
 	return (NULL);
 }
 
-// criar tipo novo de token BUILTIN para quando é builtin e possivelmente facilitar a execução?
+// comando terminar com barra?
 t_token	*get_cmd_path(t_token *cmd)
 {
 	t_token	*cmd_path;
@@ -52,31 +52,21 @@ t_token	*get_cmd_path(t_token *cmd)
 		handle_error("failed to allocate memory");
 	//if (is_builtin(cmd))
 	//{
-	//	cmd->type = 13; // BUILTIN
-	//	return (cmd);
+	//	cmd->type = BUILTIN;
+	//	cmd_path->value = cmd->value;
 	//}
-	//else if (*(cmd->value) == '/')
-	//	cmd_path = cmd;
-	//else if (ft_strchr(cmd->value, '/'))
-	//	cmd_path = search_in_cur_dir(cmd);
-	//else
-	cmd_path = search_in_path(cmd);
+	else if (ft_strchr(cmd->value, '/'))
+	{
+		cmd_path->value = cmd->value;
+		if (*(ft_strrchr(cmd->value, '/') + 1) != '\0')
+			cmd->value = ft_strrchr(cmd->value, '/') + 1;
+	}
+	else
+		cmd_path = search_in_path(cmd);
 	return (cmd_path);
 }
 
-// to do
-t_token	*search_in_cur_dir(t_token *cmd)
-{
-	t_token	*cmd_path;
-
-	(void)cmd;
-	cmd_path = ft_dalloc(sizeof(t_token), 1);
-	if (!cmd_path)
-		handle_error("failed to allocate memory");
-	return (cmd_path);
-}
-
-// to do
+// verificar permissoes do arquivos
 t_token	*search_in_path(t_token *cmd)
 {
 	t_token	*cmd_path;
@@ -105,11 +95,10 @@ t_token	*search_in_path(t_token *cmd)
 
 int	is_builtin(t_token *cmd)
 {
-	if (!ft_strncmp(cmd->value, "echo", 4) || !ft_strncmp(cmd->value, "cd", 2)
-		|| !ft_strncmp(cmd->value, "pwd", 3) || !ft_strncmp(cmd->value,
-			"export", 6) || !ft_strncmp(cmd->value, "unset", 5)
-		|| !ft_strncmp(cmd->value, "env", 3) || !ft_strncmp(cmd->value, "exit",
-			4))
+	if (!ft_strcmp(cmd->value, "echo") || !ft_strcmp(cmd->value, "cd")
+		|| !ft_strcmp(cmd->value, "pwd") || !ft_strcmp(cmd->value,
+			"export") || !ft_strcmp(cmd->value, "unset")
+		|| !ft_strcmp(cmd->value, "env") || !ft_strcmp(cmd->value, "exit"))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 18:10:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:45:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 	else
 	{
 		tree_node->cmd = token_list;
-		parse_command(tree_node);
+		parse_command(&tree_node);
 	}
 }
 
@@ -78,27 +78,34 @@ t_token	*cut_token_list(t_token *token_list, t_token *token_to_cut)
 	return (right);
 }
 
-void	parse_command(t_tree_node *tree_node)
+//funcionando mas precisa arrumar a bagunça
+void	parse_command(t_tree_node **tree_node)
 {
 	t_token	*current;
+	t_token	*new_head;
 	t_token	*cmd_path;
 
-	current = tree_node->cmd;
-	cmd_path = get_cmd_path(current);
-	token_lst_add_front(&tree_node->cmd, cmd_path);
+	current = (*tree_node)->cmd;
 	while (current)
 	{
 		// solve_expansions(current);
 		if (current->type >= REDIR_APPEND && current->type <= REDIR_OUT)
 		{
+			new_head = current->next->next;
 			if (current->prev)
 				current->prev->next = current->next->next;
+			else
+				(*tree_node)->cmd = new_head;
 			if (current->next->next)
 				current->next->next->prev = current->prev;
 			current->next->next = NULL;
 			current->prev = NULL;
-			token_lst_add_back(&tree_node->redir, current);
+			token_lst_add_back(&(*tree_node)->redir, current);
+			current = new_head;
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
+	cmd_path = get_cmd_path((*tree_node)->cmd);
+	token_lst_add_front(&(*tree_node)->cmd, cmd_path);
 }

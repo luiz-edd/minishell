@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 17:15:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:39:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ enum e_token_type
 	SPACES,
 	END,
 	WORD,
+	BUILTIN,
 };
 
 // lexer.c
@@ -83,7 +84,7 @@ void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
 int			split_list(t_tree_node *tree_node, t_token *token_list,
 				t_token *token_to_cut);
 t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
-void		parse_command(t_tree_node *tree_node);
+void		parse_command(t_tree_node **tree_node);
 
 //bin_tree_utils.c
 t_token		*search_and_or(t_token *token_list);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 19:12:27 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:08:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
  	return (cmd_and_args);
  }
 
+//dar exit se der ruim o fd?
  void	solve_redirections(t_token *redir)
  {
  	t_token	*current;
@@ -42,14 +43,14 @@
  	while (current)
  	{
  		if (current->type == REDIR_APPEND)
- 			fd = open(current->next->value, O_CREAT | O_APPEND, 0666);
+ 			fd = open(current->next->value, O_CREAT | O_APPEND | O_WRONLY, 0666);
  		else if (current->type == REDIR_HEREDOC || current->type == REDIR_IN)
  			fd = open(current->next->value, O_RDONLY, 0666);
  		else if (current->type == REDIR_OUT)
- 			fd = open(current->next->value, O_CREAT | O_TRUNC, 0666);
+ 			fd = open(current->next->value, O_CREAT | O_TRUNC | O_WRONLY, 0666);
 		if (fd == -1)
 		{
-            perror("open");
+            perror(current->next->value);
             return ;
         }
  		if (current->type == REDIR_APPEND || current->type == REDIR_OUT)

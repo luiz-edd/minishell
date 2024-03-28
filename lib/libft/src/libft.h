@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:32:55 by leduard2          #+#    #+#             */
-/*   Updated: 2024/03/25 18:18:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:58:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ float				ft_maxval(float a, float b);
 void				ft_print_words(char **str);
 long				ft_atol(char *str);
 int					ft_isspace(int c);
+int					ft_strcmp(const char *s1, const char *s2);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);

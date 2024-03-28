@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 19:16:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:49:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
  	cmd_and_args = get_cmd_and_args(cmd_node->cmd->next);
  	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 	{
+		perror(cmd_path);
 		ft_free_memory();
-		perror("execve");
 		exit(FAILURE);
  	}
  }
