@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/28 18:39:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:13:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ typedef struct s_token
 
 typedef struct s_tree_node
 {
-	int					type;
 	t_token				*cmd;
-	t_token				*redir;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }	t_tree_node;
@@ -58,14 +56,13 @@ enum e_token_type
 	SPACES,
 	END,
 	WORD,
-	BUILTIN,
 };
 
 // lexer.c
 int			lexer(char *str, t_token **list);
+int			get_token_type(char *str);
 int			get_token_length(char *str, int type);
 int			get_word_length(char *str);
-int			get_token_type(char *str);
 
 //lexer_utils.c
 int			check_open_syntax(char *str);
@@ -81,29 +78,34 @@ int			check_parenthesis_rule(t_token *token);
 //bin_tree.c
 t_tree_node	*build_execution_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
-int			split_list(t_tree_node *tree_node, t_token *token_list,
+void		split_list(t_tree_node *tree_node, t_token *token_list,
 				t_token *token_to_cut);
 t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
-void		parse_command(t_tree_node **tree_node);
+void		split_redirect(t_tree_node *tree_node, t_token *token_list,
+				t_token *token_to_cut);
 
 //bin_tree_utils.c
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
-t_token		*get_cmd_path(t_token *cmd);
-t_token		*search_in_cur_dir(t_token *cmd);
-t_token		*search_in_path(t_token *cmd);
-int			is_builtin(t_token *cmd);
+t_token		*search_redirect(t_token *token_list);
 
 //executor.c
 int			executor(t_tree_node *root);
-int			execute_and(t_tree_node *left, t_tree_node *right);
-int			execute_or(t_tree_node *left, t_tree_node *right);
-int			execute_pipe(t_tree_node *left, t_tree_node *right);
-void		execute_command(t_tree_node *cmd_node);
+void		execute_and(t_tree_node *left, t_tree_node *right);
+void		execute_or(t_tree_node *left, t_tree_node *right);
+void		execute_pipe(t_tree_node *left, t_tree_node *right);
+void		execute_redirect(t_tree_node *left, t_tree_node *right,
+				int redir_type);
 
 //executor_utils.c
+void		execute_command(t_tree_node *cmd_node);
+int			is_builtin(t_token *cmd);
+char		*get_cmd_path(t_token *cmd);
+char		*search_in_path(t_token *cmd);
 char		**get_cmd_and_args(t_token *cmd);
-void		solve_redirections(t_token *redir);
+
+//redirect.c
+void		create_heredoc_file(t_token *token);
 
 //token_list.c
 t_token		*token_lst_new(char *value, int type);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/27 19:08:40 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:07:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(void)
 		else
 			add_history(line);
 		if (lexer(line, &list) == SUCCESS)
+		{
 			if (parser(list, &root) == SUCCESS)
 			{
 				pid = fork();
@@ -40,6 +41,7 @@ int	main(void)
 				else
 					waitpid(pid, &exit_status, 0);
 			}
+		}
 		free(line);
 	}
 	return (SUCCESS);

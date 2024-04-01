@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/28 18:45:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:17:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,42 @@ t_tree_node	*build_execution_tree(t_token *token_list)
 	return (root);
 }
 
+// voltar para o modelo antigo?
 void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 {
 	t_token	*is_and_or;
 	t_token	*is_pipe;
+	t_token	*is_redirect;
 
 	is_and_or = search_and_or(token_list);
 	is_pipe = search_pipe(token_list);
+	is_redirect = search_redirect(token_list);
 	if (is_and_or)
 		split_list(tree_node, token_list, is_and_or);
 	else if (is_pipe)
 		split_list(tree_node, token_list, is_pipe);
+	else if (is_redirect)
+		split_redirect(tree_node, token_list, is_redirect);
 	else
-	{
 		tree_node->cmd = token_list;
-		parse_command(&tree_node);
-	}
 }
 
-int	split_list(t_tree_node *tree_node, t_token *token_list,
+void	split_list(t_tree_node *tree_node, t_token *token_list,
 		t_token *token_to_cut)
 {
 	t_token	*right;
 
 	if (!tree_node || !token_list || !token_to_cut)
-		return (0);
+		return ;
 	tree_node->cmd = token_to_cut;
 	right = cut_token_list(token_list, token_to_cut);
 	if (!right)
 	{
 		handle_error("failed to build execution tree");
-		return (-1);
+		return ;
 	}
 	tree_node->left = build_execution_tree(token_list);
 	tree_node->right = build_execution_tree(right);
-	return (1);
 }
 
 t_token	*cut_token_list(t_token *token_list, t_token *token_to_cut)
@@ -78,34 +79,28 @@ t_token	*cut_token_list(t_token *token_list, t_token *token_to_cut)
 	return (right);
 }
 
-//funcionando mas precisa arrumar a bagunça
-void	parse_command(t_tree_node **tree_node)
+void	split_redirect(t_tree_node *tree_node, t_token *token_list,
+		t_token *token_to_cut)
 {
-	t_token	*current;
-	t_token	*new_head;
-	t_token	*cmd_path;
-
-	current = (*tree_node)->cmd;
-	while (current)
+	if (!tree_node || !token_list || !token_to_cut)
+		return ;
+	tree_node->cmd = token_to_cut;
+	//segfault aqui
+	tree_node->right->cmd = token_to_cut->next;
+	if (token_list == token_to_cut)
 	{
-		// solve_expansions(current);
-		if (current->type >= REDIR_APPEND && current->type <= REDIR_OUT)
-		{
-			new_head = current->next->next;
-			if (current->prev)
-				current->prev->next = current->next->next;
-			else
-				(*tree_node)->cmd = new_head;
-			if (current->next->next)
-				current->next->next->prev = current->prev;
-			current->next->next = NULL;
-			current->prev = NULL;
-			token_lst_add_back(&(*tree_node)->redir, current);
-			current = new_head;
-		}
-		else
-			current = current->next;
+		token_list = token_list->next->next;
+		token_list->prev = NULL;
+		token_to_cut->next->next = NULL;
+		token_to_cut->prev = NULL;
 	}
-	cmd_path = get_cmd_path((*tree_node)->cmd);
-	token_lst_add_front(&(*tree_node)->cmd, cmd_path);
+	else
+	{
+		token_to_cut->prev->next = token_to_cut->next->next;
+		if (token_to_cut->next->next)
+			token_to_cut->next->next->prev = token_to_cut->prev;
+		token_to_cut->next->next = NULL;
+		token_to_cut->prev = NULL;
+	}
+	tree_node->left = build_execution_tree(token_list);
 }

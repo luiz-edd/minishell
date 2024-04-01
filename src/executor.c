@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/28 16:49:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 17:14:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int	executor(t_tree_node *root)
 		execute_or(root->left, root->right);
 	else if (root->cmd->type == PIPE)
 		execute_pipe(root->left, root->right);
+	else if (root->cmd->type >= REDIR_APPEND && root->cmd->type <= REDIR_OUT)
+		execute_redirect(root->left, root->right, root->cmd->type);
 	else
-	 	execute_command(root);
+		execute_command(root);
 	return (SUCCESS);
 }
 
-int	execute_and(t_tree_node *left, t_tree_node *right)
+void	execute_and(t_tree_node *left, t_tree_node *right)
 {
 	int	child_pid;
 	int	exit_status;
@@ -44,10 +46,11 @@ int	execute_and(t_tree_node *left, t_tree_node *right)
 		else
 			waitpid(child_pid, &exit_status, 0);
 	}
+	ft_free_memory();
 	exit(WEXITSTATUS(exit_status));
 }
 
-int	execute_or(t_tree_node *left, t_tree_node *right)
+void	execute_or(t_tree_node *left, t_tree_node *right)
 {
 	int	child_pid;
 	int	exit_status;
@@ -66,14 +69,16 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 		else
 			waitpid(child_pid, &exit_status, 0);
 	}
+	ft_free_memory();
 	exit(WEXITSTATUS(exit_status));
 }
 
-int	execute_pipe(t_tree_node *left, t_tree_node *right)
+// criar funcao variadica de fechar fds para diminuir linhas?
+void	execute_pipe(t_tree_node *left, t_tree_node *right)
 {
 	int	child_pid[2];
 	int	pipe_fd[2];
-	int exit_status;
+	int	exit_status;
 
 	pipe(pipe_fd);
 	child_pid[0] = fork();
@@ -100,21 +105,26 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	exit(WEXITSTATUS(exit_status));
 }
 
-// usar copia do environ no execve
- void	execute_command(t_tree_node *cmd_node)
- {
- 	char	**cmd_and_args;
- 	char	*cmd_path;
+//se der algum erro não deve executar o comando
+void	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
+{
+	int	fd;
 
- 	if (cmd_node->redir)
- 		solve_redirections(cmd_node->redir);
- 	cmd_path = cmd_node->cmd->value;
- 	cmd_and_args = get_cmd_and_args(cmd_node->cmd->next);
- 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
+	fd = -1;
+	if (redir_type == REDIR_APPEND)
+		fd = open(right->cmd->value, O_CREAT | O_APPEND | O_WRONLY, 0666);
+	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)
+		fd = open(right->cmd->value, O_RDONLY, 0666);
+	else if (redir_type == REDIR_OUT)
+		fd = open(right->cmd->value, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	if (fd == -1)
 	{
-		perror(cmd_path);
-		ft_free_memory();
+		perror(right->cmd->value);
 		exit(FAILURE);
- 	}
- }
- 
+	}
+	if (redir_type == REDIR_APPEND || redir_type == REDIR_OUT)
+		dup2(fd, STDOUT_FILENO);
+	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)
+		dup2(fd, STDIN_FILENO);
+	executor(left);
+}
