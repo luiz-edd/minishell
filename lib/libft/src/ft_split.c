@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 18:52:25 by leduard2          #+#    #+#             */
-/*   Updated: 2024/03/27 16:32:40 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:31:37 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	**ft_split(char const *s, char c)
 	int		words;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	words = ft_countwords((char *)s, c);
 	arr = (char **)ft_dalloc((words + 1), sizeof(char *));
@@ -87,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	{
 		while (*s == c)
 			s++;
-		arr[i] = (char *)ft_dalloc((ft_wordlen((char *)s, c) + 1),1);
+		arr[i] = (char *)ft_dalloc((ft_wordlen((char *)s, c) + 1), 1);
 		if (arr[i] == NULL)
 			return (ft_rollback(arr));
 		ft_addword((char *)s, arr[i], c);

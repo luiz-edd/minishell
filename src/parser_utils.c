@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.c                                         :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 17:01:37 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:47:55 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_heredoc_file(t_token *token)
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		handle_error("failed to create heredoc");
+		write(STDERR_FILENO, "failed to create heredoc", 25);
 		return ;
 	}
 	while (1)

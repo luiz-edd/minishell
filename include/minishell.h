@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 17:13:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:12:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ int			check_control_operator_rule(t_token *token);
 int			check_redirect_rule(t_token *token);
 int			check_parenthesis_rule(t_token *token);
 
+//parser_utils.c
+void		create_heredoc_file(t_token *token);
+
 //bin_tree.c
 t_tree_node	*build_execution_tree(t_token *token_list);
 void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
@@ -88,6 +91,7 @@ void		split_redirect(t_tree_node *tree_node, t_token *token_list,
 t_token		*search_and_or(t_token *token_list);
 t_token		*search_pipe(t_token *token_list);
 t_token		*search_redirect(t_token *token_list);
+t_tree_node	*get_redir_filename(t_token *redir);
 
 //executor.c
 int			executor(t_tree_node *root);
@@ -104,9 +108,6 @@ char		*get_cmd_path(t_token *cmd);
 char		*search_in_path(t_token *cmd);
 char		**get_cmd_and_args(t_token *cmd);
 
-//redirect.c
-void		create_heredoc_file(t_token *token);
-
 //token_list.c
 t_token		*token_lst_new(char *value, int type);
 void		token_lst_add_back(t_token **token_list, t_token *new);
@@ -117,6 +118,7 @@ t_token		*token_lst_get_last(t_token *token_list);
 //error.c
 int			syntax_error(char *token);
 int			handle_error(char *message);
+void		close_pipe(int *pipe_fd);
 
 //debug.c
 void		print_list(t_token *list);

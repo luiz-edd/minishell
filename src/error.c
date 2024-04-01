@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/17 20:00:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:57:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,21 @@ int	handle_error(char *message)
 	if (errno)
 	{
 		perror(message);
-		return (errno);
+		ft_free_memory();
+		exit(errno);
 	}
 	else
 	{
 		dprintf(STDERR_FILENO, "%s\n", message);
-		return (FAILURE);
+		ft_free_memory();
+		exit(FAILURE);
 	}
+}
+
+void	close_pipe(int *pipe_fd)
+{
+	if (pipe_fd[0] != -1)
+		close(pipe_fd[0]);
+	if (pipe_fd[1] != -1)
+		close(pipe_fd[1]);
 }

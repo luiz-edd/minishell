@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 17:17:02 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:45:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ t_tree_node	*build_execution_tree(t_token *token_list)
 	root = ft_dalloc(1, sizeof(t_tree_node));
 	if (!root)
 	{
-		handle_error("failed to build execution tree");
+		perror("failed to build execution tree");
 		return (NULL);
 	}
 	split_tokens_into_tree(root, token_list);
 	return (root);
 }
 
-// voltar para o modelo antigo?
 void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 {
 	t_token	*is_and_or;
@@ -34,14 +33,14 @@ void	split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list)
 	t_token	*is_redirect;
 
 	is_and_or = search_and_or(token_list);
-	is_pipe = search_pipe(token_list);
-	is_redirect = search_redirect(token_list);
 	if (is_and_or)
-		split_list(tree_node, token_list, is_and_or);
-	else if (is_pipe)
-		split_list(tree_node, token_list, is_pipe);
-	else if (is_redirect)
-		split_redirect(tree_node, token_list, is_redirect);
+		return (split_list(tree_node, token_list, is_and_or));
+	is_pipe = search_pipe(token_list);
+	if (is_pipe)
+		return (split_list(tree_node, token_list, is_pipe));
+	is_redirect = search_redirect(token_list);
+	if (is_redirect)
+		return (split_redirect(tree_node, token_list, is_redirect));
 	else
 		tree_node->cmd = token_list;
 }
@@ -79,14 +78,28 @@ t_token	*cut_token_list(t_token *token_list, t_token *token_to_cut)
 	return (right);
 }
 
+/**
+ * @brief Function responsible for splitting the token list when a redirect is
+ * found.
+ * The current node will hold the redirection symbol and the right node will
+ * hold the filename.
+ * After the split, if the redirection symbol is the first element of the list,
+ * the start of the list is updated to the next element after the file name. If
+ * the redirection symbol is not the first element of the list, the list is 
+ * ammended.
+ * Eventually the left node is built recursively.
+ * 
+ * @param tree_node 
+ * @param token_list 
+ * @param token_to_cut 
+ */
 void	split_redirect(t_tree_node *tree_node, t_token *token_list,
 		t_token *token_to_cut)
 {
 	if (!tree_node || !token_list || !token_to_cut)
 		return ;
 	tree_node->cmd = token_to_cut;
-	//segfault aqui
-	tree_node->right->cmd = token_to_cut->next;
+	tree_node->right = get_redir_filename(token_to_cut->next);
 	if (token_list == token_to_cut)
 	{
 		token_list = token_list->next->next;

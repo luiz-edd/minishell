@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 17:14:27 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:34:31 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	execute_or(t_tree_node *left, t_tree_node *right)
 	exit(WEXITSTATUS(exit_status));
 }
 
-// criar funcao variadica de fechar fds para diminuir linhas?
 void	execute_pipe(t_tree_node *left, t_tree_node *right)
 {
 	int	child_pid[2];
@@ -84,47 +83,44 @@ void	execute_pipe(t_tree_node *left, t_tree_node *right)
 	child_pid[0] = fork();
 	if (child_pid[0] == 0)
 	{
-		close(pipe_fd[READ]);
 		dup2(pipe_fd[WRITE], STDOUT_FILENO);
-		close(pipe_fd[WRITE]);
+		close_pipe(pipe_fd);
 		executor(left);
 	}
 	child_pid[1] = fork();
 	if (child_pid[1] == 0)
 	{
-		close(pipe_fd[WRITE]);
 		dup2(pipe_fd[READ], STDIN_FILENO);
-		close(pipe_fd[READ]);
+		close_pipe(pipe_fd);
 		executor(right);
 	}
-	close(pipe_fd[READ]);
-	close(pipe_fd[WRITE]);
+	close_pipe(pipe_fd);
 	waitpid(child_pid[0], &exit_status, 0);
 	waitpid(child_pid[1], &exit_status, 0);
 	ft_free_memory();
 	exit(WEXITSTATUS(exit_status));
 }
 
-//se der algum erro não deve executar o comando
 void	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 {
 	int	fd;
+	int	exit_status;
 
+	exit_status = -1;
 	fd = -1;
 	if (redir_type == REDIR_APPEND)
-		fd = open(right->cmd->value, O_CREAT | O_APPEND | O_WRONLY, 0666);
+		fd = open(right->cmd->value, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)
-		fd = open(right->cmd->value, O_RDONLY, 0666);
+		fd = open(right->cmd->value, O_RDONLY, 0644);
 	else if (redir_type == REDIR_OUT)
-		fd = open(right->cmd->value, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+		fd = open(right->cmd->value, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd == -1)
-	{
-		perror(right->cmd->value);
-		exit(FAILURE);
-	}
+		handle_error(right->cmd->value);
 	if (redir_type == REDIR_APPEND || redir_type == REDIR_OUT)
-		dup2(fd, STDOUT_FILENO);
+		exit_status = dup2(fd, STDOUT_FILENO);
 	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)
-		dup2(fd, STDIN_FILENO);
+		exit_status = dup2(fd, STDIN_FILENO);
+	if (exit_status == -1)
+		handle_error("dup2");
 	executor(left);
 }
