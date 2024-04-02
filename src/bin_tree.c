@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:38:36 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 19:45:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:37:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	split_list(t_tree_node *tree_node, t_token *token_list,
 	right = cut_token_list(token_list, token_to_cut);
 	if (!right)
 	{
-		handle_error("failed to build execution tree");
+		perror("failed to build execution tree");
 		return ;
 	}
 	tree_node->left = build_execution_tree(token_list);
@@ -89,9 +89,9 @@ t_token	*cut_token_list(t_token *token_list, t_token *token_to_cut)
  * ammended.
  * Eventually the left node is built recursively.
  * 
- * @param tree_node 
- * @param token_list 
- * @param token_to_cut 
+ * @param tree_node Node that will hold the redirection symbol.
+ * @param token_list Head of the token list.
+ * @param token_to_cut Token that holds the redirection symbol.
  */
 void	split_redirect(t_tree_node *tree_node, t_token *token_list,
 		t_token *token_to_cut)
@@ -103,7 +103,8 @@ void	split_redirect(t_tree_node *tree_node, t_token *token_list,
 	if (token_list == token_to_cut)
 	{
 		token_list = token_list->next->next;
-		token_list->prev = NULL;
+		if (token_list)
+			token_list->prev = NULL;
 		token_to_cut->next->next = NULL;
 		token_to_cut->prev = NULL;
 	}

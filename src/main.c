@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 16:07:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:22:55 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,24 @@ int	main(void)
 		list = NULL;
 		line = readline("minishell> ");
 		if (!line)
-		{
 			printf("exit\n");
-			break ;
-		}
-		else
-			add_history(line);
-		if (lexer(line, &list) == SUCCESS)
+		else if (*line != '\0')
 		{
-			if (parser(list, &root) == SUCCESS)
+			add_history(line);
+			if (lexer(line, &list) == SUCCESS)
 			{
-				pid = fork();
-				if (pid == 0)
-					executor(root);
-				else
-					waitpid(pid, &exit_status, 0);
+				if (parser(list, &root) == SUCCESS)
+				{
+					pid = fork();
+					if (pid == 0)
+						executor(root);
+					else
+						waitpid(pid, &exit_status, 0);
+				}
 			}
+			free(line);
+			create_heredoc_file(NULL);
 		}
-		free(line);
 	}
 	return (SUCCESS);
 }

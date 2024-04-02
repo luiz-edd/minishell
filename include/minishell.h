@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/01 19:12:42 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:14:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int			check_redirect_rule(t_token *token);
 int			check_parenthesis_rule(t_token *token);
 
 //parser_utils.c
-void		create_heredoc_file(t_token *token);
+int			create_heredoc_file(t_token *token);
+int			delete_heredoc_files(int *i);
 
 //bin_tree.c
 t_tree_node	*build_execution_tree(t_token *token_list);
@@ -118,6 +119,7 @@ t_token		*token_lst_get_last(t_token *token_list);
 //error.c
 int			syntax_error(char *token);
 int			handle_error(char *message);
+void		panic_exit(char *message);
 void		close_pipe(int *pipe_fd);
 
 //debug.c
