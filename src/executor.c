@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 16:00:04 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:47:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ void	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 
 	exit_status = -1;
 	fd = -1;
-	//expand $VAR
-	expand_vars(right->cmd);
+	right->cmd->value = expand_vars(right->cmd->value);
 	if (redir_type == REDIR_APPEND)
 		fd = open(right->cmd->value, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)

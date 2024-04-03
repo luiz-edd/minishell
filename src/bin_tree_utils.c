@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/02 15:36:58 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:48:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_tree_node	*get_redir_filename(t_token *redir)
 {
 	t_tree_node	*filename;
 
-	//expand_var(redir->value);
+	redir->value = expand_vars(redir->value);
 	filename = ft_dalloc(1, sizeof(t_tree_node));
 	if (!filename)
 	{

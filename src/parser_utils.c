@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/02 18:24:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:06:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	create_heredoc_file(t_token *token)
 	int			fd;
 	char		*line;
 	char		*file_name;
-	int			expand;
+	int			expandable;
 
-	expand = 1;
+	expandable = 0;
 	if (token == NULL)
 		return (delete_heredoc_files(&i));
 	file_name = ft_strjoin("/tmp/.heredoc", ft_itoa(i++));
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (write(STDERR_FILENO, "failed to create heredoc", 25));
-	if (ft_strchr(token->value, '\"') || ft_strchr(token->value, '\''))
-		expand = 0;
+	if (!ft_strchr(token->value, '\"') && !ft_strchr(token->value, '\''))
+		expandable = 1;
 	token->value = remove_quotes(token->value);
 	printf("token->value: %s\n", token->value);
 	while (42)
@@ -39,8 +39,8 @@ int	create_heredoc_file(t_token *token)
 		line = readline("> ");
 		if (ft_strcmp(line, token->value) == SUCCESS)
 			break ;
-		//if (expand)
-			//expand_vars(line);
+		if (expandable)
+			line = expand_vars(line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
@@ -62,27 +62,25 @@ int	delete_heredoc_files(int *i)
 	return (SUCCESS);
 }
 
+// Precisa arrumar alguns casos de misturar quotes
+// << e'o"i'"'"
 char	*remove_quotes(char *str)
 {
 	int		i;
 	int		j;
 	char	*tmp;
+	char	quote;
 
 	i = 0;
 	j = 0;
 	tmp = ft_dalloc(ft_strlen(str) + 1, sizeof(char));
 	while (str[i])
 	{
-		if (str[i] == '\"')
+		if (str[i] == '\"' || str[i] == '\'')
 		{
-			i++;
-			while (str[i] && str[i] != '\"')
-				tmp[j++] = str[i++];
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
+			quote = str[i++];
+			printf("quote: %c\n", quote);
+			while (str[i] && str[i] != quote)
 				tmp[j++] = str[i++];
 		}
 		else

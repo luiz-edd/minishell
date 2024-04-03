@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 16:01:31 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:55:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,19 @@
 //(variavel pode ser comando ex: var=echo)
 void	execute_command(t_tree_node *cmd_node)
 {
+	t_token	*current;
 	char	**cmd_and_args;
 	char	*cmd_path;
 
-	// expand_vars(cmd_node->cmd);
+	current = cmd_node->cmd;
+	while (current)
+	{
+		current->value = expand_vars(current->value);
+		current = current->next;
+	}
 	if (is_builtin(cmd_node->cmd))
 		return ;
-	//execute_builtin(cmd_node);
+	// execute_builtin(cmd_node);
 	else
 	{
 		cmd_path = get_cmd_path(cmd_node->cmd);
@@ -34,53 +40,30 @@ void	execute_command(t_tree_node *cmd_node)
 	}
 }
 
-void	expand_vars(t_token *cmd)
+char	*expand_vars(char *str)
 {
-	t_token	*current;
 	char	*dollar;
-	char	*expanded;
-	char	*before_dollar;
-	char	*after_dollar;
+	char	*expanded_var;
+	char	*before_var;
+	char	*after_var;
 	int		i;
 
 	i = 1;
-	current = cmd;
-	while (current)
+	while (strchr(str, '$'))
 	{
-		dollar = strchr(current->value, '$');
-		while (dollar)
+		dollar = strchr(str, '$');
+		if (dollar && dollar[1])
 		{
-			dollar = strchr(current->value, '$');
-			if (dollar && dollar[1])
-			{
-				while (dollar[i] && dollar[i] != '$')
-				{
-					i++;
-				}
-				expanded = getenv(ft_substr(dollar, 1, i - 1));
-				if (expanded)
-				{
-					before_dollar = ft_substr(current->value, 0, current->value
-							- dollar);
-					after_dollar = ft_substr(dollar, i, ft_strlen(dollar));
-					current->value = ft_strjoin(before_dollar, expanded);
-					current->value = ft_strjoin(current->value, after_dollar);
-				}
-			}
+			while (dollar[i] && dollar[i] != '$')
+				i++;
+			expanded_var = getenv(ft_substr(dollar, 1, i - 1));
+			before_var = ft_substr(str, 0, dollar - str);
+			after_var = ft_substr(dollar, i, ft_strlen(dollar));
+			str = ft_strjoin(before_var, expanded_var);
+			str = ft_strjoin(str, after_var);
 		}
-		current = current->next;
 	}
-}
-
-// mudei retorno para 0 só para não executar as builtins por enquanto
-int	is_builtin(t_token *cmd)
-{
-	if (!ft_strcmp(cmd->value, "echo") || !ft_strcmp(cmd->value, "cd")
-		|| !ft_strcmp(cmd->value, "pwd") || !ft_strcmp(cmd->value, "export")
-		|| !ft_strcmp(cmd->value, "unset") || !ft_strcmp(cmd->value, "env")
-		|| !ft_strcmp(cmd->value, "exit"))
-		return (0);
-	return (0);
+	return (str);
 }
 
 char	*get_cmd_path(t_token *cmd)
