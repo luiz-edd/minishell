@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 18:55:01 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:09:52 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	execute_command(t_tree_node *cmd_node)
 	}
 }
 
+//falta tratar $$ que vira um numero (provavelmente um processo)
 char	*expand_vars(char *str)
 {
 	char	*dollar;
@@ -48,13 +49,15 @@ char	*expand_vars(char *str)
 	char	*after_var;
 	int		i;
 
-	i = 1;
 	while (strchr(str, '$'))
 	{
 		dollar = strchr(str, '$');
 		if (dollar && dollar[1])
 		{
+			i = 1;
 			while (dollar[i] && dollar[i] != '$')
+				i++;
+			if (dollar[1] == '$')
 				i++;
 			expanded_var = getenv(ft_substr(dollar, 1, i - 1));
 			before_var = ft_substr(str, 0, dollar - str);
@@ -62,6 +65,8 @@ char	*expand_vars(char *str)
 			str = ft_strjoin(before_var, expanded_var);
 			str = ft_strjoin(str, after_var);
 		}
+		else
+			break ;
 	}
 	return (str);
 }
