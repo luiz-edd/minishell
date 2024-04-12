@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/03 18:53:52 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/12 11:58:25 by leduard2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
 SRCS_PATH			= 	./src/
-FILES				= 	$(addprefix $(SRCS_PATH), main.c lexer.c lexer_utils.c parser.c parser_utils.c bin_tree.c bin_tree_utils.c executor.c executor_utils.c builtins.c token_list.c error.c debug.c)
+FILES				= 	$(addprefix $(SRCS_PATH), main.c lexer.c lexer_utils.c parser.c parser_utils.c bin_tree.c bin_tree_utils.c executor.c executor_utils.c builtins.c token_list.c error.c debug.c builtin/echo.c builtin/execute_builtin.c builtin/pwd.c builtin/cd.c)
 OBJS				= 	$(FILES:%.c=%.o)
 
 .DEFAULT_GOAL = $(NAME)

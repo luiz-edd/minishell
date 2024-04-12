@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 18:47:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:26:53 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	execute_and(t_tree_node *left, t_tree_node *right)
 		executor(left);
 	else
 		waitpid(child_pid, &exit_status, 0);
+	ft_printf("exit status %d\n", exit_status);
+	ft_printf("WEXITSTATUS %d\n", WEXITSTATUS(exit_status));
 	if (exit_status == SUCCESS)
 	{
 		child_pid = fork();

@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/08 11:09:52 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:23:42 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ void	execute_command(t_tree_node *cmd_node)
 		current->value = expand_vars(current->value);
 		current = current->next;
 	}
+	//to-do se o comando nao tiver pipe, executar sem dar fork
+	//to-do tratar mensagens de erro
+	//to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
+	//no momento todas as builtins estao retornando SUCCESS ou o o retorno de handle_error();
 	if (is_builtin(cmd_node->cmd))
-		return ;
-	// execute_builtin(cmd_node);
-	else
+		exit(execute_builtin(cmd_node->cmd));
 	{
 		cmd_path = get_cmd_path(cmd_node->cmd);
 		cmd_and_args = get_cmd_and_args(cmd_node->cmd);
 		if (execve(cmd_path, cmd_and_args, __environ) == -1)
-			handle_error(cmd_path);
+			exit(handle_error(cmd_path));
 	}
 }
 

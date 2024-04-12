@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/02 16:22:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:40:15 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,16 @@ int	main(void)
 			{
 				if (parser(list, &root) == SUCCESS)
 				{
+					// if (is_builtin(root->cmd) && there_is_only_one_root)
+					// 	execute_builtin(root->cmd);
+					// else
+					// {
 					pid = fork();
 					if (pid == 0)
 						executor(root);
 					else
 						waitpid(pid, &exit_status, 0);
+					// }
 				}
 			}
 			free(line);

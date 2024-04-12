@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 18:53:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:57:09 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,15 @@ char					*remove_quotes(char *str);
 
 // bin_tree.c
 t_tree_node				*build_execution_tree(t_token *token_list);
-void					split_tokens_into_tree(t_tree_node *tree_node,
+void	split_tokens_into_tree(t_tree_node *tree_node,
 							t_token *token_list);
 void					split_list(t_tree_node *tree_node, t_token *token_list,
 							t_token *token_to_cut);
-t_token					*cut_token_list(t_token *token_list,
-							t_token *token_to_cut);
-void					split_redirect(t_tree_node *tree_node,
-							t_token *token_list, t_token *token_to_cut);
+t_token	*cut_token_list(t_token *token_list,
+						t_token *token_to_cut);
+void	split_redirect(t_tree_node *tree_node,
+					t_token *token_list,
+					t_token *token_to_cut);
 
 // bin_tree_utils.c
 t_token					*search_and_or(t_token *token_list);
@@ -114,6 +115,10 @@ char					*expand_vars(char *str);
 
 // builtins.c
 int						is_builtin(t_token *cmd);
+int						execute_echo(t_token *cmd);
+int						execute_builtin(t_token *cmd);
+int						execute_pwd(void);
+int						execute_cd(t_token *cmd);
 
 // token_list.c
 t_token					*token_lst_new(char *value, int type);
@@ -127,6 +132,8 @@ int						syntax_error(char *token);
 int						handle_error(char *message);
 void					panic_exit(char *message);
 void					close_pipe(int *pipe_fd);
+void					exit_success(void);
+void					exit_failure(void);
 
 // debug.c
 void					print_list(t_token *list);

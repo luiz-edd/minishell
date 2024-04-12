@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/02 15:48:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:59:35 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	close_pipe(int *pipe_fd)
 		close(pipe_fd[0]);
 	if (pipe_fd[1] != -1)
 		close(pipe_fd[1]);
+}
+
+void	exit_status(int status)
+{
+	ft_free_memory();
+	exit(status);
+}
+void	exit_success(void)
+{
+	ft_free_memory();
+	exit(SUCCESS);
+}
+
+void	exit_failure(void)
+{
+	ft_free_memory();
+	exit(errno);
 }
