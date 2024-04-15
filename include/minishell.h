@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/12 14:57:09 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:24:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,14 @@ char					*remove_quotes(char *str);
 
 // bin_tree.c
 t_tree_node				*build_execution_tree(t_token *token_list);
-void	split_tokens_into_tree(t_tree_node *tree_node,
+void					split_tokens_into_tree(t_tree_node *tree_node,
 							t_token *token_list);
 void					split_list(t_tree_node *tree_node, t_token *token_list,
 							t_token *token_to_cut);
-t_token	*cut_token_list(t_token *token_list,
-						t_token *token_to_cut);
-void	split_redirect(t_tree_node *tree_node,
-					t_token *token_list,
-					t_token *token_to_cut);
+t_token					*cut_token_list(t_token *token_list,
+							t_token *token_to_cut);
+void					split_redirect(t_tree_node *tree_node,
+							t_token *token_list, t_token *token_to_cut);
 
 // bin_tree_utils.c
 t_token					*search_and_or(t_token *token_list);
@@ -112,6 +111,7 @@ char					*get_cmd_path(t_token *cmd);
 char					*search_in_path(t_token *cmd);
 char					**get_cmd_and_args(t_token *cmd);
 char					*expand_vars(char *str);
+char					*expand(char *start, char *dollar, char *after_var);
 
 // builtins.c
 int						is_builtin(t_token *cmd);

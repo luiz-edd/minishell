@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/12 14:59:35 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:33:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	exit_status(int status)
 	ft_free_memory();
 	exit(status);
 }
+
 void	exit_success(void)
 {
 	ft_free_memory();
@@ -72,5 +73,8 @@ void	exit_success(void)
 void	exit_failure(void)
 {
 	ft_free_memory();
-	exit(errno);
+	if (errno)
+		exit(errno);
+	else
+		exit(FAILURE);
 }

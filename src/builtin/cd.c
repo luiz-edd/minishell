@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/12 17:45:30 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:24:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	check_access(char *path)
 		return (handle_error("cd: permission denied"));
 	return (SUCCESS);
 }
+
 int	change_dir(char *path)
 {
 	char	*work_dir;
@@ -59,10 +60,11 @@ int	change_to_home(void)
 	else
 		return (handle_error("cd: HOME not set"));
 }
-//atualizar getenv
+
+// atualizar getenv
 int	execute_cd(t_token *cmd)
 {
-	char **args;
+	char	**args;
 
 	if (token_lst_get_size(cmd) > 2)
 		return (handle_error("minishell: too many arguments"));

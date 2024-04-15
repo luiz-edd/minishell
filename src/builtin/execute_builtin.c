@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:51:33 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/12 16:53:00 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:23:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int	execute_builtin(t_token *cmd)
 {
-	char *str;
+	char	*str;
 
 	str = cmd->value;
 	if (!ft_strcmp(str, "echo"))

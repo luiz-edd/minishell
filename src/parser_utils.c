@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/03 19:06:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:59:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	delete_heredoc_files(int *i)
 	return (SUCCESS);
 }
 
-// Precisa arrumar alguns casos de misturar quotes
-// << e'o"i'"'"
 char	*remove_quotes(char *str)
 {
 	int		i;
@@ -73,18 +71,17 @@ char	*remove_quotes(char *str)
 
 	i = 0;
 	j = 0;
+	quote = '\0';
 	tmp = ft_dalloc(ft_strlen(str) + 1, sizeof(char));
 	while (str[i])
 	{
-		if (str[i] == '\"' || str[i] == '\'')
-		{
-			quote = str[i++];
-			printf("quote: %c\n", quote);
-			while (str[i] && str[i] != quote)
-				tmp[j++] = str[i++];
-		}
+		if ((str[i] == '\"' || str[i] == '\'') && quote == str[i])
+			quote = '\0';
+		else if ((str[i] == '\"' || str[i] == '\'') && quote == '\0')
+			quote = str[i];
 		else
-			tmp[j++] = str[i++];
+			tmp[j++] = str[i];
+		i++;
 	}
 	tmp[j] = '\0';
 	return (tmp);
