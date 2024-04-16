@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/15 16:38:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:42:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	execute_and(t_tree_node *left, t_tree_node *right)
 		executor(left);
 	else
 		waitpid(child_pid, &exit_status, 0);
-	ft_printf("exit status %d\n", exit_status);
-	ft_printf("WEXITSTATUS %d\n", WEXITSTATUS(exit_status));
 	if (exit_status == SUCCESS)
 	{
 		child_pid = fork();

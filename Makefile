@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+         #
+#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/12 11:58:25 by leduard2         ###   ########.fr        #
+#    Updated: 2024/04/16 15:46:18 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,26 @@ LIBFLAGS			=	-lreadline -lhistory
 HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
-SRCS_PATH			= 	./src/
-FILES				= 	$(addprefix $(SRCS_PATH), main.c lexer.c lexer_utils.c parser.c parser_utils.c bin_tree.c bin_tree_utils.c executor.c executor_utils.c builtins.c token_list.c error.c debug.c builtin/echo.c builtin/execute_builtin.c builtin/pwd.c builtin/cd.c)
-OBJS				= 	$(FILES:%.c=%.o)
+VPATH 				= 	./src:./src/builtin:./src/executor:./src/expansion:./src/lexer:./src/parser:./src/redirect:./src/utils
+FILES				= 	main.c \
+						builtins.c \
+						cd.c \
+						echo.c \
+						pwd.c \
+						execute_command.c \
+						executor.c \
+						expand.c \
+						lexer.c \
+						open_syntax.c \
+						bin_tree.c \
+						bin_tree_helper.c \
+						parser.c \
+						heredoc.c \
+						debug.c \
+						error.c \
+						token_list.c
+OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR				= 	obj
 
 .DEFAULT_GOAL = $(NAME)
 
@@ -31,11 +48,12 @@ $(NAME): $(OBJS) libft
 libft:
 	@make -C $(LIBFT_PATH) --silent
 
-%.o: %.c
+$(OBJ_DIR)/%.o : %.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
 
 clean:
-	@rm -rf $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_PATH) clean --silent
 	@echo "Deleted object files"
 
