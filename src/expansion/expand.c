@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 15:27:14 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:54:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,49 +25,42 @@ char	*expand(char *start, char *dollar, char *after_var)
 	return (str);
 }
 
-char	*expand_vars(char *str)
+// Criar condição de imprimir último exit status
+char	*handle_dollar(char *start, char **str)
 {
-	char	*start;
 	char	*dollar;
 	char	*after_var;
 
+	dollar = *str++;
+	while (**str && **str != '\'' && **str != '\"' && **str != '$')
+		(*str)++;
+	after_var = *str;
+	return (expand(start, dollar, after_var));
+}
+
+char	*expand_vars(char *str)
+{
+	char	*start;
+
 	start = str;
-	dollar = NULL;
-	after_var = NULL;
 	while (*str)
 	{
 		if (*str == '\'')
 		{
-			str++;
-			while (*str && *str != '\'')
+			while (*(++str) && *str != '\'')
 				str++;
 		}
-		if (*str == '\"')
+		else if (*str == '\"')
 		{
-			str++;
-			while (*str && *str != '\"')
+			while (*(++str) && *str != '\"')
 			{
 				if (*str == '$')
-				{
-					dollar = str++;
-					while (*str && *str != '\'' && *str != '\"' && *str != '$')
-						str++;
-					after_var = str;
-					return (expand(start, dollar, after_var));
-				}
+					return (handle_dollar(start, &str));
 				str++;
 			}
 		}
-		if (*str == '$')
-		{
-			dollar = str++;
-			while (*str && *str != '\'' && *str != '\"' && *str != '$')
-				str++;
-			after_var = str;
-			return (expand(start, dollar, after_var));
-		}
-		dollar = NULL;
-		after_var = NULL;
+		else if (*str == '$')
+			return (handle_dollar(start, &str));
 		str++;
 	}
 	return (start);

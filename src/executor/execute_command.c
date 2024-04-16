@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 15:28:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:06:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
 // no momento todas as builtins estao retornando SUCCESS ou o o retorno de 
 // handle_error();
+// to-do RETOKENIZE THE COMMANDS AFTER EXPANDING VARS
 void	execute_command(t_tree_node *cmd_node)
 {
 	t_token	*current;
