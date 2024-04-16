@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 17:54:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:39:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*handle_dollar(char *start, char **str)
 	char	*dollar;
 	char	*after_var;
 
-	dollar = *str++;
+	dollar = (*str)++;
 	while (**str && **str != '\'' && **str != '\"' && **str != '$')
 		(*str)++;
 	after_var = *str;
@@ -89,4 +89,23 @@ char	*remove_quotes(char *str)
 	}
 	tmp[j] = '\0';
 	return (tmp);
+}
+
+void	retokenize(t_token **token)
+{
+	t_token	*next;
+	char	**tokens;
+	int		i;
+
+	next = (*token)->next;
+	tokens = ft_split((*token)->value, ' ');
+	(*token)->value = tokens[0];
+	i = 1;
+	while (tokens[i])
+	{
+		(*token)->next = token_lst_new(tokens[i], WORD);
+		(*token) = (*token)->next;
+		i++;
+	}
+	(*token)->next = next;
 }

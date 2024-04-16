@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 17:56:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:05:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	handle_error(char *message)
 	}
 	else
 	{
-		dprintf(STDERR_FILENO, "%s\n", message);
+		write(STDERR_FILENO, message, ft_strlen(message));
 		ft_free_memory();
 		return (FAILURE);
 	}
@@ -44,7 +44,7 @@ void	panic_exit(char *message)
 	}
 	else
 	{
-		dprintf(STDERR_FILENO, "%s\n", message);
+		write(STDERR_FILENO, message, ft_strlen(message));
 		ft_free_memory();
 		exit(FAILURE);
 	}
