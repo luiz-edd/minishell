@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:15:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:49:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void		execute_redirect(t_tree_node *left, t_tree_node *right,
 /************** expand.c ******************/
 
 char		*expand_vars(char *str);
+char		*handle_dollar(char *start, char **str);
 char		*expand(char *start, char *dollar, char *after_var);
 char		*remove_quotes(char *str);
 void		retokenize(t_token **token);
