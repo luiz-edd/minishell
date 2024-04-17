@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_dlst_add_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 17:29:18 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:16:00 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/25 18:15:10 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/04/17 16:18:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_dlst_add_back(t_dlst *list, t_dlst *new)
 {
-	size_t	i;
-	size_t	s_len;
-	char	*sub;
+	t_dlst	*current;
 
-	i = 0;
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (ft_strdup(""));
-	if (s_len - start < len)
-		len = s_len - start;
-	sub = (char *)ft_dalloc((len + 1), sizeof(char));
-	if (sub == NULL)
-		return (NULL);
-	while (i < len)
+	if (!list)
+		list = new;
+	else
 	{
-		sub[i] = s[start + i];
-		i++;
+		current = list;
+		while (current->next)
+			current = current->next;
+		current->next = new;
+		new->prev = current;
 	}
-	sub[i] = '\0';
-	return (sub);
 }

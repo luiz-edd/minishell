@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/21 19:22:53 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:16:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,40 @@
 
 int	main(void)
 {
-	char	*line;
-	t_token	*list;
+	char		*line;
+	t_token		*list;
+	t_tree_node	*root;
+	int			pid;
+	int			exit_status;
 
 	while (42)
 	{
 		list = NULL;
 		line = readline("minishell> ");
 		if (!line)
-		{
 			printf("exit\n");
-			break ;
-		}
-		else
+		else if (*line != '\0')
+		{
 			add_history(line);
-		printf("You typed: %s\n", line);
-		if(lexer(line, &list) == SUCCESS)
-			parser(list);
-		//print_list(list);
-		free(line);
-		ft_free_memory();
+			if (lexer(line, &list) == SUCCESS)
+			{
+				if (parser(list, &root) == SUCCESS)
+				{
+					// if (is_builtin(root->cmd) && there_is_only_one_root)
+					// 	execute_builtin(root->cmd);
+					// else
+					// {
+					pid = fork();
+					if (pid == 0)
+						executor(root);
+					else
+						waitpid(pid, &exit_status, 0);
+					// }
+				}
+			}
+			free(line);
+			create_heredoc_file(DELETE);
+		}
 	}
-	return (0);
+	return (SUCCESS);
 }
-

@@ -1,46 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   open_syntax.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/20 16:11:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:16:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_token	*create_token(char *value, int type)
-{
-	t_token	*new;
-
-	new = ft_dalloc(sizeof(t_token), 1);
-	if (!new)
-		return (NULL);
-	new->type = type;
-	new->value = value;
-	new->prev = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-void	append_token(t_token *token, t_token **list)
-{
-	t_token	*current;
-
-	if (*list == NULL)
-		*list = token;
-	else
-	{
-		current = *list;
-		while (current->next)
-			current = current->next;
-		current->next = token;
-		token->prev = current;
-	}
-}
 
 int	check_open_syntax(char *str)
 {
@@ -64,8 +34,8 @@ int	check_open_syntax(char *str)
 		index++;
 	}
 	if (brackets != 0 || single_quote != 0 || double_quote != 0)
-		return (handle_error("Invalid syntax, check input for open quotes or \
-brackets."));
+		return (write(STDERR_FILENO, "Invalid syntax, check input for open \
+quotes or brackets.", 57));
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:07:08 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/21 17:08:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:16:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,24 @@ void	print_list(t_token *list)
 	}
 }
 
-void print2DUtil(t_tree_node *root, int space)
+void	print_tree_util(t_tree_node *root, int space)
 {
-    // Base case
-    if (root == NULL)
-        return;
+	int	i;
 
-    // Increase distance between levels
-    space += COUNT;
-
-    // Process right child first
-    print2DUtil(root->right, space);
-
-    // Print current node after space count
-    printf("\n");
-    for (int i = COUNT; i < space; i++)
-        printf(" ");
-    if (root->cmd != NULL)
-        printf("%d: %s\n", root->cmd->type, root->cmd->value);
-
-    // Process left child
-    print2DUtil(root->left, space);
+	if (root == NULL)
+		return ;
+	space += COUNT;
+	print_tree_util(root->right, space);
+	printf("\n");
+	i = COUNT;
+	while (i++ < space)
+		printf(" ");
+	if (root->cmd != NULL)
+		printf("%d: %s\n", root->cmd->type, root->cmd->value);
+	print_tree_util(root->left, space);
 }
 
-void print2D(t_tree_node *root)
+void	print_tree(t_tree_node *root)
 {
-    // Pass initial space count as 0
-    print2DUtil(root, 0);
+	print_tree_util(root, 0);
 }

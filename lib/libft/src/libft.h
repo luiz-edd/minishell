@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:32:55 by leduard2          #+#    #+#             */
-/*   Updated: 2024/03/20 15:18:17 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:58:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_dlst
+{
+	void			*content;
+	struct s_dlst	*prev;
+	struct s_dlst	*next;
+}					t_dlst;
 
 int					ft_isalpha(int point);
 int					ft_isdigit(int point);
@@ -81,6 +88,7 @@ float				ft_maxval(float a, float b);
 void				ft_print_words(char **str);
 long				ft_atol(char *str);
 int					ft_isspace(int c);
+int					ft_strcmp(const char *s1, const char *s2);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);
@@ -101,6 +109,13 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_lstadd_back_arr(t_list **lst, void **content);
+
+//double linked list utils
+void				ft_dlst_add_back(t_dlst *list, t_dlst *new);
+void				ft_dlst_add_front(t_dlst *list, t_dlst *new);
+t_dlst				*ft_dlst_last(t_dlst *list);
+t_dlst				*ft_dlst_new(void *content);
+int					ft_dlst_size(t_dlst	*list);
 
 // memory collector
 t_list				**ft_get_memory_lst(void);

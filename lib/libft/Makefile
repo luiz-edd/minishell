@@ -79,9 +79,16 @@ SRC = ft_isalpha.c \
 	ft_lstadd_back_arr.c \
 	ft_collect_mem.c \
 	ft_isspace.c	\
+	ft_strcmp.c	\
 	$(PRINTF) \
 	$(GNL) \
 	$(SPLIT_QUOTE) 
+
+	# ft_dlstadd_back.c \
+	# ft_dlstadd_front.c \
+	# ft_dlst_last.c \
+	# ft_dlst_new.c \
+	# ft_dlst_size.c \
 
 OBJ = $(SRC:.c=.o)
 

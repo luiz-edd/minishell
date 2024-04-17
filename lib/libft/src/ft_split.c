@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 18:52:25 by leduard2          #+#    #+#             */
-/*   Updated: 2024/03/20 16:24:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:15:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	**ft_split(char const *s, char c)
 	int		words;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	words = ft_countwords((char *)s, c);
 	arr = (char **)ft_dalloc((words + 1), sizeof(char *));

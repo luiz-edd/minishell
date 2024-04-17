@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 17:29:18 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:16:00 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/03/28 15:52:37 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/03/28 15:58:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
-	size_t	s_len;
-	char	*sub;
+	int	i;
 
 	i = 0;
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (ft_strdup(""));
-	if (s_len - start < len)
-		len = s_len - start;
-	sub = (char *)ft_dalloc((len + 1), sizeof(char));
-	if (sub == NULL)
-		return (NULL);
-	while (i < len)
+	while ((s1[i] || s2[i]))
 	{
-		sub[i] = s[start + i];
+		if (s1[i] != s2[i])
+			break ;
 		i++;
 	}
-	sub[i] = '\0';
-	return (sub);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

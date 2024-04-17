@@ -6,28 +6,27 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/21 17:08:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:16:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parser(t_token *list)
+int	parser(t_token *list, t_tree_node **root)
 {
-	t_token	*current;
-	t_tree_node	*root;
+	t_token		*current;
 
 	current = list;
 	while (current)
 	{
-		if (check_syntax(current) == FAILURE)
+		if (current->type == REDIR_HEREDOC && current->next->type == WORD)
+			if (create_heredoc_file(current->next) != SUCCESS)
+				return (FAILURE);
+		if (check_syntax(current) == 1)
 			return (FAILURE);
 		current = current->next;
 	}
-	root = build_execution_tree(list);
-	if (root == NULL)
-		return (FAILURE);
-	print2D(root);
+	*root = build_execution_tree(list);
 	return (SUCCESS);
 }
 
