@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/16 15:50:04 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/17 17:55:30 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,4 +77,3 @@ val: all
 #         --log-file=valgrind-out.txt \
 
 .PHONY: all, clean, fclean, re, norm, val
-

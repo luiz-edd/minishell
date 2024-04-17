@@ -6,39 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:03:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:55:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*expand(char *start, char *dollar, char *after_var)
-{
-	char	*expanded_var;
-	char	*before_var;
-	char	*str;
-
-	expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
-	before_var = ft_substr(start, 0, dollar - start);
-	str = ft_strjoin(before_var, expanded_var);
-	str = ft_strjoin(str, after_var);
-	return (str);
-}
-
-// Criar condição de imprimir último exit status
-char	*handle_dollar(char *start, char **str)
-{
-	char	*dollar;
-	char	*after_var;
-
-	dollar = (*str)++;
-	if (!ft_isalnum(**str))
-		return (start);
-	while (**str && **str != '\'' && **str != '\"' && **str != '$')
-		(*str)++;
-	after_var = *str;
-	return (expand(start, dollar, after_var));
-}
 
 char	*expand_vars(char *str)
 {
@@ -56,16 +28,42 @@ char	*expand_vars(char *str)
 		{
 			while (*(++str) && *str != '\"')
 			{
-				if (*str == '$')
+				if (*str == '$' && ft_isalnum(*(str + 1)))
 					return (handle_dollar(start, &str));
 				str++;
 			}
 		}
-		else if (*str == '$')
+		else if (*str == '$' && ft_isalnum(*(str + 1)))
 			return (handle_dollar(start, &str));
 		str++;
 	}
 	return (start);
+}
+
+// Criar condição de imprimir último exit status
+char	*handle_dollar(char *start, char **str)
+{
+	char	*dollar;
+	char	*after_var;
+
+	dollar = (*str)++;
+	while (**str && ft_isalnum(**str))
+		(*str)++;
+	after_var = *str;
+	return (expand(start, dollar, after_var));
+}
+
+char	*expand(char *start, char *dollar, char *after_var)
+{
+	char	*expanded_var;
+	char	*before_var;
+	char	*str;
+
+	expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
+	before_var = ft_substr(start, 0, dollar - start);
+	str = ft_strjoin(before_var, expanded_var);
+	str = ft_strjoin(str, after_var);
+	return (str);
 }
 
 char	*remove_quotes(char *str)

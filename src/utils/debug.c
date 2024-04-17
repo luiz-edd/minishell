@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:07:08 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/22 21:33:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:55:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,11 @@
 void	print_list(t_token *list)
 {
 	t_token	*current;
-	int		i;
 
 	current = list;
-	i = 0;
 	while (current)
 	{
-		printf("NODE %02i\t--->\tType: %02i\tValue: %s\t\tPrev: %p\tNext: \
-		%p\n", i, current->type, current->value, current->prev, current->next);
-		i++;
+		printf("%5s\t", current->value);
 		current = current->next;
 	}
 }
