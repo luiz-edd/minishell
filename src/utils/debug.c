@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:07:08 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:16:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:21:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	print_list(t_token *list)
 {
 	t_token	*current;
-
 
 	current = list;
 	while (current)
