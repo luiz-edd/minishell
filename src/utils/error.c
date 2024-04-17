@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 18:05:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:23:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ void	close_pipe(int *pipe_fd)
 void	free_and_exit(int status)
 {
 	ft_free_memory();
-	if (errno)
+	if (status == SUCCESS)
+		exit(SUCCESS);
+	else if (errno)
 		exit(errno);
 	else
 		exit(status);

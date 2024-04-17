@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 18:39:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:03:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*handle_dollar(char *start, char **str)
 	char	*after_var;
 
 	dollar = (*str)++;
+	if (!ft_isalnum(**str))
+		return (start);
 	while (**str && **str != '\'' && **str != '\"' && **str != '$')
 		(*str)++;
 	after_var = *str;

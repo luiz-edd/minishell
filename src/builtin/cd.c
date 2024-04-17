@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/16 16:55:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:35:36 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	execute_cd(t_token *cmd)
 	char	**args;
 
 	if (token_lst_get_size(cmd) > 2)
-		return (handle_error("minishell: too many arguments"));
+		return (handle_error("cd: too many arguments"));
 	args = get_cmd_and_args(cmd);
 	if (!ft_strcmp(args[1], "~") || !args[1])
 		return (change_to_home());
