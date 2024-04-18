@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:55:38 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:03:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define DELETE 0
+# define CHECK_LAST_VALUE -1
 # define WRITE 1
 # define READ 0
 
@@ -91,7 +92,7 @@ int			execute_pwd(void);
 
 /************ execute_command.c ***********/
 
-void		execute_command(t_tree_node *cmd_node);
+int			execute_command(t_tree_node *cmd_node);
 char		*get_cmd_path(t_token *cmd);
 char		*search_in_path(t_token *cmd);
 char		**get_cmd_and_args(t_token *cmd);
@@ -99,10 +100,10 @@ char		**get_cmd_and_args(t_token *cmd);
 /************* executor.c *****************/
 
 int			executor(t_tree_node *root);
-void		execute_and(t_tree_node *left, t_tree_node *right);
-void		execute_or(t_tree_node *left, t_tree_node *right);
-void		execute_pipe(t_tree_node *left, t_tree_node *right);
-void		execute_redirect(t_tree_node *left, t_tree_node *right,
+int			execute_and(t_tree_node *left, t_tree_node *right);
+int			execute_or(t_tree_node *left, t_tree_node *right);
+int			execute_pipe(t_tree_node *left, t_tree_node *right);
+int			execute_redirect(t_tree_node *left, t_tree_node *right,
 				int redir_type);
 
 /*******************************************
@@ -185,6 +186,11 @@ int			handle_error(char *message);
 void		panic_exit(char *message);
 void		close_pipe(int *pipe_fd);
 void		free_and_exit(int status);
+
+/**************** helper.c ****************/
+
+int			last_exit_status_holder(int status);
+void		wait_for_all_children(void);
 
 /************** token_list.c **************/
 

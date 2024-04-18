@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 18:28:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:06:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 // to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
 // no momento todas as builtins estao retornando SUCCESS ou o o retorno de 
 // handle_error();
-void	execute_command(t_tree_node *cmd_node)
+// !!!!!! mudar __environ
+int	execute_command(t_tree_node *cmd_node)
 {
 	t_token	*current;
 	char	**cmd_and_args;
 	char	*cmd_path;
+	int		pid;
+	int		exit_status;
 
+	exit_status = SUCCESS;
 	current = cmd_node->cmd;
 	while (current)
 	{
@@ -33,13 +37,26 @@ void	execute_command(t_tree_node *cmd_node)
 		current = current->next;
 	}
 	if (is_builtin(cmd_node->cmd))
-		exit(execute_builtin(cmd_node->cmd));
 	{
-		cmd_path = get_cmd_path(cmd_node->cmd);
-		cmd_and_args = get_cmd_and_args(cmd_node->cmd);
-		if (execve(cmd_path, cmd_and_args, __environ) == -1)
-			exit(handle_error(cmd_path));
+		exit_status = execute_builtin(cmd_node->cmd);
+		return (exit_status);
 	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			exit(handle_error("failed to fork"));
+		if (pid == 0)
+		{
+			cmd_path = get_cmd_path(cmd_node->cmd);
+			cmd_and_args = get_cmd_and_args(cmd_node->cmd);
+			if (execve(cmd_path, cmd_and_args, __environ) == -1)
+				exit(handle_error(cmd_path));
+		}
+		else
+			waitpid(pid, &exit_status, 0);
+	}
+	return (exit_status);
 }
 
 char	*get_cmd_path(t_token *cmd)

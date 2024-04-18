@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/17 17:55:30 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/18 19:03:19 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ FILES				= 	main.c \
 						heredoc.c \
 						debug.c \
 						error.c \
+						helper.c \
 						token_list.c
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj

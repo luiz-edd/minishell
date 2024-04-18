@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:55:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:18:13 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ char	*expand_vars(char *str)
 		{
 			while (*(++str) && *str != '\"')
 			{
-				if (*str == '$' && ft_isalnum(*(str + 1)))
+				if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str + 1) == '?'))
 					return (handle_dollar(start, &str));
 				str++;
 			}
 		}
-		else if (*str == '$' && ft_isalnum(*(str + 1)))
+		else if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str + 1) == '?'))
 			return (handle_dollar(start, &str));
 		str++;
 	}
@@ -47,6 +47,8 @@ char	*handle_dollar(char *start, char **str)
 	char	*after_var;
 
 	dollar = (*str)++;
+	if (dollar[1] == '?')
+		return (ft_itoa(last_exit_status_holder(CHECK_LAST_VALUE)));
 	while (**str && ft_isalnum(**str))
 		(*str)++;
 	after_var = *str;

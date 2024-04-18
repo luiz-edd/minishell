@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:55:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:01:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	main(void)
 	char		*line;
 	t_token		*list;
 	t_tree_node	*root;
-	int			pid;
-	int			exit_status;
 
 	while (42)
 	{
@@ -33,20 +31,13 @@ int	main(void)
 			{
 				if (parser(list, &root) == SUCCESS)
 				{
-					// if (is_builtin(root->cmd) && there_is_only_one_root)
-					// 	execute_builtin(root->cmd);
-					// else
-					// {
-					pid = fork();
-					if (pid == 0)
-						executor(root);
-					else
-						waitpid(pid, &exit_status, 0);
-					// }
+					if (last_exit_status_holder(executor(root)))
+						wait_for_all_children();
 				}
 			}
 			free(line);
 			create_heredoc_file(DELETE);
+			ft_free_memory();
 		}
 	}
 	return (SUCCESS);
