@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/18 19:06:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:10:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // to-do se o comando nao tiver pipe, executar sem dar fork
 // to-do tratar mensagens de erro
 // to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
-// no momento todas as builtins estao retornando SUCCESS ou o o retorno de 
+// no momento todas as builtins estao retornando SUCCESS ou o o retorno de
 // handle_error();
 // !!!!!! mudar __environ
 int	execute_command(t_tree_node *cmd_node)

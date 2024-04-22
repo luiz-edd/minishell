@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/18 19:03:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:05:35 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,12 @@ void		free_and_exit(int status);
 
 /**************** helper.c ****************/
 
-int			last_exit_status_holder(int status);
 void		wait_for_all_children(void);
+int			*get_fds(void);
+void		save_std_fd(void);
+void		revert_fds(void);
+int			*get_exit_status(void);
+int			set_exit_status(int status);
 
 /************** token_list.c **************/
 

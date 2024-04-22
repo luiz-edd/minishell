@@ -6,12 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/18 19:10:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:05:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//verificar se temos permissao de acessar o binario
 int	executor(t_tree_node *root)
 {
 	if (root->cmd->type == AND)
@@ -30,9 +31,10 @@ int	execute_and(t_tree_node *left, t_tree_node *right)
 {
 	int	exit_status;
 
-	exit_status = last_exit_status_holder(executor(left));
+	exit_status = set_exit_status(executor(left));
+	revert_fds();
 	if (exit_status == SUCCESS)
-		return (last_exit_status_holder(executor(right)));
+		return (set_exit_status(executor(right)));
 	return (exit_status);
 }
 
@@ -40,9 +42,10 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 {
 	int	exit_status;
 
-	exit_status = last_exit_status_holder(executor(left));
+	exit_status = set_exit_status(executor(left));
+	revert_fds();
 	if (exit_status != SUCCESS)
-		return (last_exit_status_holder(executor(right)));
+		return (set_exit_status(executor(right)));
 	return (exit_status);
 }
 
@@ -100,5 +103,8 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 		exit_status = dup2(fd, STDIN_FILENO);
 	if (exit_status == -1)
 		return (handle_error("dup2"));
+	close(fd);
+	if (!left->cmd)
+		return (0);
 	return (executor(left));
 }

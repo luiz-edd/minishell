@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/18 19:01:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:54:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(void)
 	t_token		*list;
 	t_tree_node	*root;
 
+	save_std_fd();
 	while (42)
 	{
 		list = NULL;
@@ -31,13 +32,14 @@ int	main(void)
 			{
 				if (parser(list, &root) == SUCCESS)
 				{
-					if (last_exit_status_holder(executor(root)))
+					if (set_exit_status(executor(root)))
 						wait_for_all_children();
 				}
 			}
 			free(line);
 			create_heredoc_file(DELETE);
 			ft_free_memory();
+			revert_fds();
 		}
 	}
 	return (SUCCESS);
