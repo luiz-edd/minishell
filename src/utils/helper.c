@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 18:09:12 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:35:56 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	set_exit_status(int status)
 	exit_status = get_exit_status();
 	if (WIFEXITED(status))
 		*exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		*exit_status = WTERMSIG(status) + 128;
 	else
 		*exit_status = status;
 	return (*exit_status);

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 18:05:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:25:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 # define SUCCESS 0
 # define FAILURE 1
+# define SYNTAX_ERROR 2
 # define DELETE 0
-# define CHECK_LAST_VALUE -1
 # define WRITE 1
 # define READ 0
 
@@ -183,7 +183,6 @@ int			delete_heredoc_files(int *i);
 
 int			syntax_error(char *token);
 int			handle_error(char *message);
-void		panic_exit(char *message);
 void		close_pipe(int *pipe_fd);
 void		free_and_exit(int status);
 

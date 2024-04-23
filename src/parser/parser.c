@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:55:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:28:32 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parser(t_token *list, t_tree_node **root)
 		if (current->type == REDIR_HEREDOC && current->next->type == WORD)
 			if (create_heredoc_file(current->next) != SUCCESS)
 				return (FAILURE);
-		if (check_syntax(current) == 1)
+		if (check_syntax(current) != SUCCESS)
 			return (FAILURE);
 		current = current->next;
 	}

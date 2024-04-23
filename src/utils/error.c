@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 15:23:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:51:14 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,30 @@
 int	syntax_error(char *token)
 {
 	printf("minishell: syntax error near unexpected token `%s'\n", token);
-	return (FAILURE);
+	return (set_exit_status(SYNTAX_ERROR));
+}
+
+// trocar checagem para valor do errno e então "traduzir" o erro para o bash
+// assim o trabalho fica com o execve e não com o minishell
+int throw_error(char *cmd_path)
+{
+	if (access(cmd_path, R_OK | W_OK) == -1 && !access(cmd_path, F_OK))
+		return (126 + write(2, "minishell: Permission denied", 28) - 28);
+	else if ((*cmd_path == '/' || *cmd_path == '.') && !access(cmd_path, F_OK))
+		return(126 + write(2, "minishell: Is a directory", 25) - 25);
+	else if (!search_command(cmd_path) && !(*cmd_path == '/' || *cmd_path == '.'))
+		return(127 + write(2,"minishell: command not found", 27) - 27);
+	else if (!search_command(cmd_path) || !ft_getenv("PATH"))
+		return(127 + write(2,"minishell: No such file or directory", 37) - 37);
+	else
+		return(!!errno + write(2, "minishell: unexpected error", 28) - 28);
 }
 
 int	handle_error(char *message)
 {
-	if (errno)
-	{
 		perror(message);
 		ft_free_memory();
-		return (errno);
-	}
-	else
-	{
-		write(STDERR_FILENO, message, ft_strlen(message));
-		ft_free_memory();
-		return (FAILURE);
-	}
-}
-
-void	panic_exit(char *message)
-{
-	if (errno)
-	{
-		perror(message);
-		ft_free_memory();
-		exit(errno);
-	}
-	else
-	{
-		write(STDERR_FILENO, message, ft_strlen(message));
-		ft_free_memory();
-		exit(FAILURE);
-	}
+		return (!!errno);
 }
 
 void	close_pipe(int *pipe_fd)

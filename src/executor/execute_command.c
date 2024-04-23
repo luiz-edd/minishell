@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 18:10:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:52:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execute_command(t_tree_node *cmd_node)
 			cmd_path = get_cmd_path(cmd_node->cmd);
 			cmd_and_args = get_cmd_and_args(cmd_node->cmd);
 			if (execve(cmd_path, cmd_and_args, __environ) == -1)
-				exit(handle_error(cmd_path));
+				exit(throw_error(cmd_path));
 		}
 		else
 			waitpid(pid, &exit_status, 0);

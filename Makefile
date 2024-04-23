@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/18 19:03:19 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/23 15:14:43 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ val: all
 	valgrind --leak-check=full \
 		 --trace-children=yes \
 		 --track-fds=yes \
+		 --suppressions=readline.supp \
 		 ./$(NAME)
 #		  --show-leak-kinds=all \
 #         --track-origins=yes \
