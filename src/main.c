@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 17:54:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:30:32 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	executor(t_tree_node **root)
+{
+	if (set_exit_status(execute(*root)))
+		wait_for_all_children();
+}
 int	main(void)
 {
 	char		*line;
@@ -31,10 +36,7 @@ int	main(void)
 			if (lexer(line, &list) == SUCCESS)
 			{
 				if (parser(list, &root) == SUCCESS)
-				{
-					if (set_exit_status(executor(root)))
-						wait_for_all_children();
-				}
+					executor(&root);
 			}
 			free(line);
 			create_heredoc_file(DELETE);

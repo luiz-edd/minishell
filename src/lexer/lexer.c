@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:33:13 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 15:41:02 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:18:33 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	lexer(char *str, t_token **list)
 	t_token	*token;
 
 	if (!str || check_open_syntax(str))
-		return (FAILURE);
+		return (set_exit_status(FAILURE));
 	while (*str)
 	{
 		length = 0;

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 18:05:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:25:10 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //verificar se temos permissao de acessar o binario
-int	executor(t_tree_node *root)
+int	execute(t_tree_node *root)
 {
 	if (root->cmd->type == AND)
 		return (execute_and(root->left, root->right));
@@ -31,10 +31,10 @@ int	execute_and(t_tree_node *left, t_tree_node *right)
 {
 	int	exit_status;
 
-	exit_status = set_exit_status(executor(left));
+	exit_status = set_exit_status(execute(left));
 	revert_fds();
 	if (exit_status == SUCCESS)
-		return (set_exit_status(executor(right)));
+		return (set_exit_status(execute(right)));
 	return (exit_status);
 }
 
@@ -42,10 +42,10 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 {
 	int	exit_status;
 
-	exit_status = set_exit_status(executor(left));
+	exit_status = set_exit_status(execute(left));
 	revert_fds();
 	if (exit_status != SUCCESS)
-		return (set_exit_status(executor(right)));
+		return (set_exit_status(execute(right)));
 	return (exit_status);
 }
 
@@ -61,7 +61,7 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	{
 		dup2(pipe_fd[WRITE], STDOUT_FILENO);
 		close_pipe(pipe_fd);
-		exit_status = executor(left);
+		exit_status = execute(left);
 		ft_free_memory();
 		exit(exit_status);
 	}
@@ -70,7 +70,7 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	{
 		dup2(pipe_fd[READ], STDIN_FILENO);
 		close_pipe(pipe_fd);
-		exit_status = executor(right);
+		exit_status = execute(right);
 		ft_free_memory();
 		exit(exit_status);
 	}
@@ -106,5 +106,5 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 	close(fd);
 	if (!left->cmd)
 		return (0);
-	return (executor(left));
+	return (execute(left));
 }

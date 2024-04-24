@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/23 20:35:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:24:09 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_tree_node
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }						t_tree_node;
+
 
 enum					e_token_type
 {
@@ -99,7 +100,8 @@ char		**get_cmd_and_args(t_token *cmd);
 
 /************* executor.c *****************/
 
-int			executor(t_tree_node *root);
+void		executor(t_tree_node **root);
+int			execute(t_tree_node *root);
 int			execute_and(t_tree_node *left, t_tree_node *right);
 int			execute_or(t_tree_node *left, t_tree_node *right);
 int			execute_pipe(t_tree_node *left, t_tree_node *right);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/23 18:35:56 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:04:01 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	*get_exit_status(void)
 
 	return (&exit_status);
 }
-
+// 0000 0000 1011 1100 
 int	set_exit_status(int status)
 {
 	int	*exit_status;

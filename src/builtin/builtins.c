@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:52:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 15:54:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:22:17 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_builtin(t_token *cmd)
 		return (1);
 	return (0);
 }
-
+//provavelmente se der erro o retorno e 1, se sucesso = 0
 int	execute_builtin(t_token *cmd)
 {
 	char	*str;
