@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/23 16:25:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:35:21 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "libft.h"
 # include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <wait.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -183,6 +183,7 @@ int			delete_heredoc_files(int *i);
 
 int			syntax_error(char *token);
 int			handle_error(char *message);
+int			throw_error(char *cmd_path);
 void		close_pipe(int *pipe_fd);
 void		free_and_exit(int status);
 

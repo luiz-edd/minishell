@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/23 18:52:24 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:42:21 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execute_command(t_tree_node *cmd_node)
 	{
 		pid = fork();
 		if (pid == -1)
-			exit(handle_error("failed to fork"));
+			exit(handle_error("fork"));
 		if (pid == 0)
 		{
 			cmd_path = get_cmd_path(cmd_node->cmd);
@@ -82,7 +82,7 @@ char	*search_in_path(t_token *cmd)
 
 	path_env = getenv("PATH");
 	if (!path_env)
-		handle_error("failed to get PATH environment variable");
+		handle_error("getenv");
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		handle_error("failed to allocate memory");
