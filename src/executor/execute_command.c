@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 15:16:09 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:29:35 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// to-do se o comando nao tiver pipe, executar sem dar fork
-// to-do tratar mensagens de erro
 // to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
 // no momento todas as builtins estao retornando SUCCESS ou o o retorno de
 // handle_error();
@@ -46,6 +44,7 @@ int	execute_command(t_tree_node *cmd_node)
 		pid = fork();
 		if (pid == -1)
 			exit(handle_error("fork"));
+		setup_fork_signal_handlers(pid);
 		if (pid == 0)
 		{
 			cmd_path = get_cmd_path(cmd_node->cmd);
@@ -54,7 +53,14 @@ int	execute_command(t_tree_node *cmd_node)
 				exit(throw_error(cmd_path));
 		}
 		else
+		{
 			waitpid(pid, &exit_status, 0);
+			if (WIFSIGNALED(exit_status))
+			{
+				write(STDIN_FILENO, "\n", 1);
+				exit_status = WTERMSIG(exit_status) + 128;
+			}
+		}
 	}
 	return (exit_status);
 }

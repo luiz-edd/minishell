@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/23 15:14:43 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/25 20:35:31 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFLAGS			=	-lreadline -lhistory
 HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
 LIBFT_PATH			= 	./lib/libft/
-VPATH 				= 	./src:./src/builtin:./src/executor:./src/expansion:./src/lexer:./src/parser:./src/redirect:./src/utils
+VPATH 				= 	./src:./src/builtin:./src/executor:./src/expansion:./src/lexer:./src/parser:./src/redirect:./src/signals:./src/utils
 FILES				= 	main.c \
 						builtins.c \
 						cd.c \
@@ -32,6 +32,8 @@ FILES				= 	main.c \
 						bin_tree_helper.c \
 						parser.c \
 						heredoc.c \
+						std_fd_restore.c \
+						signals.c \
 						debug.c \
 						error.c \
 						helper.c \

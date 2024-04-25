@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 15:26:36 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:26:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int	create_heredoc_file(t_token *token)
 {
-	static int	count;
+	int			*heredoc_counter;
 	int			fd;
 	char		*file_name;
 	int			is_expandable;
 
 	is_expandable = 0;
-	if (token == DELETE)
-		return (delete_heredoc_files(&count));
-	file_name = ft_strjoin("/tmp/.heredoc", ft_itoa(count++));
+	heredoc_counter = get_heredoc_counter();
+	file_name = ft_strjoin("/tmp/.heredoc", ft_itoa((*heredoc_counter)++));
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (!!write(STDERR_FILENO, "failed to create heredoc", 25));
@@ -52,14 +51,23 @@ int	write_input_to_heredoc(int fd, char *end_condition, int is_expandable)
 	return (FAILURE);
 }
 
-int	delete_heredoc_files(int *i)
+int	delete_heredoc_files(void)
 {
 	char	*file_name;
+	int		*heredoc_counter;
 
-	while ((*i) >= 0)
+	heredoc_counter = get_heredoc_counter();
+	while ((*heredoc_counter) >= 0)
 	{
-		file_name = ft_strjoin("/tmp/.heredoc", ft_itoa((*i)--));
+		file_name = ft_strjoin("/tmp/.heredoc", ft_itoa((*heredoc_counter)--));
 		unlink(file_name);
 	}
 	return (SUCCESS);
+}
+
+int	*get_heredoc_counter(void)
+{
+	static int	count;
+
+	return (&count);
 }

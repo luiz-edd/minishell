@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 17:24:09 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:50:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <wait.h>
+# include <signal.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
 # define SUCCESS 0
-# define FAILURE 1
-# define SYNTAX_ERROR 2
+# define FAILURE 257
+# define SYNTAX_ERROR 258
 # define DELETE 0
 # define WRITE 1
 # define READ 0
@@ -43,7 +44,6 @@ typedef struct s_tree_node
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
 }						t_tree_node;
-
 
 enum					e_token_type
 {
@@ -100,7 +100,7 @@ char		**get_cmd_and_args(t_token *cmd);
 
 /************* executor.c *****************/
 
-void		executor(t_tree_node **root);
+void		executor(char *line, t_tree_node **root);
 int			execute(t_tree_node *root);
 int			execute_and(t_tree_node *left, t_tree_node *right);
 int			execute_or(t_tree_node *left, t_tree_node *right);
@@ -175,7 +175,24 @@ int			check_parenthesis_rule(t_token *token);
 int			create_heredoc_file(t_token *token);
 int			write_input_to_heredoc(int fd, char *end_condition,
 				int is_expandable);
-int			delete_heredoc_files(int *i);
+int			delete_heredoc_files(void);
+int			*get_heredoc_counter(void);
+
+/************ std_fd_restore.c ************/
+
+int			*get_fds(void);
+void		save_std_fd(void);
+void		restore_fds(void);
+
+/*******************************************
+############## SIGNALS FOLDER ##############
+*******************************************/
+
+/*************** signals.c ****************/
+int			setup_signal_handler(void (*func)(int signum));
+int			setup_fork_signal_handlers(int pid);
+void		main_signal_handler(int signum);
+void		heredoc_signal_handler(int signum);
 
 /*******************************************
 ############### UTILS FOLDER ###############
@@ -187,14 +204,10 @@ int			syntax_error(char *token);
 int			handle_error(char *message);
 int			throw_error(char *cmd_path);
 void		close_pipe(int *pipe_fd);
-void		free_and_exit(int status);
 
 /**************** helper.c ****************/
 
 void		wait_for_all_children(void);
-int			*get_fds(void);
-void		save_std_fd(void);
-void		revert_fds(void);
 int			*get_exit_status(void);
 int			set_exit_status(int status);
 

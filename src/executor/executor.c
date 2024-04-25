@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 17:25:10 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:56:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//verificar se temos permissao de acessar o binario
+//retorno com 3 pipes quando o ultimo comando não existe não está funcionando
+// está voltando 0
+void	executor(char *line, t_tree_node **root)
+{
+	if (set_exit_status(execute(*root)))
+		wait_for_all_children();
+	free(line);
+	delete_heredoc_files();
+	restore_fds();
+	ft_free_memory();
+}
+
 int	execute(t_tree_node *root)
 {
 	if (root->cmd->type == AND)
@@ -32,7 +43,7 @@ int	execute_and(t_tree_node *left, t_tree_node *right)
 	int	exit_status;
 
 	exit_status = set_exit_status(execute(left));
-	revert_fds();
+	restore_fds();
 	if (exit_status == SUCCESS)
 		return (set_exit_status(execute(right)));
 	return (exit_status);
@@ -43,7 +54,7 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 	int	exit_status;
 
 	exit_status = set_exit_status(execute(left));
-	revert_fds();
+	restore_fds();
 	if (exit_status != SUCCESS)
 		return (set_exit_status(execute(right)));
 	return (exit_status);
@@ -57,6 +68,7 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 
 	pipe(pipe_fd);
 	child_pid[0] = fork();
+	setup_fork_signal_handlers(child_pid[0]);
 	if (child_pid[0] == 0)
 	{
 		dup2(pipe_fd[WRITE], STDOUT_FILENO);
@@ -66,6 +78,7 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 		exit(exit_status);
 	}
 	child_pid[1] = fork();
+	setup_fork_signal_handlers(child_pid[1]);
 	if (child_pid[1] == 0)
 	{
 		dup2(pipe_fd[READ], STDIN_FILENO);

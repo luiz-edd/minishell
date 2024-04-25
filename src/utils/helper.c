@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 16:04:01 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:55:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	*get_exit_status(void)
 
 	return (&exit_status);
 }
-// 0000 0000 1011 1100 
+
 int	set_exit_status(int status)
 {
 	int	*exit_status;
@@ -39,34 +39,11 @@ int	set_exit_status(int status)
 	exit_status = get_exit_status();
 	if (WIFEXITED(status))
 		*exit_status = WEXITSTATUS(status);
+	else if (status > 256)
+		*exit_status = status - 256;
+	else if (WIFSIGNALED(status))
+		*exit_status = WTERMSIG(status) + 128;
 	else
 		*exit_status = status;
 	return (*exit_status);
-}
-
-int	*get_fds(void)
-{
-	static int	fd[3];
-
-	return (fd);
-}
-
-void	save_std_fd(void)
-{
-	int	*fd;
-
-	fd = get_fds();
-	fd[STDIN_FILENO] = dup(STDIN_FILENO);
-	fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	fd[STDERR_FILENO] = dup(STDERR_FILENO);
-}
-
-void	revert_fds(void)
-{
-	int	*std_fd;
-
-	std_fd = get_fds();
-	dup2(std_fd[STDIN_FILENO], STDIN_FILENO);
-	dup2(std_fd[STDOUT_FILENO], STDOUT_FILENO);
-	dup2(std_fd[STDERR_FILENO], STDERR_FILENO);
 }
