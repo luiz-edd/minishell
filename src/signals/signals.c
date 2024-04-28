@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:37:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:16:29 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/27 21:29:17 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	main_signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		set_exit_status(SIGINT);
+		set_exit_status(SIGINT + 128);
 	}
 }
 
@@ -45,7 +45,8 @@ void	heredoc_signal_handler(int signum)
 	if (signum == SIGINT)
 	{
 		write(STDIN_FILENO, "\n", 1);
-		set_exit_status(SIGINT);
+		close(STDIN_FILENO);
+		set_exit_status(SIGINT + 128);
 	}
 }
 

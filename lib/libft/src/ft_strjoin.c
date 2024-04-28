@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 15:45:04 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/08 10:37:57 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:47:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	str = (char *)ft_dalloc((ft_strlen(s1) + ft_strlen(s2) + 1) , sizeof(char));
+	str = (char *)ft_dalloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	while (s1 && s1[i])

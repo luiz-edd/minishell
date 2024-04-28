@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/25 20:35:31 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/27 22:37:02 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ FILES				= 	main.c \
 						echo.c \
 						pwd.c \
 						execute_command.c \
+						execute_pipe.c \
+						execute_redirect.c \
 						executor.c \
 						expand.c \
 						lexer.c \

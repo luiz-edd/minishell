@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:48:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:34:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	main(void)
 			if (lexer(line, &list) == SUCCESS)
 			{
 				if (parser(list, &root) == SUCCESS)
-					executor(line, &root);
+					set_exit_status(executor(root));
 			}
 		}
+		reset_for_next_iteration(line);
 	}
 	return (SUCCESS);
 }

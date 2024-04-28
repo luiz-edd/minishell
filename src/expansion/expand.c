@@ -6,11 +6,26 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/22 18:15:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:03:46 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	expand_command(t_tree_node *cmd_node)
+{
+	t_token	*current;
+
+	current = cmd_node->cmd;
+	while (current)
+	{
+		current->value = expand_vars(current->value);
+		current->value = remove_quotes(current->value);
+		if (ft_strchr(current->value, ' '))
+			retokenize(&current);
+		current = current->next;
+	}
+}
 
 char	*expand_vars(char *str)
 {
@@ -41,11 +56,13 @@ char	*expand_vars(char *str)
 	return (start);
 }
 
-// Criar condição de imprimir último exit status
 char	*handle_dollar(char *start, char **str)
 {
 	char	*dollar;
+	char	*before_var;
 	char	*after_var;
+	char	*expanded_var;
+	char	*result;
 
 	dollar = (*str)++;
 	if (dollar[1] == '?')
@@ -53,20 +70,11 @@ char	*handle_dollar(char *start, char **str)
 	while (**str && ft_isalnum(**str))
 		(*str)++;
 	after_var = *str;
-	return (expand(start, dollar, after_var));
-}
-
-char	*expand(char *start, char *dollar, char *after_var)
-{
-	char	*expanded_var;
-	char	*before_var;
-	char	*str;
-
 	expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
 	before_var = ft_substr(start, 0, dollar - start);
-	str = ft_strjoin(before_var, expanded_var);
-	str = ft_strjoin(str, after_var);
-	return (str);
+	result = ft_strjoin(before_var, expanded_var);
+	result = ft_strjoin(result, after_var);
+	return (result);
 }
 
 char	*remove_quotes(char *str)

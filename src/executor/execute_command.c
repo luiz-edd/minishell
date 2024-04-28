@@ -6,39 +6,23 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:29:35 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:26:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// to-do algumas builtin mudam as variaveis de ambiente, como cd muda a HOME
-// no momento todas as builtins estao retornando SUCCESS ou o o retorno de
-// handle_error();
 // !!!!!! mudar __environ
 int	execute_command(t_tree_node *cmd_node)
 {
-	t_token	*current;
 	char	**cmd_and_args;
 	char	*cmd_path;
 	int		pid;
 	int		exit_status;
 
-	exit_status = SUCCESS;
-	current = cmd_node->cmd;
-	while (current)
-	{
-		current->value = expand_vars(current->value);
-		current->value = remove_quotes(current->value);
-		if (ft_strchr(current->value, ' '))
-			retokenize(&current);
-		current = current->next;
-	}
+	expand_command(cmd_node);
 	if (is_builtin(cmd_node->cmd))
-	{
-		exit_status = execute_builtin(cmd_node->cmd);
-		return (exit_status);
-	}
+		return (execute_builtin(cmd_node->cmd));
 	else
 	{
 		pid = fork();
@@ -53,16 +37,9 @@ int	execute_command(t_tree_node *cmd_node)
 				exit(throw_error(cmd_path));
 		}
 		else
-		{
-			waitpid(pid, &exit_status, 0);
-			if (WIFSIGNALED(exit_status))
-			{
-				write(STDIN_FILENO, "\n", 1);
-				exit_status = WTERMSIG(exit_status) + 128;
-			}
-		}
+			wait_child_status(pid, &exit_status);
+		return (exit_status);
 	}
-	return (exit_status);
 }
 
 char	*get_cmd_path(t_token *cmd)

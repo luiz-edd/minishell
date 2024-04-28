@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:50:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:47:21 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <readline/readline.h>
 
 # define SUCCESS 0
-# define FAILURE 257
-# define SYNTAX_ERROR 258
+# define FAILURE 1
+# define SYNTAX_ERROR 2
 # define DELETE 0
 # define WRITE 1
 # define READ 0
@@ -98,15 +98,23 @@ char		*get_cmd_path(t_token *cmd);
 char		*search_in_path(t_token *cmd);
 char		**get_cmd_and_args(t_token *cmd);
 
-/************* executor.c *****************/
+/************* execute_pipe.c *************/
 
-void		executor(char *line, t_tree_node **root);
-int			execute(t_tree_node *root);
-int			execute_and(t_tree_node *left, t_tree_node *right);
-int			execute_or(t_tree_node *left, t_tree_node *right);
 int			execute_pipe(t_tree_node *left, t_tree_node *right);
+int			execute_child(int fd, int *pipe, t_tree_node *node);
+
+/*********** execute_redirect.c ***********/
+
 int			execute_redirect(t_tree_node *left, t_tree_node *right,
 				int redir_type);
+int			open_redir_file(t_tree_node *right, int redir_type, int *fd);
+int			dup2_redir_file(int redir_type, int *fd);
+
+/************* executor.c *****************/
+
+int			executor(t_tree_node *root);
+int			execute_and(t_tree_node *left, t_tree_node *right);
+int			execute_or(t_tree_node *left, t_tree_node *right);
 
 /*******************************************
 ############# EXPANSION FOLDER #############
@@ -114,9 +122,9 @@ int			execute_redirect(t_tree_node *left, t_tree_node *right,
 
 /************** expand.c ******************/
 
+void		expand_command(t_tree_node *cmd_node);
 char		*expand_vars(char *str);
 char		*handle_dollar(char *start, char **str);
-char		*expand(char *start, char *dollar, char *after_var);
 char		*remove_quotes(char *str);
 void		retokenize(t_token **token);
 
@@ -210,6 +218,8 @@ void		close_pipe(int *pipe_fd);
 void		wait_for_all_children(void);
 int			*get_exit_status(void);
 int			set_exit_status(int status);
+void		wait_child_status(pid_t pid, int *status);
+void		reset_for_next_iteration(char *line);
 
 /************** token_list.c **************/
 
@@ -225,4 +235,5 @@ t_token		*token_lst_get_last(t_token *token_list);
 void		print_list(t_token *list);
 void		print_tree(t_tree_node *root);
 void		print_tree_util(t_tree_node *root, int space);
+
 #endif
