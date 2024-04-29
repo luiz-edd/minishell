@@ -6,12 +6,14 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:03:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:13:12 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Cuidar com expansão de numeral
+// underline "_" é um char válido
 void	expand_command(t_tree_node *cmd_node)
 {
 	t_token	*current;

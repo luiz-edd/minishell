@@ -6,12 +6,15 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/17 15:35:36 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:23:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//cd sozinho está dando segfault
+// cd precisa mudar a variavel da env (PWD e OLDPWD)
+// cd ~ está dando segfault
 int	execute_cd(t_token *cmd)
 {
 	char	**args;
