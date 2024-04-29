@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/27 22:37:02 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/04/29 15:12:25 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ VPATH 				= 	./src:./src/builtin:./src/executor:./src/expansion:./src/lexer:./sr
 FILES				= 	main.c \
 						builtins.c \
 						cd.c \
+						exit.c \
 						echo.c \
 						pwd.c \
 						execute_command.c \

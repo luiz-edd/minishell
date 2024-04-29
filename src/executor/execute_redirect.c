@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:35:23 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:45:45 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:03:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	dup2_redir_file(int redir_type, int *fd)
 {
 	int	exit_status;
 
+	exit_status = -1;
 	if (redir_type == REDIR_APPEND || redir_type == REDIR_OUT)
 		exit_status = dup2(*fd, STDOUT_FILENO);
 	else if (redir_type == REDIR_HEREDOC || redir_type == REDIR_IN)

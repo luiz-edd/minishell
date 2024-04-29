@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:47:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:31:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <errno.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -76,6 +77,12 @@ int			execute_cd(t_token *cmd);
 int			change_to_home(void);
 int			change_dir(char *path);
 int			check_access(char *path);
+
+/***************** exit.c *****************/
+
+int			execute_exit(t_token *token_list);
+int			validate_argument(char *arg);
+int			check_limits(long number);
 
 /***************** echo.c *****************/
 

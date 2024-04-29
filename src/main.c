@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:34:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:02:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)
-			continue ;
+			return (FAILURE);
 		list = NULL;
 		line = readline("minishell> ");
 		if (!line)
