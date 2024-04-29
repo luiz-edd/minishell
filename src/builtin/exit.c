@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/29 17:43:09 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:53:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	execute_exit(t_token *token_list)
 		}
 	}
 	printf("exit\n");
+	delete_heredoc_files();
+	ft_free_memory();
 	exit(status % 256);
 	return (SUCCESS);
 }
