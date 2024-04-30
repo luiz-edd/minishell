@@ -6,30 +6,30 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/29 17:53:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:57:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_exit(t_token *token_list)
+int	execute_exit(t_token *cmd)
 {
 	long	status;
 
 	status = 0;
-	if (token_list->next)
+	if (cmd->next)
 	{
-		status = ft_atol(token_list->next->value);
-		if (validate_argument(token_list->next->value) == FAILURE
+		status = ft_atol(cmd->next->value);
+		if (validate_argument(cmd->next->value) == FAILURE
 			|| check_limits(status) == FAILURE)
 		{
-			dprintf(STDERR_FILENO, "exit\nexit:\
-%s: numeric argument required\n", token_list->next->value);
+			ft_fprintf(STDERR_FILENO, "exit\nexit:\
+%s: numeric argument required\n", cmd->next->value);
 			exit(SYNTAX_ERROR);
 		}
-		if (token_list->next->next)
+		if (cmd->next->next)
 		{
-			dprintf(STDERR_FILENO, "exit: too many arguments\n");
+			ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
 			exit(EXIT_FAILURE);
 		}
 	}

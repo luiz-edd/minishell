@@ -6,17 +6,21 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:35:23 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/29 16:03:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:57:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//testar ambiguous redirect depois de ter o export
 int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 {
 	int	fd;
 
 	fd = -1;
+	if (ft_strchr(right->cmd->value, ' '))
+		return (!!ft_fprintf(STDERR_FILENO, "%s: ambiguous redirect\n",
+				right->cmd->value));
 	right->cmd->value = expand_vars(right->cmd->value);
 	right->cmd->value = remove_quotes(right->cmd->value);
 	if (open_redir_file(right, redir_type, &fd) != SUCCESS)

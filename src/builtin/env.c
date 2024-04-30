@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 11:16:36 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/30 15:59:40 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/04/30 14:29:57 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/04/30 15:59:02 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_pwd(void)
+int	execute_env(t_token *cmd)
 {
-	char	*path;
+	int	i;
 
-	path = getcwd(NULL, 0);
-	if (path)
+	if (cmd->next)
+		return (handle_error("env: too many arguments"));
+	i = 0;
+	while (__environ[i])
 	{
-		ft_collect_mem(path);
-		printf("%s\n", path);
-		return (SUCCESS);
+		if (ft_strchr(__environ[i], '='))
+			ft_fprintf(STDOUT_FILENO, "%s\n", __environ[i]);
+		i++;
 	}
-	else
-		return (handle_error("pwd"));
+	return (SUCCESS);
 }

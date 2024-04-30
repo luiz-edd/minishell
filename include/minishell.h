@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/29 15:31:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:37:10 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ int			change_to_home(void);
 int			change_dir(char *path);
 int			check_access(char *path);
 
+/***************** env.c ******************/
+
+int			execute_env(t_token *cmd);
+
 /***************** exit.c *****************/
 
-int			execute_exit(t_token *token_list);
+int			execute_exit(t_token *cmd);
 int			validate_argument(char *arg);
 int			check_limits(long number);
 

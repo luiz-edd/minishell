@@ -82,7 +82,10 @@ SRC = ft_isalpha.c \
 	ft_strcmp.c	\
 	$(PRINTF) \
 	$(GNL) \
-	$(SPLIT_QUOTE) 
+	$(SPLIT_QUOTE) \
+	ft_putptr_fd.c \
+	ft_putnbr_base_fd.c \
+	ft_fprintf.c
 
 	# ft_dlstadd_back.c \
 	# ft_dlstadd_front.c \
