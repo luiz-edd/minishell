@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 14:57:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:59:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ void	expand_command(t_tree_node *cmd_node)
 		current->value = remove_quotes(current->value);
 		if (ft_strchr(current->value, ' '))
 			retokenize(&current);
+		if (*(current->value) == '\0')
+		{
+			if (current->prev)
+				current->prev->next = current->next;
+			if (current->next)
+				current->next->prev = current->prev;
+		}
 		current = current->next;
 	}
 }
@@ -111,13 +118,18 @@ void	retokenize(t_token **token)
 
 	next = (*token)->next;
 	tokens = ft_split((*token)->value, ' ');
-	(*token)->value = tokens[0];
-	i = 1;
-	while (tokens[i])
+	if (*tokens)
 	{
-		(*token)->next = token_lst_new(tokens[i], WORD);
-		(*token) = (*token)->next;
-		i++;
+		(*token)->value = *tokens;
+		i = 1;
+		while (tokens[i])
+		{
+			(*token)->next = token_lst_new(tokens[i], WORD);
+			(*token) = (*token)->next;
+			i++;
+		}
+		(*token)->next = next;
 	}
-	(*token)->next = next;
+	else
+		(*token)->value = "\0";
 }

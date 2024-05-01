@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 14:57:44 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:07:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			execute_pwd(void);
 /************ execute_command.c ***********/
 
 int			execute_command(t_tree_node *cmd_node);
+void		run_command_in_child_process(t_tree_node *cmd_node);
 char		*get_cmd_path(t_token *cmd);
 char		*search_in_path(t_token *cmd);
 char		**get_cmd_and_args(t_token *cmd);
