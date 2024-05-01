@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/30 14:37:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:57:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int			execute_redirect(t_tree_node *left, t_tree_node *right,
 int			open_redir_file(t_tree_node *right, int redir_type, int *fd);
 int			dup2_redir_file(int redir_type, int *fd);
 
-/************* executor.c *****************/
+/*************** executor.c ***************/
 
 int			executor(t_tree_node *root);
 int			execute_and(t_tree_node *left, t_tree_node *right);
@@ -131,7 +131,7 @@ int			execute_or(t_tree_node *left, t_tree_node *right);
 ############# EXPANSION FOLDER #############
 *******************************************/
 
-/************** expand.c ******************/
+/**************** expand.c ****************/
 
 void		expand_command(t_tree_node *cmd_node);
 char		*expand_vars(char *str);
@@ -143,7 +143,7 @@ void		retokenize(t_token **token);
 ############### LEXER FOLDER ###############
 *******************************************/
 
-/*************** lexer.c ******************/
+/**************** lexer.c *****************/
 
 int			lexer(char *str, t_token **list);
 int			get_token_type(char *str);

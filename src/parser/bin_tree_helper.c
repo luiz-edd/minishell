@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/16 18:37:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:11:44 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,10 @@ t_token	*search_redirect(t_token *token_list)
 	return (NULL);
 }
 
-// no bash, se o filename é uma variavel que contém spaces, o bash reclama
-// com o erro "ambiguous redirect"
 t_tree_node	*get_redir_filename(t_token *redir)
 {
 	t_tree_node	*filename;
 
-	redir->value = expand_vars(redir->value);
-	redir->value = remove_quotes(redir->value);
 	filename = ft_dalloc(1, sizeof(t_tree_node));
 	if (!filename)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_syntax.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/24 17:08:35 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:14:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	check_open_syntax(char *str)
 		index++;
 	}
 	if (brackets != 0 || single_quote != 0 || double_quote != 0)
-		return (write(STDERR_FILENO, "Invalid syntax, check input for open \
-quotes or brackets.\n", 58));
+		return (write(STDERR_FILENO, "Invalid syntax, check input for open\
+ quotes or brackets.\n", 58));
 	return (SUCCESS);
 }
 
