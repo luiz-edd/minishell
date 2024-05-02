@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_arrstr_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 13:22:48 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/02 14:25:27 by leduard2         ###   ########.fr       */
+/*   Created: 2024/05/02 14:32:49 by leduard2          #+#    #+#             */
+/*   Updated: 2024/05/02 14:33:54 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_arrstr_len(char **str)
 {
-	size_t	len;
-	size_t	i;
+	int i;
 
-	if(s == NULL)
-		return NULL;
-	len = ft_strlen(s);
 	i = 0;
-	while (i <= len)
-	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)s + i);
+	while (str[i])
 		i++;
-	}
-	return (NULL);
+	return (i);
 }

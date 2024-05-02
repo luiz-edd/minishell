@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:34:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:17:06 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	main(void)
 {
-	char				*line;
-	t_token				*list;
-	t_tree_node			*root;
+	char		*line;
+	t_token		*list;
+	t_tree_node	*root;
 
 	save_std_fd();
+	init_env_lst();
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)
@@ -38,5 +39,6 @@ int	main(void)
 		}
 		reset_for_next_iteration(line);
 	}
+	free_env_lst();
 	return (SUCCESS);
 }

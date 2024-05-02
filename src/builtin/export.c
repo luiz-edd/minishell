@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 13:22:48 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/02 14:25:27 by leduard2         ###   ########.fr       */
+/*   Created: 2024/05/02 11:12:58 by leduard2          #+#    #+#             */
+/*   Updated: 2024/05/02 14:44:50 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*get_env_value(char *content)
 {
-	size_t	len;
-	size_t	i;
+	char	*value;
 
-	if(s == NULL)
-		return NULL;
-	len = ft_strlen(s);
+	value = ft_strchr(search_env_lst(content), '=');
+	if (value)
+		return (value + 1);
+	return (value);
+}
+
+void	export(t_token *cmd)
+{
+	char **args;
+	char *content;
+	int i;
+
 	i = 0;
-	while (i <= len)
+	args = get_cmd_and_args(cmd);
+	if(ft_arrstr_len(args) == 1)
 	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)s + i);
-		i++;
+		//print export;
 	}
-	return (NULL);
+	content = search_env_lst(*args);
+	if (content)
+		get_env_key(content);
 }

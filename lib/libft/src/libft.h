@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:32:55 by leduard2          #+#    #+#             */
-/*   Updated: 2024/03/28 15:58:10 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:35:26 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void				ft_print_words(char **str);
 long				ft_atol(char *str);
 int					ft_isspace(int c);
 int					ft_strcmp(const char *s1, const char *s2);
+int					ft_arrstr_len(char **str);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);
@@ -115,7 +116,7 @@ void				ft_dlst_add_back(t_dlst *list, t_dlst *new);
 void				ft_dlst_add_front(t_dlst *list, t_dlst *new);
 t_dlst				*ft_dlst_last(t_dlst *list);
 t_dlst				*ft_dlst_new(void *content);
-int					ft_dlst_size(t_dlst	*list);
+int					ft_dlst_size(t_dlst *list);
 
 // memory collector
 t_list				**ft_get_memory_lst(void);
