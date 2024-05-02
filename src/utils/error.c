@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 15:36:24 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:24:55 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	syntax_error(char *token)
 	return (set_exit_status(SYNTAX_ERROR));
 }
 
+// retorno de comando que não existe está sendo No such file or directory em
+//vez de command not found
 int	throw_error(char *cmd_path)
 {
 	if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:35:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:10:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_or(t_tree_node *left, t_tree_node *right)
 
 	exit_status = set_exit_status(executor(left));
 	restore_fds();
-	if (exit_status != SUCCESS)
+	if (exit_status != SUCCESS && *get_exit_status() < 128)
 		return (set_exit_status(executor(right)));
 	return (exit_status);
 }

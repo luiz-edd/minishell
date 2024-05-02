@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:37:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 15:13:09 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:06:20 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	main_signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		ft_free_memory();
 		set_exit_status(SIGINT + 128);
 	}
 }
@@ -48,6 +49,7 @@ void	heredoc_signal_handler(int signum)
 	{
 		write(STDIN_FILENO, "\n", 1);
 		close(STDIN_FILENO);
+		ft_free_memory();
 		set_exit_status(SIGINT + 128);
 	}
 }

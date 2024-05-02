@@ -6,24 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 21:48:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:19:18 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	wait_for_all_children(void)
-{
-	int	status;
-	int	pid;
-
-	while (42)
-	{
-		pid = waitpid(-1, &status, WNOHANG);
-		if (pid <= 0)
-			break ;
-	}
-}
 
 int	*get_exit_status(void)
 {
