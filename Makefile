@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/01 14:57:51 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/07 14:50:35 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ FILES				= 	main.c \
 						bin_tree_helper.c \
 						parser.c \
 						heredoc.c \
-						std_fd_restore.c \
 						signals.c \
 						debug.c \
 						error.c \

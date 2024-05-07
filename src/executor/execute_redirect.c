@@ -6,17 +6,22 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:35:23 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 15:55:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:48:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//mudar para dar restore no fim
 int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 {
 	int		fd;
+	int		std_fd[2];
+	int		exit_status;
 	char	*before_expansion;
 
+	std_fd[0] = dup(STDIN_FILENO);
+	std_fd[1] = dup(STDOUT_FILENO);
 	fd = -1;
 	before_expansion = right->cmd->value;
 	expand_command(right);
@@ -29,7 +34,10 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 		return (FAILURE);
 	if (!left->cmd)
 		return (SUCCESS);
-	return (executor(left));
+	exit_status = executor(left);
+	dup2(std_fd[0], STDIN_FILENO);
+	dup2(std_fd[1], STDOUT_FILENO);
+	return (exit_status);
 }
 
 int	open_redir_file(t_tree_node *right, int redir_type, int *fd)

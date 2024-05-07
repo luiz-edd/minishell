@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:05:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:51:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(void)
 	t_token				*list;
 	t_tree_node			*root;
 
-	save_std_fd();
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)

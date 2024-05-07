@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:19:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:50:55 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ void	reset_for_next_iteration(char *line)
 {
 	free(line);
 	delete_heredoc_files();
-	restore_fds();
 	ft_free_memory();
 }

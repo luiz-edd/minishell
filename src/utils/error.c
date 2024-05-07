@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 18:24:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:34:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	syntax_error(char *token)
 	return (set_exit_status(SYNTAX_ERROR));
 }
 
-// retorno de comando que não existe está sendo No such file or directory em
-//vez de command not found
 int	throw_error(char *cmd_path)
 {
 	if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))
@@ -28,14 +26,14 @@ int	throw_error(char *cmd_path)
 		ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd_path);
 		return (126);
 	}
-	else if ((*cmd_path == '/' || *cmd_path == '.'
-			|| cmd_path[ft_strlen(cmd_path) - 1] == '/') && !access(cmd_path,
+	else if ((*cmd_path == '.' || ft_strchr(cmd_path, '/')) && !access(cmd_path,
 			F_OK))
 	{
 		ft_fprintf(STDERR_FILENO, "%s: Is a directory\n", cmd_path);
 		return (126);
 	}
-	else if (errno == 13 && !(*cmd_path == '/' || *cmd_path == '.'))
+	else if ((errno == 2 || errno == 13) && !(strchr(cmd_path, '/')
+			|| *cmd_path == '.'))
 	{
 		ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd_path);
 		return (127);

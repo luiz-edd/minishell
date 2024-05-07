@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 17:07:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:11:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int			dup2_redir_file(int redir_type, int *fd);
 int			executor(t_tree_node *root);
 int			execute_and(t_tree_node *left, t_tree_node *right);
 int			execute_or(t_tree_node *left, t_tree_node *right);
+int			execute_block(t_tree_node *root);
 
 /*******************************************
 ############# EXPANSION FOLDER #############
@@ -198,12 +199,6 @@ int			write_input_to_heredoc(int fd, char *end_condition,
 int			delete_heredoc_files(void);
 int			*get_heredoc_counter(void);
 
-/************ std_fd_restore.c ************/
-
-int			*get_fds(void);
-void		save_std_fd(void);
-void		restore_fds(void);
-
 /*******************************************
 ############## SIGNALS FOLDER ##############
 *******************************************/
@@ -227,7 +222,6 @@ void		close_pipe(int *pipe_fd);
 
 /**************** helper.c ****************/
 
-void		wait_for_all_children(void);
 int			*get_exit_status(void);
 int			set_exit_status(int status);
 void		wait_child_status(pid_t pid, int *status);

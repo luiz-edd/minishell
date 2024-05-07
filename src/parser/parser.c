@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:27:43 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:31:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:43:53 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int	check_syntax(t_token *current)
 
 int	check_control_operator_rule(t_token *token)
 {
-	if (token->prev == NULL || token->prev->type <= PIPE)
+	if (token->prev == NULL || token->prev->type <= PIPE
+		|| token->prev->type == OPEN_PAREN)
 		return (syntax_error(token->value));
-	if (token->next == NULL || token->next->type <= PIPE)
+	if (token->next == NULL || token->next->type <= PIPE
+		|| token->next->type == CLOSE_PAREN)
 		return (syntax_error(token->value));
 	return (SUCCESS);
 }
