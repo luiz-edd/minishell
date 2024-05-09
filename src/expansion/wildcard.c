@@ -6,56 +6,42 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/08 20:58:43 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 
-int	match_result_and_free(int **lookup, int text_length, int pattern_length)
+void	expand_wildcards(t_token **token)
 {
-	int	result;
-	int	row;
+	DIR				*dir;
+	struct dirent	*entry;
+	t_token			*glob_list;
+	t_token			*last;
 
-	result = lookup[text_length][pattern_length];
-	row = 0;
-	while (row <= text_length)
+	dir = opendir(".");
+	if (!dir)
+		return ;
+	glob_list = NULL;
+	entry = readdir(dir);
+	while (entry)
 	{
-		free(lookup[row]);
-		row++;
+		if (*(entry->d_name) != '.' && is_match(entry->d_name, (*token)->value))
+			token_lst_add_back(&glob_list, token_lst_new(entry->d_name, WORD));
+		entry = readdir(dir);
 	}
-	free(lookup);
-	return (result);
-}
-
-int	**init_lookup_table(char *text, int *text_length, char *pattern,
-		int *pattern_length)
-{
-	int	**lookup;
-	int	row;
-	int	col;
-
-	*text_length = strlen(text);
-	*pattern_length = strlen(pattern);
-	lookup = (int **)calloc((*text_length + 1), sizeof(int *));
-	row = 0;
-	while (row <= *text_length)
-	{
-		lookup[row] = (int *)calloc((*pattern_length + 1), sizeof(int));
-		row++;
-	}
-	lookup[0][0] = 1;
-	col = 1;
-	while (col <= *pattern_length)
-	{
-		if (pattern[col - 1] == '*')
-			lookup[0][col] = lookup[0][col - 1];
-		col++;
-	}
-	return (lookup);
+	closedir(dir);
+	if (!glob_list)
+		return ;
+	last = token_lst_get_last(glob_list);
+	last->next = (*token)->next;
+	if ((*token)->next)
+		(*token)->next->prev = last;
+	glob_list->prev = (*token)->prev;
+	if ((*token)->prev)
+		(*token)->prev->next = glob_list;
+	*token = glob_list;
+	print_list(glob_list);
 }
 
 int	is_match(char *text, char *pattern)
@@ -84,16 +70,45 @@ int	is_match(char *text, char *pattern)
 	return (match_result_and_free(lookup, text_length, pattern_length));
 }
 
-int	main(void)
+int	**init_lookup_table(char *text, int *text_length, char *pattern,
+		int *pattern_length)
 {
-	char	*text;
-	char	*pattern;
+	int	**lookup;
+	int	row;
+	int	col;
 
-	text = "123baaabab";
-	pattern = "*****ba*****ab";
-	if (is_match(text, pattern))
-		printf("Encontrou\n");
-	else
-		printf("Não encontrou\n");
-	return (0);
+	*text_length = ft_strlen(text);
+	*pattern_length = ft_strlen(pattern);
+	lookup = (int **)ft_calloc((*text_length + 1), sizeof(int *));
+	row = 0;
+	while (row <= *text_length)
+	{
+		lookup[row] = (int *)ft_calloc((*pattern_length + 1), sizeof(int));
+		row++;
+	}
+	lookup[0][0] = 1;
+	col = 1;
+	while (col <= *pattern_length)
+	{
+		if (pattern[col - 1] == '*')
+			lookup[0][col] = lookup[0][col - 1];
+		col++;
+	}
+	return (lookup);
+}
+
+int	match_result_and_free(int **lookup, int text_length, int pattern_length)
+{
+	int	result;
+	int	row;
+
+	result = lookup[text_length][pattern_length];
+	row = 0;
+	while (row <= text_length)
+	{
+		free(lookup[row]);
+		row++;
+	}
+	free(lookup);
+	return (result);
 }

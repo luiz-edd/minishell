@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/01 17:07:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:54:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
+	//print_list(cmd_node->cmd);
 	if (*(cmd_node->cmd->value) == '\0')
 		return (exit_status);
 	if (is_builtin(cmd_node->cmd))

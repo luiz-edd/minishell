@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/07 14:50:35 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/09 17:18:00 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES				= 	main.c \
 						execute_redirect.c \
 						executor.c \
 						expand.c \
+						wildcard.c \
 						lexer.c \
 						open_syntax.c \
 						bin_tree.c \

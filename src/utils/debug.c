@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:07:08 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:55:18 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:46:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 void	print_list(t_token *list)
 {
 	t_token	*current;
+	int		i;
 
+	i = 0;
 	current = list;
 	while (current)
 	{
-		printf("%5s\t", current->value);
+		printf("%iº:%5s\t", i, current->value);
+		i++;
 		current = current->next;
 	}
+	printf("\n");
 }
 
 void	print_tree_util(t_tree_node *root, int space)
