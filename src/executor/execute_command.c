@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/09 17:54:50 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:36:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
-	//print_list(cmd_node->cmd);
 	if (*(cmd_node->cmd->value) == '\0')
 		return (exit_status);
 	if (is_builtin(cmd_node->cmd))
@@ -53,6 +52,7 @@ char	*get_cmd_path(t_token *cmd)
 {
 	char	*cmd_path;
 
+	print_list(cmd);
 	if (ft_strchr(cmd->value, '/'))
 	{
 		cmd_path = cmd->value;
@@ -60,16 +60,19 @@ char	*get_cmd_path(t_token *cmd)
 	}
 	else
 		cmd_path = search_in_path(cmd);
+	print_list(cmd);
 	return (cmd_path);
 }
 
 char	*search_in_path(t_token *cmd)
 {
+	char	*command;
 	char	*cmd_path;
 	char	*path_env;
 	char	**paths;
 	int		i;
 
+	command = ft_strdup(cmd->value);
 	path_env = getenv("PATH");
 	if (!path_env)
 		exit(!!write(STDERR_FILENO, "minishell: PATH not set\n", 24));
@@ -80,13 +83,13 @@ char	*search_in_path(t_token *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], "/");
-		cmd_path = ft_strjoin(cmd_path, cmd->value);
+		ft_strlcat(paths[i], "/", ft_strlen(paths[i]) + 2);
+		cmd_path = ft_strjoin(paths[i], command);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 			return (cmd_path);
 		i++;
 	}
-	cmd_path = cmd->value;
+	cmd_path = command;
 	return (cmd_path);
 }
 

@@ -6,42 +6,37 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/09 17:50:59 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:13:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_wildcards(t_token **token)
+// readdir não devolve em ordem alfabetica, seria bom criar uma função de
+// ordenação para ficar igual ao bash
+void	expand_wildcards(t_token **token, t_token **cmd)
 {
 	DIR				*dir;
 	struct dirent	*entry;
-	t_token			*glob_list;
-	t_token			*last;
+	t_token			*matched;
 
 	dir = opendir(".");
 	if (!dir)
 		return ;
-	glob_list = NULL;
+	matched = NULL;
 	entry = readdir(dir);
 	while (entry)
 	{
 		if (*(entry->d_name) != '.' && is_match(entry->d_name, (*token)->value))
-			token_lst_add_back(&glob_list, token_lst_new(entry->d_name, WORD));
+			token_lst_add_back(&matched, token_lst_new(entry->d_name, WORD));
 		entry = readdir(dir);
 	}
 	closedir(dir);
-	if (!glob_list)
+	if (!matched)
 		return ;
-	last = token_lst_get_last(glob_list);
-	last->next = (*token)->next;
-	if ((*token)->next)
-		(*token)->next->prev = last;
-	glob_list->prev = (*token)->prev;
-	if ((*token)->prev)
-		(*token)->prev->next = glob_list;
-	*token = glob_list;
-	print_list(glob_list);
+	if ((*token)->prev == NULL)
+		*cmd = matched;
+	update_token_list(token, matched);
 }
 
 int	is_match(char *text, char *pattern)
@@ -111,4 +106,18 @@ int	match_result_and_free(int **lookup, int text_length, int pattern_length)
 	}
 	free(lookup);
 	return (result);
+}
+
+void	update_token_list(t_token **token, t_token *matched)
+{
+	t_token	*last;
+
+	last = token_lst_get_last(matched);
+	last->next = (*token)->next;
+	if ((*token)->next)
+		(*token)->next->prev = last;
+	matched->prev = (*token)->prev;
+	if ((*token)->prev)
+		(*token)->prev->next = matched;
+	*token = last;
 }

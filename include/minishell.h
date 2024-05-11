@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/09 17:18:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:34:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,13 @@ char		*remove_quotes(char *str);
 void		retokenize(t_token **token);
 
 /************* wildcard.c ****************/
-void		expand_wildcards(t_token **token);
+void		expand_wildcards(t_token **token, t_token **cmd);
 int			is_match(char *text, char *pattern);
 int			**init_lookup_table(char *text, int *text_length, char *pattern,
 				int *pattern_length);
 int			match_result_and_free(int **lookup, int text_length,
 				int pattern_length);
+void		update_token_list(t_token **token, t_token *matched);
 
 /*******************************************
 ############### LEXER FOLDER ###############
