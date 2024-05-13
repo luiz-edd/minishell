@@ -6,13 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/11 16:13:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:54:54 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//strchr precisa pular quotes
 void	expand_command(t_tree_node *cmd_node)
 {
 	t_token	*current;
@@ -21,9 +20,9 @@ void	expand_command(t_tree_node *cmd_node)
 	while (current)
 	{
 		current->value = expand_vars(current->value);
-		current->value = remove_quotes(current->value);
-		if (ft_strchr(current->value, '*'))
+		if (ft_strchr_quote_aware(current->value, '*'))
 			expand_wildcards(&current, &cmd_node->cmd);
+		current->value = remove_quotes(current->value);
 		if (ft_strchr(current->value, ' '))
 			retokenize(&current);
 		if (*(current->value) == '\0')

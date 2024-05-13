@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/11 15:16:09 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:44:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ int	syntax_error(char *token)
 	return (set_exit_status(SYNTAX_ERROR));
 }
 
+// testar todos os tipos de erro
 int	throw_error(char *cmd_path)
 {
-	if ((errno == 2 || errno == 13) && !(strchr(cmd_path, '/')
-			|| *cmd_path == '.'))
-	{
-		ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd_path);
-		return (127);
-	}
-	else if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))
+	if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))
 	{
 		ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd_path);
 		return (126);

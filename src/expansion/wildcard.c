@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/11 16:13:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:07:41 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // readdir não devolve em ordem alfabetica, seria bom criar uma função de
 // ordenação para ficar igual ao bash
-void	expand_wildcards(t_token **token, t_token **cmd)
+void	expand_wildcards(t_token **token, t_token **head)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -35,7 +35,7 @@ void	expand_wildcards(t_token **token, t_token **cmd)
 	if (!matched)
 		return ;
 	if ((*token)->prev == NULL)
-		*cmd = matched;
+		*head = matched;
 	update_token_list(token, matched);
 }
 
@@ -55,7 +55,7 @@ int	is_match(char *text, char *pattern)
 		while (col <= pattern_length)
 		{
 			if (pattern[col - 1] == '*')
-				lookup[row][col] = lookup[row][col - 1] || lookup[row - 1][col];
+				lookup[row][col] = lookup[row][col - 1] | lookup[row - 1][col];
 			else if (text[row - 1] == pattern[col - 1])
 				lookup[row][col] = lookup[row - 1][col - 1];
 			col++;

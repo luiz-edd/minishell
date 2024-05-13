@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/11 16:36:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:06:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
+	print_list(cmd_node->cmd);
 	if (*(cmd_node->cmd->value) == '\0')
 		return (exit_status);
 	if (is_builtin(cmd_node->cmd))
@@ -31,19 +32,22 @@ int	execute_command(t_tree_node *cmd_node)
 			exit(handle_error("fork"));
 		setup_fork_signal_handlers(pid);
 		if (pid == 0)
-			run_command_in_child_process(cmd_node);
+			run_command_in_child_process(cmd_node->cmd);
 		wait_child_status(pid, &exit_status);
 		return (exit_status);
 	}
 }
 
-void	run_command_in_child_process(t_tree_node *cmd_node)
+// a lista está sofrendo decay após o get_cmd_path
+// possivelmente estamos passando um ponteiro local
+void	run_command_in_child_process(t_token *cmd)
 {
 	char	**cmd_and_args;
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(cmd_node->cmd);
-	cmd_and_args = get_cmd_and_args(cmd_node->cmd);
+	cmd_path = get_cmd_path(cmd);
+	print_list(cmd);
+	cmd_and_args = get_cmd_and_args(cmd);
 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 		exit(throw_error(cmd_path));
 }
@@ -52,7 +56,6 @@ char	*get_cmd_path(t_token *cmd)
 {
 	char	*cmd_path;
 
-	print_list(cmd);
 	if (ft_strchr(cmd->value, '/'))
 	{
 		cmd_path = cmd->value;
@@ -60,7 +63,6 @@ char	*get_cmd_path(t_token *cmd)
 	}
 	else
 		cmd_path = search_in_path(cmd);
-	print_list(cmd);
 	return (cmd_path);
 }
 
@@ -89,8 +91,8 @@ char	*search_in_path(t_token *cmd)
 			return (cmd_path);
 		i++;
 	}
-	cmd_path = command;
-	return (cmd_path);
+	ft_fprintf(STDERR_FILENO, "%s: command not found\n", command);
+	exit(127);
 }
 
 char	**get_cmd_and_args(t_token *cmd)

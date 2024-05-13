@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/07 14:50:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:38:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,32 @@ void	reset_for_next_iteration(char *line)
 	free(line);
 	delete_heredoc_files();
 	ft_free_memory();
+}
+
+char	*ft_strchr_quote_aware(const char *s, int c)
+{
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(s);
+	i = 0;
+	while (i <= len)
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+		}
+		if (s[i] == '\"')
+		{
+			i++;
+			while (s[i] && s[i] != '\"')
+				i++;
+		}
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	return (NULL);
 }
