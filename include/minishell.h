@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 18:07:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:58:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,9 @@ char		*ft_strchr_quote_aware(const char *s, int c);
 
 t_token		*token_lst_new(char *value, int type);
 void		token_lst_add_back(t_token **token_list, t_token *new);
-void		token_lst_add_front(t_token **token_list, t_token *new);
 int			token_lst_get_size(t_token *token_list);
 t_token		*token_lst_get_last(t_token *token_list);
+void		sort_token_lst(t_token **matched);
 
 /*******************************************
 !!!!!!!!!!!!!!! DELETE THIS !!!!!!!!!!!!!!!!

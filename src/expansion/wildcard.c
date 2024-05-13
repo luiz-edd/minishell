@@ -6,14 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 18:07:41 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:01:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// readdir não devolve em ordem alfabetica, seria bom criar uma função de
-// ordenação para ficar igual ao bash
 void	expand_wildcards(t_token **token, t_token **head)
 {
 	DIR				*dir;
@@ -28,7 +26,8 @@ void	expand_wildcards(t_token **token, t_token **head)
 	while (entry)
 	{
 		if (*(entry->d_name) != '.' && is_match(entry->d_name, (*token)->value))
-			token_lst_add_back(&matched, token_lst_new(entry->d_name, WORD));
+			token_lst_add_back(&matched, token_lst_new(ft_strdup(entry->d_name),
+					WORD));
 		entry = readdir(dir);
 	}
 	closedir(dir);
@@ -36,6 +35,7 @@ void	expand_wildcards(t_token **token, t_token **head)
 		return ;
 	if ((*token)->prev == NULL)
 		*head = matched;
+	sort_token_lst(&matched);
 	update_token_list(token, matched);
 }
 

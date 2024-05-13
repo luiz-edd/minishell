@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 18:06:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:09:12 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
-	print_list(cmd_node->cmd);
 	if (*(cmd_node->cmd->value) == '\0')
 		return (exit_status);
 	if (is_builtin(cmd_node->cmd))
@@ -38,15 +37,12 @@ int	execute_command(t_tree_node *cmd_node)
 	}
 }
 
-// a lista está sofrendo decay após o get_cmd_path
-// possivelmente estamos passando um ponteiro local
 void	run_command_in_child_process(t_token *cmd)
 {
 	char	**cmd_and_args;
 	char	*cmd_path;
 
 	cmd_path = get_cmd_path(cmd);
-	print_list(cmd);
 	cmd_and_args = get_cmd_and_args(cmd);
 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 		exit(throw_error(cmd_path));
@@ -68,13 +64,11 @@ char	*get_cmd_path(t_token *cmd)
 
 char	*search_in_path(t_token *cmd)
 {
-	char	*command;
 	char	*cmd_path;
 	char	*path_env;
 	char	**paths;
 	int		i;
 
-	command = ft_strdup(cmd->value);
 	path_env = getenv("PATH");
 	if (!path_env)
 		exit(!!write(STDERR_FILENO, "minishell: PATH not set\n", 24));
@@ -86,12 +80,12 @@ char	*search_in_path(t_token *cmd)
 	while (paths[i])
 	{
 		ft_strlcat(paths[i], "/", ft_strlen(paths[i]) + 2);
-		cmd_path = ft_strjoin(paths[i], command);
+		cmd_path = ft_strjoin(paths[i], cmd->value);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 			return (cmd_path);
 		i++;
 	}
-	ft_fprintf(STDERR_FILENO, "%s: command not found\n", command);
+	ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->value);
 	exit(127);
 }
 
