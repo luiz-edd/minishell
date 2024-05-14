@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 17:54:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:53:51 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	expand_command(t_tree_node *cmd_node)
 	}
 }
 
+// está dando problema = echo "exit_code ->$? user ->$USER home -> $HOME"
 char	*expand_vars(char *str)
 {
 	char	*start;

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 17:44:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:50:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	syntax_error(char *token)
 	return (set_exit_status(SYNTAX_ERROR));
 }
 
+// testar quando passa só .
 // testar todos os tipos de erro
 int	throw_error(char *cmd_path)
 {
