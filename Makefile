@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/09 17:18:00 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/14 15:38:56 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,12 +76,12 @@ norm:
 
 val: all
 	valgrind --leak-check=full \
-		 --trace-children=yes \
-		 --track-fds=yes \
-		 --suppressions=readline.supp \
-		 ./$(NAME)
-#		  --show-leak-kinds=all \
-#         --track-origins=yes \
-#         --log-file=valgrind-out.txt \
+		--trace-children=yes \
+		--show-leak-kinds=all \
+		--suppressions=readline.supp \
+		./$(NAME)
+#		--track-fds=yes \
+#       --track-origins=yes \
+#       --log-file=valgrind-out.txt \
 
 .PHONY: all, clean, fclean, re, norm, val

@@ -6,13 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 19:09:12 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:26:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// !!!!!! mudar __environ
 int	execute_command(t_tree_node *cmd_node)
 {
 	int		pid;
@@ -79,8 +78,8 @@ char	*search_in_path(t_token *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		ft_strlcat(paths[i], "/", ft_strlen(paths[i]) + 2);
-		cmd_path = ft_strjoin(paths[i], cmd->value);
+		cmd_path = ft_strjoin(paths[i], "/");
+		cmd_path = ft_strjoin(cmd_path, cmd->value);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 			return (cmd_path);
 		i++;

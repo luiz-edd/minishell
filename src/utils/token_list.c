@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:30:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 19:58:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:49:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ t_token	*token_lst_get_last(t_token *token_list)
 	return (current);
 }
 
-void	sort_token_lst(t_token **matched)
+void	sort_token_lst(t_token **head)
 {
 	t_token	*current;
 	t_token	*next;
 	char	*temp;
 
-	current = *matched;
+	current = *head;
 	while (current)
 	{
 		next = current->next;

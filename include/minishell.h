@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 19:58:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:03:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define SYNTAX_ERROR 2
-# define DELETE 0
-# define WRITE 1
-# define READ 0
 
 typedef struct s_token
 {
