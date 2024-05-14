@@ -11,6 +11,17 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+# include "libft.h"
+# include <dirent.h>
+# include <errno.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <wait.h>
+# include <signal.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 //!line tem que dar free na env
 int	main(void)
@@ -19,6 +30,7 @@ int	main(void)
 	t_token				*list;
 	t_tree_node			*root;
 
+	init_environ();
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)
@@ -38,5 +50,6 @@ int	main(void)
 		}
 		reset_for_next_iteration(line);
 	}
+	free_env();
 	return (SUCCESS);
 }

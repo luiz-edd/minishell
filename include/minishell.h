@@ -99,6 +99,17 @@ void		print_args(char **args, int has_n_flag);
 
 int			execute_pwd(void);
 
+/***************** export.c ******************/
+int			execute_export(t_token *cmd);
+
+/***************** export_print.c ******************/
+void		print_environ_sorted(void);
+
+/***************** export_utils.c ******************/
+void		add_to_env(char *str);
+int			is_valid_identifier(char *str);
+char		*get_key(char *arg);
+
 /*******************************************
 ############# EXECUTOR FOLDER ##############
 *******************************************/
@@ -245,6 +256,12 @@ void		token_lst_add_back(t_token **token_list, t_token *new);
 void		token_lst_add_front(t_token **token_list, t_token *new);
 int			token_lst_get_size(t_token *token_list);
 t_token		*token_lst_get_last(t_token *token_list);
+
+/**************** environ.c ****************/
+// char		**get_environ(void);
+void		init_environ(void);
+void		free_env(void);
+char		*ft_strdup_calloc(const char *s);
 
 /*******************************************
 !!!!!!!!!!!!!!! DELETE THIS !!!!!!!!!!!!!!!!
