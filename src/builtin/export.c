@@ -1,38 +1,78 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
+/*   Updated: 2024/05/14 17:29:49 by leduard2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-// int is_key_exist(char *key)
-// {
-// 	int i;
-// 	i = 0;
+void	update_env(char *new_str, char *key)
+{
+	int		i;
+	char	*env_key;
+	char	*aux;
 
-// 	while(__environ[i])
-// 	{
+	i = -1;
+	while (__environ[++i])
+	{
+		env_key = get_key(__environ[i]);
+		if (!ft_strcmp(key, env_key))
+		{
+			aux = __environ[i];
+			__environ[i] = ft_strdup_calloc(new_str);
+			free(aux);
+			break ;
+		}
+	}
+}
 
-// 	}
-// }
+int	is_key_exist(char *key)
+{
+	int		i;
+	char	*env_key;
+
+	i = -1;
+	while (__environ[++i])
+	{
+		env_key = get_key(__environ[i]);
+		if (!ft_strcmp(key, env_key))
+			return (1);
+	}
+	return (0);
+}
+int	is_key_exist_whitout_content(char *key)
+{
+	int		i;
+	char	*env_key;
+
+	i = -1;
+	while (__environ[++i])
+	{
+		if (!ft_strchr(__environ[i], '='))
+		{
+			env_key = get_key(__environ[i]);
+			if (!ft_strcmp(key, env_key))
+				return (1);
+		}
+	}
+	return (0);
+}
 
 static void	ft_set_env(char *new_str, char *key, char *content)
 {
 	char	*env_var;
-	char	*aux;
 
 	env_var = getenv(key);
-	printf("getenv return: %s\n", env_var);
-	// verifica se a key existe
-	// se existir e o contet nao for null,
-	// atulizar o valor da env_var com o novo valor new_str
-	// se nao, adicionar arg na __env
-	if (env_var && content != NULL)
-	{
-		aux = env_var;
-		env_var = new_str;
-		free(aux);
-	}
-	else
+	if ((env_var || is_key_exist_whitout_content(key)) && content != NULL)
+		update_env(new_str, key);
+	else if (!is_key_exist(key))
 		(add_to_env(new_str));
-	// else if(is_key_exist(key))
 }
 
 // export key=content
@@ -60,5 +100,5 @@ int	execute_export(t_token *cmd)
 		else
 			ft_set_env(args[i], key, NULL);
 	}
-	return (!!status);
+	return (set_exit_status(!!status));
 }

@@ -40,7 +40,7 @@ void	init_environ(void)
 	i = 0;
 	while (__environ[i])
 		i++;
-	env_copy = ft_calloc(i, sizeof(char *));
+	env_copy = ft_calloc(i + 1, sizeof(char *));
 	i = -1;
 	while (__environ[++i])
 		env_copy[i] = ft_strdup_calloc(__environ[i]);

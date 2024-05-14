@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 18:07:03 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:25:41 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <wait.h>
-# include <signal.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -69,46 +69,49 @@ enum					e_token_type
 
 /*************** builtins.c ***************/
 
-int			is_builtin(t_token *cmd);
-int			execute_builtin(t_token *cmd);
+int						is_builtin(t_token *cmd);
+int						execute_builtin(t_token *cmd);
 
 /****************** cd.c ******************/
 
-int			execute_cd(t_token *cmd);
-int			change_to_home(void);
-int			change_dir(char *path);
-int			check_access(char *path);
+int						execute_cd(t_token *cmd);
+int						change_to_home(void);
+int						change_dir(char *path);
+int						check_access(char *path);
 
 /***************** env.c ******************/
 
-int			execute_env(t_token *cmd);
+int						execute_env(t_token *cmd);
 
 /***************** exit.c *****************/
 
-int			execute_exit(t_token *cmd);
-int			validate_argument(char *arg);
-int			check_limits(long number);
+int						execute_exit(t_token *cmd);
+int						validate_argument(char *arg);
+int						check_limits(long number);
 
 /***************** echo.c *****************/
 
-int			execute_echo(t_token *cmd);
-int			check_n_flag(char *str);
-void		print_args(char **args, int has_n_flag);
+int						execute_echo(t_token *cmd);
+int						check_n_flag(char *str);
+void					print_args(char **args, int has_n_flag);
 
 /***************** pwd.c ******************/
 
-int			execute_pwd(void);
+int						execute_pwd(void);
 
 /***************** export.c ******************/
-int			execute_export(t_token *cmd);
+int						execute_export(t_token *cmd);
 
 /***************** export_print.c ******************/
-void		print_environ_sorted(void);
+void					print_environ_sorted(void);
 
 /***************** export_utils.c ******************/
-void		add_to_env(char *str);
-int			is_valid_identifier(char *str);
-char		*get_key(char *arg);
+void					add_to_env(char *str);
+int						is_valid_identifier(char *str);
+char					*get_key(char *arg);
+
+/***************** unset.c ******************/
+int						execute_unset(t_token *cmd);
 
 /*******************************************
 ############# EXECUTOR FOLDER ##############
@@ -116,30 +119,31 @@ char		*get_key(char *arg);
 
 /************ execute_command.c ***********/
 
-int			execute_command(t_tree_node *cmd_node);
-void		run_command_in_child_process(t_token *cmd);
-char		*get_cmd_path(t_token *cmd);
-char		*search_in_path(t_token *cmd);
-char		**get_cmd_and_args(t_token *cmd);
+int						execute_command(t_tree_node *cmd_node);
+void					run_command_in_child_process(t_token *cmd);
+char					*get_cmd_path(t_token *cmd);
+char					*search_in_path(t_token *cmd);
+char					**get_cmd_and_args(t_token *cmd);
 
 /************* execute_pipe.c *************/
 
-int			execute_pipe(t_tree_node *left, t_tree_node *right);
-int			execute_child(int fd, int *pipe, t_tree_node *node);
+int						execute_pipe(t_tree_node *left, t_tree_node *right);
+int						execute_child(int fd, int *pipe, t_tree_node *node);
 
 /*********** execute_redirect.c ***********/
 
-int			execute_redirect(t_tree_node *left, t_tree_node *right,
-				int redir_type);
-int			open_redir_file(t_tree_node *right, int redir_type, int *fd);
-int			dup2_redir_file(int redir_type, int *fd);
+int						execute_redirect(t_tree_node *left, t_tree_node *right,
+							int redir_type);
+int						open_redir_file(t_tree_node *right, int redir_type,
+							int *fd);
+int						dup2_redir_file(int redir_type, int *fd);
 
 /*************** executor.c ***************/
 
-int			executor(t_tree_node *root);
-int			execute_and(t_tree_node *left, t_tree_node *right);
-int			execute_or(t_tree_node *left, t_tree_node *right);
-int			execute_block(t_tree_node *root);
+int						executor(t_tree_node *root);
+int						execute_and(t_tree_node *left, t_tree_node *right);
+int						execute_or(t_tree_node *left, t_tree_node *right);
+int						execute_block(t_tree_node *root);
 
 /*******************************************
 ############# EXPANSION FOLDER #############
@@ -147,20 +151,20 @@ int			execute_block(t_tree_node *root);
 
 /**************** expand.c ****************/
 
-void		expand_command(t_tree_node *cmd_node);
-char		*expand_vars(char *str);
-char		*handle_dollar(char *start, char **str);
-char		*remove_quotes(char *str);
-void		retokenize(t_token **token);
+void					expand_command(t_tree_node *cmd_node);
+char					*expand_vars(char *str);
+char					*handle_dollar(char *start, char **str);
+char					*remove_quotes(char *str);
+void					retokenize(t_token **token);
 
 /************* wildcard.c ****************/
-void		expand_wildcards(t_token **token, t_token **cmd);
-int			is_match(char *text, char *pattern);
-int			**init_lookup_table(char *text, int *text_length, char *pattern,
-				int *pattern_length);
-int			match_result_and_free(int **lookup, int text_length,
-				int pattern_length);
-void		update_token_list(t_token **token, t_token *matched);
+void					expand_wildcards(t_token **token, t_token **cmd);
+int						is_match(char *text, char *pattern);
+int						**init_lookup_table(char *text, int *text_length,
+							char *pattern, int *pattern_length);
+int						match_result_and_free(int **lookup, int text_length,
+							int pattern_length);
+void					update_token_list(t_token **token, t_token *matched);
 
 /*******************************************
 ############### LEXER FOLDER ###############
@@ -168,16 +172,16 @@ void		update_token_list(t_token **token, t_token *matched);
 
 /**************** lexer.c *****************/
 
-int			lexer(char *str, t_token **list);
-int			get_token_type(char *str);
-int			get_token_length(char *str, int type);
-int			get_word_length(char *str);
+int						lexer(char *str, t_token **list);
+int						get_token_type(char *str);
+int						get_token_length(char *str, int type);
+int						get_word_length(char *str);
 
 /************* open_syntax.c **************/
 
-int			check_open_syntax(char *str);
-void		move_to_next_quote(char *str, int *index, int *single_quote,
-				int *double_quote);
+int						check_open_syntax(char *str);
+void					move_to_next_quote(char *str, int *index,
+							int *single_quote, int *double_quote);
 
 /*******************************************
 ############## PARSER FOLDER ###############
@@ -185,28 +189,31 @@ void		move_to_next_quote(char *str, int *index, int *single_quote,
 
 /*************** bin_tree.c ***************/
 
-t_tree_node	*build_execution_tree(t_token *token_list);
-void		split_tokens_into_tree(t_tree_node *tree_node, t_token *token_list);
-void		split_list(t_tree_node *tree_node, t_token *token_list,
-				t_token *token_to_cut);
-t_token		*cut_token_list(t_token *token_list, t_token *token_to_cut);
-void		split_redirect(t_tree_node *tree_node, t_token *token_list,
-				t_token *token_to_cut);
+t_tree_node				*build_execution_tree(t_token *token_list);
+void	split_tokens_into_tree(t_tree_node *tree_node,
+							t_token *token_list);
+void					split_list(t_tree_node *tree_node, t_token *token_list,
+							t_token *token_to_cut);
+t_token	*cut_token_list(t_token *token_list,
+						t_token *token_to_cut);
+void	split_redirect(t_tree_node *tree_node,
+					t_token *token_list,
+					t_token *token_to_cut);
 
 /*********** bin_tree_helper.c ************/
 
-t_token		*search_and_or(t_token *token_list);
-t_token		*search_pipe(t_token *token_list);
-t_token		*search_redirect(t_token *token_list);
-t_tree_node	*get_redir_filename(t_token *redir);
+t_token					*search_and_or(t_token *token_list);
+t_token					*search_pipe(t_token *token_list);
+t_token					*search_redirect(t_token *token_list);
+t_tree_node				*get_redir_filename(t_token *redir);
 
 /**************** parser.c ****************/
 
-int			parser(t_token *list, t_tree_node **root);
-int			check_syntax(t_token *current);
-int			check_control_operator_rule(t_token *token);
-int			check_redirect_rule(t_token *token);
-int			check_parenthesis_rule(t_token *token);
+int						parser(t_token *list, t_tree_node **root);
+int						check_syntax(t_token *current);
+int						check_control_operator_rule(t_token *token);
+int						check_redirect_rule(t_token *token);
+int						check_parenthesis_rule(t_token *token);
 
 /*******************************************
 ############# REDIRECT FOLDER ##############
@@ -214,21 +221,21 @@ int			check_parenthesis_rule(t_token *token);
 
 /*************** heredoc.c ****************/
 
-int			create_heredoc_file(t_token *token);
-int			write_input_to_heredoc(int fd, char *end_condition,
-				int is_expandable);
-int			delete_heredoc_files(void);
-int			*get_heredoc_counter(void);
+int						create_heredoc_file(t_token *token);
+int						write_input_to_heredoc(int fd, char *end_condition,
+							int is_expandable);
+int						delete_heredoc_files(void);
+int						*get_heredoc_counter(void);
 
 /*******************************************
 ############## SIGNALS FOLDER ##############
 *******************************************/
 
 /*************** signals.c ****************/
-int			setup_signal_handler(void (*func)(int signum));
-int			setup_fork_signal_handlers(int pid);
-void		main_signal_handler(int signum);
-void		heredoc_signal_handler(int signum);
+int						setup_signal_handler(void (*func)(int signum));
+int						setup_fork_signal_handlers(int pid);
+void					main_signal_handler(int signum);
+void					heredoc_signal_handler(int signum);
 
 /*******************************************
 ############### UTILS FOLDER ###############
@@ -236,38 +243,38 @@ void		heredoc_signal_handler(int signum);
 
 /**************** error.c *****************/
 
-int			syntax_error(char *token);
-int			handle_error(char *message);
-int			throw_error(char *cmd_path);
-void		close_pipe(int *pipe_fd);
+int						syntax_error(char *token);
+int						handle_error(char *message);
+int						throw_error(char *cmd_path);
+void					close_pipe(int *pipe_fd);
 
 /**************** helper.c ****************/
 
-int			*get_exit_status(void);
-int			set_exit_status(int status);
-void		wait_child_status(pid_t pid, int *status);
-void		reset_for_next_iteration(char *line);
-char		*ft_strchr_quote_aware(const char *s, int c);
+int						*get_exit_status(void);
+int						set_exit_status(int status);
+void					wait_child_status(pid_t pid, int *status);
+void					reset_for_next_iteration(char *line);
+char					*ft_strchr_quote_aware(const char *s, int c);
 
 /************** token_list.c **************/
 
-t_token		*token_lst_new(char *value, int type);
-void		token_lst_add_back(t_token **token_list, t_token *new);
-void		token_lst_add_front(t_token **token_list, t_token *new);
-int			token_lst_get_size(t_token *token_list);
-t_token		*token_lst_get_last(t_token *token_list);
+t_token					*token_lst_new(char *value, int type);
+void					token_lst_add_back(t_token **token_list, t_token *new);
+void					token_lst_add_front(t_token **token_list, t_token *new);
+int						token_lst_get_size(t_token *token_list);
+t_token					*token_lst_get_last(t_token *token_list);
 
 /**************** environ.c ****************/
 // char		**get_environ(void);
-void		init_environ(void);
-void		free_env(void);
-char		*ft_strdup_calloc(const char *s);
+void					init_environ(void);
+void					free_env(void);
+char					*ft_strdup_calloc(const char *s);
 
 /*******************************************
 !!!!!!!!!!!!!!! DELETE THIS !!!!!!!!!!!!!!!!
 *******************************************/
-void		print_list(t_token *list);
-void		print_tree(t_tree_node *root);
-void		print_tree_util(t_tree_node *root, int space);
+void					print_list(t_token *list);
+void					print_tree(t_tree_node *root);
+void					print_tree_util(t_tree_node *root, int space);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 18:06:28 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:32:08 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
-	print_list(cmd_node->cmd);
+	// print_list(cmd_node->cmd);
 	if (*(cmd_node->cmd->value) == '\0')
 		return (exit_status);
 	if (is_builtin(cmd_node->cmd))
@@ -46,7 +46,7 @@ void	run_command_in_child_process(t_token *cmd)
 	char	*cmd_path;
 
 	cmd_path = get_cmd_path(cmd);
-	print_list(cmd);
+	// print_list(cmd);
 	cmd_and_args = get_cmd_and_args(cmd);
 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 		exit(throw_error(cmd_path));

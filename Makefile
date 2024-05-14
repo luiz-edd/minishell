@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/09 17:18:00 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/14 16:26:11 by leduard2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ FILES				= 	main.c \
 						environ.c \
 						export.c \
 						export_print.c \
-						export_utils.c
+						export_utils.c \
+						unset.c
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj
 
