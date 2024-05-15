@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/14 16:26:42 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:19:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ char	*get_cmd_path(t_token *cmd)
 {
 	char	*cmd_path;
 
-	if (ft_strchr(cmd->value, '/'))
+	if (ft_strcmp(cmd->value, ".") == 0)
+		exit(!!write(STDERR_FILENO, ".: filename argument required\n", 31));
+	else if (ft_strchr(cmd->value, '/'))
 	{
 		cmd_path = cmd->value;
 		cmd->value = ft_strrchr(cmd->value, '/') + 1;

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/14 17:53:51 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:03:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	expand_command(t_tree_node *cmd_node)
 		current->value = expand_vars(current->value);
 		if (ft_strchr_quote_aware(current->value, '*'))
 			expand_wildcards(&current, &cmd_node->cmd);
-		current->value = remove_quotes(current->value);
-		if (ft_strchr(current->value, ' '))
+		if (ft_strchr_quote_aware(current->value, ' '))
 			retokenize(&current);
 		if (*(current->value) == '\0')
 		{
@@ -32,11 +31,16 @@ void	expand_command(t_tree_node *cmd_node)
 			if (current->next)
 				current->next->prev = current->prev;
 		}
+		current->value = remove_quotes(current->value);
 		current = current->next;
+	}
+	if (!*(cmd_node->cmd->value) && cmd_node->cmd->next)
+	{
+		cmd_node->cmd = cmd_node->cmd->next;
+		cmd_node->cmd->prev = NULL;
 	}
 }
 
-// está dando problema = echo "exit_code ->$? user ->$USER home -> $HOME"
 char	*expand_vars(char *str)
 {
 	char	*start;
@@ -76,15 +80,21 @@ char	*handle_dollar(char *start, char **str)
 
 	dollar = (*str)++;
 	if (*(dollar + 1) == '?')
-		return (ft_itoa(*get_exit_status()));
-	while (**str && (ft_isalnum(**str) || **str == '_'))
-		(*str)++;
-	after_var = *str;
-	expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
+	{
+		expanded_var = ft_itoa(*get_exit_status());
+		after_var = ++(*str);
+	}
+	else
+	{
+		while (**str && (ft_isalnum(**str) || **str == '_'))
+			(*str)++;
+		after_var = *str;
+		expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
+	}
 	before_var = ft_substr(start, 0, dollar - start);
 	result = ft_strjoin(before_var, expanded_var);
 	result = ft_strjoin(result, after_var);
-	*str = result + ft_strlen(before_var) + ft_strlen(after_var) - 1;
+	*str = result + ft_strlen(before_var) + ft_strlen(expanded_var) - 1;
 	return (result);
 }
 
