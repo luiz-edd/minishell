@@ -93,6 +93,7 @@ int					ft_isspace(char c);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_arrstr_len(char **str);
 int					ft_fprintf(int fd, const char *format, ...);
+char				*ft_strndup(char *s, int n);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);
@@ -114,7 +115,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_lstadd_back_arr(t_list **lst, void **content);
 
-//double linked list utils
+// double linked list utils
 void				ft_dlst_add_back(t_dlst *list, t_dlst *new);
 void				ft_dlst_add_front(t_dlst *list, t_dlst *new);
 t_dlst				*ft_dlst_last(t_dlst *list);

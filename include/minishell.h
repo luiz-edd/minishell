@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/15 17:16:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:16:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <wait.h>
-# include <signal.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -100,6 +100,20 @@ int			execute_export(t_token *cmd);
 
 int			execute_pwd(void);
 
+/***************** export.c ******************/
+int			execute_export(t_token *cmd);
+
+/***************** export_print.c ******************/
+void		print_environ_sorted(void);
+
+/***************** export_utils.c ******************/
+void		add_to_env(char *str);
+int			is_valid_identifier(char *str);
+char		*get_key(char *arg);
+
+/***************** unset.c ******************/
+int			execute_unset(t_token *cmd);
+
 /*******************************************
 ############# EXECUTOR FOLDER ##############
 *******************************************/
@@ -147,8 +161,8 @@ void		retokenize(t_token **token);
 /************* wildcard.c ****************/
 void		expand_wildcards(t_token **token, t_token **cmd);
 int			is_match(char *text, char *pattern);
-int			**init_lookup_table(char *text, int *text_length, char *pattern,
-				int *pattern_length);
+int			**init_lookup_table(char *text, int *text_length,
+				char *pattern, int *pattern_length);
 int			match_result_and_free(int **lookup, int text_length,
 				int pattern_length);
 void		update_token_list(t_token **token, t_token *matched);
@@ -249,6 +263,11 @@ void		token_lst_add_back(t_token **token_list, t_token *new);
 int			token_lst_get_size(t_token *token_list);
 t_token		*token_lst_get_last(t_token *token_list);
 void		sort_token_lst(t_token **matched);
+
+/**************** environ.c ****************/
+void		init_environ(void);
+void		free_env(void);
+char		*ft_strdup_calloc(const char *s);
 
 /************** environ_list.c **************/
 

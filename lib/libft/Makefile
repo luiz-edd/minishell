@@ -81,6 +81,7 @@ SRC = ft_isalpha.c \
 	ft_isspace.c	\
 	ft_strcmp.c	\
 	ft_arrstr_len.c \
+	ft_strndup.c \
 	$(PRINTF) \
 	$(GNL) \
 	$(SPLIT_QUOTE) \

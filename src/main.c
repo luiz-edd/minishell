@@ -6,21 +6,19 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/15 16:39:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:09:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//!line tem que dar free na env
 int	main(void)
 {
 	char		*line;
 	t_token		*list;
 	t_tree_node	*root;
 
-	save_std_fd();
-	init_env_lst();
+	init_environ();
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)
@@ -28,7 +26,7 @@ int	main(void)
 		list = NULL;
 		line = readline("minishell> ");
 		if (!line)
-			return (!write(STDOUT_FILENO, "exit\n", 5));
+			break ;
 		else if (*line != '\0')
 		{
 			add_history(line);
@@ -40,6 +38,7 @@ int	main(void)
 		}
 		reset_for_next_iteration(line);
 	}
-	free_env_lst();
+	free_env();
+	write(STDOUT_FILENO, "exit\n", 5);
 	return (SUCCESS);
 }

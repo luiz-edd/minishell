@@ -6,13 +6,13 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/14 15:38:56 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/15 20:05:40 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				=	minishell
 CC					=	cc
-CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3 
+CFLAGS				=	-Wextra -Wall -Werror -Wunreachable-code -g3
 LIBFLAGS			=	-lreadline -lhistory 
 HEADERS				= 	-I ./include -I $(LIBFT_PATH)/src
 LIBFT				= 	$(addprefix $(LIBFT_PATH), libft.a)
@@ -41,7 +41,12 @@ FILES				= 	main.c \
 						debug.c \
 						error.c \
 						helper.c \
-						token_list.c
+						token_list.c \
+						environ.c \
+						export.c \
+						export_print.c \
+						export_utils.c \
+						unset.c
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj
 
@@ -50,7 +55,7 @@ OBJ_DIR				= 	obj
 all: $(NAME) 
 
 $(NAME): $(OBJS) libft
-	@$(CC) $(CFLAGS) $(LIBFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) $(LIBFLAGS)
 
 libft:
 	@make -C $(LIBFT_PATH) --silent
