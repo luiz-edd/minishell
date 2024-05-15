@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/04/27 22:37:02 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/14 15:38:56 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,21 @@ FILES				= 	main.c \
 						builtins.c \
 						cd.c \
 						echo.c \
+						env.c \
+						exit.c \
 						pwd.c \
 						execute_command.c \
 						execute_pipe.c \
 						execute_redirect.c \
 						executor.c \
 						expand.c \
+						wildcard.c \
 						lexer.c \
 						open_syntax.c \
 						bin_tree.c \
 						bin_tree_helper.c \
 						parser.c \
 						heredoc.c \
-						std_fd_restore.c \
 						signals.c \
 						debug.c \
 						error.c \
@@ -74,12 +76,12 @@ norm:
 
 val: all
 	valgrind --leak-check=full \
-		 --trace-children=yes \
-		 --track-fds=yes \
-		 --suppressions=readline.supp \
-		 ./$(NAME)
-#		  --show-leak-kinds=all \
-#         --track-origins=yes \
-#         --log-file=valgrind-out.txt \
+		--trace-children=yes \
+		--show-leak-kinds=all \
+		--suppressions=readline.supp \
+		./$(NAME)
+#		--track-fds=yes \
+#       --track-origins=yes \
+#       --log-file=valgrind-out.txt \
 
 .PHONY: all, clean, fclean, re, norm, val

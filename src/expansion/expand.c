@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:03:46 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:03:27 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,24 @@ void	expand_command(t_tree_node *cmd_node)
 	while (current)
 	{
 		current->value = expand_vars(current->value);
-		current->value = remove_quotes(current->value);
-		if (ft_strchr(current->value, ' '))
+		if (ft_strchr_quote_aware(current->value, '*'))
+			expand_wildcards(&current, &cmd_node->cmd);
+		if (ft_strchr_quote_aware(current->value, ' '))
 			retokenize(&current);
+		if (*(current->value) == '\0')
+		{
+			if (current->prev)
+				current->prev->next = current->next;
+			if (current->next)
+				current->next->prev = current->prev;
+		}
+		current->value = remove_quotes(current->value);
 		current = current->next;
+	}
+	if (!*(cmd_node->cmd->value) && cmd_node->cmd->next)
+	{
+		cmd_node->cmd = cmd_node->cmd->next;
+		cmd_node->cmd->prev = NULL;
 	}
 }
 
@@ -37,20 +51,20 @@ char	*expand_vars(char *str)
 		if (*str == '\'')
 		{
 			while (*(++str) && *str != '\'')
-				str++;
+				;
 		}
 		else if (*str == '\"')
 		{
 			while (*(++str) && *str != '\"')
 			{
-				if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str
-							+ 1) == '?'))
-					return (handle_dollar(start, &str));
-				str++;
+				if (*str == '$' && str[1] && (ft_isalnum(str[1])
+						|| ft_strchr("_?", str[1])))
+					start = handle_dollar(start, &str);
 			}
 		}
-		else if (*str == '$' && (ft_isalnum(*(str + 1)) || *(str + 1) == '?'))
-			return (handle_dollar(start, &str));
+		else if (*str == '$' && str[1] && (ft_isalnum(str[1]) || ft_strchr("_?",
+					str[1])))
+			start = handle_dollar(start, &str);
 		str++;
 	}
 	return (start);
@@ -65,15 +79,22 @@ char	*handle_dollar(char *start, char **str)
 	char	*result;
 
 	dollar = (*str)++;
-	if (dollar[1] == '?')
-		return (ft_itoa(*get_exit_status()));
-	while (**str && ft_isalnum(**str))
-		(*str)++;
-	after_var = *str;
-	expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
+	if (*(dollar + 1) == '?')
+	{
+		expanded_var = ft_itoa(*get_exit_status());
+		after_var = ++(*str);
+	}
+	else
+	{
+		while (**str && (ft_isalnum(**str) || **str == '_'))
+			(*str)++;
+		after_var = *str;
+		expanded_var = getenv(ft_substr(dollar, 1, after_var - dollar - 1));
+	}
 	before_var = ft_substr(start, 0, dollar - start);
 	result = ft_strjoin(before_var, expanded_var);
 	result = ft_strjoin(result, after_var);
+	*str = result + ft_strlen(before_var) + ft_strlen(expanded_var) - 1;
 	return (result);
 }
 
@@ -110,13 +131,18 @@ void	retokenize(t_token **token)
 
 	next = (*token)->next;
 	tokens = ft_split((*token)->value, ' ');
-	(*token)->value = tokens[0];
-	i = 1;
-	while (tokens[i])
+	if (*tokens)
 	{
-		(*token)->next = token_lst_new(tokens[i], WORD);
-		(*token) = (*token)->next;
-		i++;
+		(*token)->value = *tokens;
+		i = 1;
+		while (tokens[i])
+		{
+			(*token)->next = token_lst_new(tokens[i], WORD);
+			(*token) = (*token)->next;
+			i++;
+		}
+		(*token)->next = next;
 	}
-	(*token)->next = next;
+	else
+		(*token)->value = "\0";
 }

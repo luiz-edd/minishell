@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:50:37 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:50:28 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,33 @@
 
 int	syntax_error(char *token)
 {
-	dprintf(2, "minishell: syntax error near unexpected token `%s'\n", token);
+	ft_fprintf(2, "minishell: syntax error near unexpected token `%s'\n",
+		token);
 	return (set_exit_status(SYNTAX_ERROR));
 }
 
+// testar quando passa só .
+// testar todos os tipos de erro
 int	throw_error(char *cmd_path)
 {
 	if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))
 	{
-		dprintf(STDERR_FILENO, "%s: Permission denied\n", cmd_path);
+		ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd_path);
 		return (126);
 	}
-	else if ((*cmd_path == '/' || *cmd_path == '.') && !access(cmd_path, F_OK))
+	else if ((*cmd_path == '.' || ft_strchr(cmd_path, '/')) && !access(cmd_path,
+			F_OK))
 	{
-		dprintf(STDERR_FILENO, "%s: Is a directory\n", cmd_path);
+		ft_fprintf(STDERR_FILENO, "%s: Is a directory\n", cmd_path);
 		return (126);
-	}
-	else if (errno == 2 && !(*cmd_path == '/' || *cmd_path == '.'))
-	{
-		dprintf(STDERR_FILENO, "%s: command not found\n", cmd_path);
-		return (127);
 	}
 	else if (errno == 2 || !getenv("PATH"))
 	{
-		dprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd_path);
+		ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd_path);
 		return (127);
 	}
 	else
-		return (!!errno
-			+ write(STDERR_FILENO, "minishell: unexpected error\n", 28) - 28);
+		return (!!write(STDERR_FILENO, "minishell: unexpected error\n", 28));
 }
 
 int	handle_error(char *message)

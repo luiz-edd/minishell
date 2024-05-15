@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 15:17:06 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:39:26 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//!line tem que dar free na env
 int	main(void)
 {
 	char		*line;
@@ -23,11 +24,11 @@ int	main(void)
 	while (42)
 	{
 		if (setup_signal_handler(main_signal_handler) != SUCCESS)
-			continue ;
+			return (FAILURE);
 		list = NULL;
 		line = readline("minishell> ");
 		if (!line)
-			return (SUCCESS + write(STDOUT_FILENO, "exit\n", 5) - 5);
+			return (!write(STDOUT_FILENO, "exit\n", 5));
 		else if (*line != '\0')
 		{
 			add_history(line);

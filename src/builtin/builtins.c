@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:52:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:48:05 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:14:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 int	is_builtin(t_token *cmd)
 {
 	if (!ft_strcmp(cmd->value, "echo") || !ft_strcmp(cmd->value, "pwd")
-		|| !ft_strcmp(cmd->value, "cd"))
+		|| !ft_strcmp(cmd->value, "cd") || !ft_strcmp(cmd->value, "exit")
+		|| !ft_strcmp(cmd->value, "env"))
 		return (1);
 	return (0);
 }
 
-// provavelmente se der erro o retorno e 1, se sucesso = 0
 int	execute_builtin(t_token *cmd)
 {
 	char	*str;
@@ -36,5 +36,9 @@ int	execute_builtin(t_token *cmd)
 		return (execute_pwd());
 	if (!ft_strcmp(cmd->value, "cd"))
 		return (execute_cd(cmd));
-	return (handle_error("error execute builtin"));
+	if (!ft_strcmp(cmd->value, "env"))
+		return (execute_env(cmd));
+	if (!ft_strcmp(cmd->value, "exit"))
+		return (execute_exit(cmd));
+	return (handle_error("error executing builtin"));
 }

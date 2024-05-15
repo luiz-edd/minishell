@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:12:58 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/02 14:44:50 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:39:29 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	export(t_token *cmd)
 
 	i = 0;
 	args = get_cmd_and_args(cmd);
-	if(ft_arrstr_len(args) == 1)
+	if (ft_arrstr_len(args) == 1)
 	{
-		//print export;
+		// print export;
 	}
 	content = search_env_lst(*args);
 	if (content)

@@ -6,24 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 21:48:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:38:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	wait_for_all_children(void)
-{
-	int	status;
-	int	pid;
-
-	while (42)
-	{
-		pid = waitpid(-1, &status, WNOHANG);
-		if (pid <= 0)
-			break ;
-	}
-}
 
 int	*get_exit_status(void)
 {
@@ -59,6 +46,33 @@ void	reset_for_next_iteration(char *line)
 {
 	free(line);
 	delete_heredoc_files();
-	restore_fds();
 	ft_free_memory();
+}
+
+char	*ft_strchr_quote_aware(const char *s, int c)
+{
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(s);
+	i = 0;
+	while (i <= len)
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+		}
+		if (s[i] == '\"')
+		{
+			i++;
+			while (s[i] && s[i] != '\"')
+				i++;
+		}
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	return (NULL);
 }

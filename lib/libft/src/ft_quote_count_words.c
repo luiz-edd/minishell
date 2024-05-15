@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quote_count_words.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:39:05 by leduard2          #+#    #+#             */
-/*   Updated: 2024/01/19 20:24:18 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:11:43 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static char	*verify_word(char *str, char delimiter, char quote, int *count)
 	return (str);
 }
 
-//  ""''aa
 int	ft_countwords_quote(char *str, char delimiter)
 {
 	int	count;

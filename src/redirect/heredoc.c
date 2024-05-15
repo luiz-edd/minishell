@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:30:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:57:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	write_input_to_heredoc(int fd, char *end_condition, int is_expandable)
 	if (!line)
 	{
 		if (*get_exit_status() != SIGINT + 128)
-			dprintf(STDERR_FILENO, "minishell: warning: here-document delimited\
+			ft_fprintf(STDERR_FILENO, "minishell: warning: here-document delimited\
  by end-of-file (wanted '%s')\n", end_condition);
 		return (SUCCESS);
 	}

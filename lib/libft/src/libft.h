@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:32:55 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/02 14:35:26 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:42:54 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ char				**ft_split(char const *s, char point);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
-void				ft_putchar_fd(char point, int fd);
-void				ft_putstr_fd(char *s, int fd);
-void				ft_putendl_fd(char *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+int					ft_putchar_fd(char c, int fd);
+int					ft_putstr_fd(char *s, int fd);
+int					ft_putendl_fd(char *s, int fd);
+int					ft_putnbr_fd(long n, int fd);
+int					ft_putptr_fd(unsigned long nbr, int fd);
+int					ft_putnbr_base_fd(long nbr, char *base, int fd);
 
 char				*get_next_line(int fd);
 int					ft_wordcount(char *str, char delimiter);
@@ -87,9 +89,10 @@ float				ft_absolute(float a);
 float				ft_maxval(float a, float b);
 void				ft_print_words(char **str);
 long				ft_atol(char *str);
-int					ft_isspace(int c);
+int					ft_isspace(char c);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_arrstr_len(char **str);
+int					ft_fprintf(int fd, const char *format, ...);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);

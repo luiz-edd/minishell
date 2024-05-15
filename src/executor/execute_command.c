@@ -6,21 +6,21 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/27 22:26:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:19:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// !!!!!! mudar __environ
 int	execute_command(t_tree_node *cmd_node)
 {
-	char	**cmd_and_args;
-	char	*cmd_path;
 	int		pid;
 	int		exit_status;
 
+	exit_status = 0;
 	expand_command(cmd_node);
+	if (*(cmd_node->cmd->value) == '\0')
+		return (exit_status);
 	if (is_builtin(cmd_node->cmd))
 		return (execute_builtin(cmd_node->cmd));
 	else
@@ -30,23 +30,30 @@ int	execute_command(t_tree_node *cmd_node)
 			exit(handle_error("fork"));
 		setup_fork_signal_handlers(pid);
 		if (pid == 0)
-		{
-			cmd_path = get_cmd_path(cmd_node->cmd);
-			cmd_and_args = get_cmd_and_args(cmd_node->cmd);
-			if (execve(cmd_path, cmd_and_args, __environ) == -1)
-				exit(throw_error(cmd_path));
-		}
-		else
-			wait_child_status(pid, &exit_status);
+			run_command_in_child_process(cmd_node->cmd);
+		wait_child_status(pid, &exit_status);
 		return (exit_status);
 	}
+}
+
+void	run_command_in_child_process(t_token *cmd)
+{
+	char	**cmd_and_args;
+	char	*cmd_path;
+
+	cmd_path = get_cmd_path(cmd);
+	cmd_and_args = get_cmd_and_args(cmd);
+	if (execve(cmd_path, cmd_and_args, __environ) == -1)
+		exit(throw_error(cmd_path));
 }
 
 char	*get_cmd_path(t_token *cmd)
 {
 	char	*cmd_path;
 
-	if (ft_strchr(cmd->value, '/'))
+	if (ft_strcmp(cmd->value, ".") == 0)
+		exit(!!write(STDERR_FILENO, ".: filename argument required\n", 31));
+	else if (ft_strchr(cmd->value, '/'))
 	{
 		cmd_path = cmd->value;
 		cmd->value = ft_strrchr(cmd->value, '/') + 1;
@@ -65,10 +72,11 @@ char	*search_in_path(t_token *cmd)
 
 	path_env = getenv("PATH");
 	if (!path_env)
-		handle_error("getenv");
+		exit(!!write(STDERR_FILENO, "minishell: PATH not set\n", 24));
 	paths = ft_split(path_env, ':');
 	if (!paths)
-		handle_error("failed to allocate memory");
+		exit(!!write(STDERR_FILENO, "minishell: failed to retrieve PATH\
+ directories\n", 47));
 	i = 0;
 	while (paths[i])
 	{
@@ -78,8 +86,8 @@ char	*search_in_path(t_token *cmd)
 			return (cmd_path);
 		i++;
 	}
-	cmd_path = cmd->value;
-	return (cmd_path);
+	ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->value);
+	exit(127);
 }
 
 char	**get_cmd_and_args(t_token *cmd)
@@ -95,9 +103,9 @@ char	**get_cmd_and_args(t_token *cmd)
 	current = cmd;
 	while (current)
 	{
-		cmd_and_args[i] = current->value;
+		if (*(current->value) != '\0')
+			cmd_and_args[i++] = current->value;
 		current = current->next;
-		i++;
 	}
 	cmd_and_args[i] = NULL;
 	return (cmd_and_args);

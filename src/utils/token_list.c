@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:30:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/03/26 17:59:40 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:49:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@ void	token_lst_add_back(t_token **token_list, t_token *new)
 	}
 }
 
-void	token_lst_add_front(t_token **token_list, t_token *new)
-{
-	if (!(*token_list))
-		*token_list = new;
-	else
-	{
-		(*token_list)->prev = new;
-		new->next = *token_list;
-		*token_list = new;
-	}
-}
-
 int	token_lst_get_size(t_token *token_list)
 {
 	t_token	*current;
@@ -77,4 +65,28 @@ t_token	*token_lst_get_last(t_token *token_list)
 	while (current->next)
 		current = current->next;
 	return (current);
+}
+
+void	sort_token_lst(t_token **head)
+{
+	t_token	*current;
+	t_token	*next;
+	char	*temp;
+
+	current = *head;
+	while (current)
+	{
+		next = current->next;
+		while (next)
+		{
+			if (ft_strcmp(current->value, next->value) > 0)
+			{
+				temp = current->value;
+				current->value = next->value;
+				next->value = temp;
+			}
+			next = next->next;
+		}
+		current = current->next;
+	}
 }

@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   temp.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 20:31:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/25 20:32:37 by pehenri2         ###   ########.fr       */
+/*   Created: 2024/04/30 14:29:57 by pehenri2          #+#    #+#             */
+/*   Updated: 2024/04/30 17:05:23 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*get_fds(void)
+int	execute_env(t_token *cmd)
 {
-	static int	fd[3];
+	int	i;
 
-	return (fd);
-}
-
-void	save_std_fd(void)
-{
-	int	*fd;
-
-	fd = get_fds();
-	fd[STDIN_FILENO] = dup(STDIN_FILENO);
-	fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	fd[STDERR_FILENO] = dup(STDERR_FILENO);
-}
-
-void	restore_fds(void)
-{
-	int	*std_fd;
-
-	std_fd = get_fds();
-	dup2(std_fd[STDIN_FILENO], STDIN_FILENO);
-	dup2(std_fd[STDOUT_FILENO], STDOUT_FILENO);
-	dup2(std_fd[STDERR_FILENO], STDERR_FILENO);
+	if (cmd->next)
+		return (!!write(STDERR_FILENO, "env: too many arguments", 24));
+	i = 0;
+	while (__environ[i])
+	{
+		if (ft_strchr(__environ[i], '='))
+			ft_fprintf(STDOUT_FILENO, "%s\n", __environ[i]);
+		i++;
+	}
+	return (SUCCESS);
 }
