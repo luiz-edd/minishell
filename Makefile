@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/16 16:28:31 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/16 18:33:40 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ OBJ_DIR				= 	obj
 all: $(NAME) 
 
 $(NAME): $(OBJS) libft
-	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) $(LIBFLAGS)
+	@$(CC) $(CFLAGS) $(LIBFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME)
 
 libft:
 	@make -C $(LIBFT_PATH) --silent

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:32:27 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 15:25:49 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:51:14 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	wait_child_status(pid_t pid, int *status)
 		return ;
 	else if (WIFSIGNALED(*status))
 	{
-		write(STDIN_FILENO, "\n", 1);
+		if (*status == SIGINT)
+			write(STDIN_FILENO, "\n", 1);
 		*status = WTERMSIG(*status) + 128;
 	}
 }

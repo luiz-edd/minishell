@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 18:30:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:58:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		leave_program(int status);
 
 int	main(void)
 {
-	char					*line;
-	t_token					*list;
-	t_tree_node				*root;
-	static struct termios	term;
+	char			*line;
+	t_token			*list;
+	t_tree_node		*root;
+	struct termios	term;
 
 	init_shell(&term);
 	while (42)

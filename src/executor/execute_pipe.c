@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:11:20 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 18:10:34 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:56:22 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_pipe(t_tree_node *left, t_tree_node *right)
 	close_pipe(pipe_fd);
 	wait_child_status(child_pid[0], &exit_status[0]);
 	wait_child_status(child_pid[1], &exit_status[1]);
-	if (exit_status[0] > 128)
+	if (exit_status[0] == SIGINT + 128)
 		return (exit_status[0]);
 	return (exit_status[1]);
 }
