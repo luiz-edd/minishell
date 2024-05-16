@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/15 20:05:40 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/16 16:28:31 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,10 @@ FILES				= 	main.c \
 						echo.c \
 						env.c \
 						exit.c \
+						export_print.c \
+						export.c \
 						pwd.c \
+						unset.c \
 						execute_command.c \
 						execute_pipe.c \
 						execute_redirect.c \
@@ -33,20 +36,16 @@ FILES				= 	main.c \
 						wildcard.c \
 						lexer.c \
 						open_syntax.c \
-						bin_tree.c \
 						bin_tree_helper.c \
+						bin_tree.c \
 						parser.c \
 						heredoc.c \
 						signals.c \
-						debug.c \
+						environ.c \
 						error.c \
 						helper.c \
-						token_list.c \
-						environ.c \
-						export.c \
-						export_print.c \
-						export_utils.c \
-						unset.c
+						token_list.c
+
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj
 

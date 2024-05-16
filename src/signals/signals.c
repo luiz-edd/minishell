@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:37:40 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:06:20 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:58:57 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	setup_signal_handler(void (*func)(int signum))
 	return (SUCCESS);
 }
 
-// investigar como retornar os atributos do terminal
-// tcgetattr();
 void	main_signal_handler(int signum)
 {
 	if (signum == SIGINT)

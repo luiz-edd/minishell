@@ -82,6 +82,8 @@ SRC = ft_isalpha.c \
 	ft_strcmp.c	\
 	ft_arrstr_len.c \
 	ft_strndup.c \
+	ft_strdup_calloc.c \
+	ft_strchr_quote_aware.c \
 	$(PRINTF) \
 	$(GNL) \
 	$(SPLIT_QUOTE) \

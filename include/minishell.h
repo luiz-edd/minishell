@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/15 20:16:42 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:57:54 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -66,7 +67,7 @@ enum					e_token_type
 
 /*************** builtins.c ***************/
 
-int			is_builtin(t_token *cmd);
+bool		is_builtin(t_token *cmd);
 int			execute_builtin(t_token *cmd);
 
 /****************** cd.c ******************/
@@ -92,27 +93,29 @@ int			execute_exit(t_token *cmd);
 int			validate_argument(char *arg);
 int			check_limits(long number);
 
-/**************** export.c ****************/
+/***************** export.c ******************/
 
 int			execute_export(t_token *cmd);
+char		*get_key(char *arg);
+int			is_valid_identifier(char *str);
+int			is_env_key_present(char *key);
+int			is_key_without_value(char *key);
+
+/***************** export_print.c ******************/
+
+void		print_environ_sorted(void);
+int			print_smallest_unprinted(char **env, size_t env_size,
+				char *printed);
+void		format_and_print(const char *env_var);
 
 /***************** pwd.c ******************/
 
 int			execute_pwd(void);
 
-/***************** export.c ******************/
-int			execute_export(t_token *cmd);
-
-/***************** export_print.c ******************/
-void		print_environ_sorted(void);
-
-/***************** export_utils.c ******************/
-void		add_to_env(char *str);
-int			is_valid_identifier(char *str);
-char		*get_key(char *arg);
-
 /***************** unset.c ******************/
+
 int			execute_unset(t_token *cmd);
+void		delete_env_key(char *key_to_delete);
 
 /*******************************************
 ############# EXECUTOR FOLDER ##############
@@ -160,10 +163,10 @@ void		retokenize(t_token **token);
 
 /************* wildcard.c ****************/
 void		expand_wildcards(t_token **token, t_token **cmd);
-int			is_match(char *text, char *pattern);
-int			**init_lookup_table(char *text, int *text_length,
+bool		is_match(char *text, char *pattern);
+bool		**init_lookup_table(char *text, int *text_length,
 				char *pattern, int *pattern_length);
-int			match_result_and_free(int **lookup, int text_length,
+bool		match_result_and_free(bool **lookup, int text_length,
 				int pattern_length);
 void		update_token_list(t_token **token, t_token *matched);
 
@@ -244,9 +247,9 @@ void		heredoc_signal_handler(int signum);
 /**************** error.c *****************/
 
 int			syntax_error(char *token);
-int			handle_error(char *message);
 int			throw_error(char *cmd_path);
-void		close_pipe(int *pipe_fd);
+int			handle_error(char *message);
+int			signal_error(void);
 
 /**************** helper.c ****************/
 
@@ -254,7 +257,7 @@ int			*get_exit_status(void);
 int			set_exit_status(int status);
 void		wait_child_status(pid_t pid, int *status);
 void		reset_for_next_iteration(char *line);
-char		*ft_strchr_quote_aware(const char *s, int c);
+void		close_pipe(int *pipe_fd);
 
 /************** token_list.c **************/
 
@@ -265,23 +268,11 @@ t_token		*token_lst_get_last(t_token *token_list);
 void		sort_token_lst(t_token **matched);
 
 /**************** environ.c ****************/
+
 void		init_environ(void);
 void		free_env(void);
-char		*ft_strdup_calloc(const char *s);
-
-/************** environ_list.c **************/
-
-t_list		**get_env_lst(void);
-void		add_env_lst(char *content);
-void		init_env_lst(void);
-void		free_env_lst(void);
-char		*search_env_lst(char *content);
-
-/*******************************************
-!!!!!!!!!!!!!!! DELETE THIS !!!!!!!!!!!!!!!!
-*******************************************/
-void		print_list(t_token *list);
-void		print_tree(t_tree_node *root);
-void		print_tree_util(t_tree_node *root, int space);
+void		set_env(char *new_str, char *key, char *content);
+void		add_to_env(char *str);
+void		update_env(char *new_str, char *key);
 
 #endif

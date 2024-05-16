@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/13 20:01:24 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:06:09 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ void	expand_wildcards(t_token **token, t_token **head)
 	update_token_list(token, matched);
 }
 
-int	is_match(char *text, char *pattern)
+bool	is_match(char *text, char *pattern)
 {
-	int	text_length;
-	int	pattern_length;
-	int	row;
-	int	col;
-	int	**lookup;
+	int		text_length;
+	int		pattern_length;
+	int		row;
+	int		col;
+	bool	**lookup;
 
 	lookup = init_lookup_table(text, &text_length, pattern, &pattern_length);
-	row = 1;
+	row = true;
 	while (row <= text_length)
 	{
-		col = 1;
+		col = true;
 		while (col <= pattern_length)
 		{
 			if (pattern[col - 1] == '*')
@@ -65,23 +65,23 @@ int	is_match(char *text, char *pattern)
 	return (match_result_and_free(lookup, text_length, pattern_length));
 }
 
-int	**init_lookup_table(char *text, int *text_length, char *pattern,
+bool	**init_lookup_table(char *text, int *text_length, char *pattern,
 		int *pattern_length)
 {
-	int	**lookup;
-	int	row;
-	int	col;
+	bool	**lookup;
+	int		row;
+	int		col;
 
 	*text_length = ft_strlen(text);
 	*pattern_length = ft_strlen(pattern);
-	lookup = (int **)ft_calloc((*text_length + 1), sizeof(int *));
-	row = 0;
+	lookup = (bool **)ft_calloc((*text_length + 1), sizeof(bool *));
+	row = false;
 	while (row <= *text_length)
 	{
-		lookup[row] = (int *)ft_calloc((*pattern_length + 1), sizeof(int));
+		lookup[row] = (bool *)ft_calloc((*pattern_length + 1), sizeof(bool));
 		row++;
 	}
-	lookup[0][0] = 1;
+	lookup[0][0] = true;
 	col = 1;
 	while (col <= *pattern_length)
 	{
@@ -92,10 +92,11 @@ int	**init_lookup_table(char *text, int *text_length, char *pattern,
 	return (lookup);
 }
 
-int	match_result_and_free(int **lookup, int text_length, int pattern_length)
+bool	match_result_and_free(bool **lookup, int text_length,
+		int pattern_length)
 {
-	int	result;
-	int	row;
+	bool	result;
+	int		row;
 
 	result = lookup[text_length][pattern_length];
 	row = 0;

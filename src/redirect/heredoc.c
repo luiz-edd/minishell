@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:29:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/04/30 15:57:38 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:58:43 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@ int	create_heredoc_file(t_token *token)
 	int			*heredoc_counter;
 	int			fd;
 	char		*file_name;
-	int			is_expandable;
+	bool		is_expandable;
 
-	setup_signal_handler(heredoc_signal_handler);
-	is_expandable = 0;
+	if (setup_signal_handler(heredoc_signal_handler) != SUCCESS)
+		return (signal_error());
+	is_expandable = false;
 	heredoc_counter = get_heredoc_counter();
 	file_name = ft_strjoin("/tmp/.heredoc", ft_itoa((*heredoc_counter)++));
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (set_exit_status(handle_error("failed to create heredoc")));
 	if (!ft_strchr(token->value, '\"') && !ft_strchr(token->value, '\''))
-		is_expandable = 1;
+		is_expandable = true;
 	token->value = remove_quotes(token->value);
 	while (42)
 		if (write_input_to_heredoc(fd, token->value, is_expandable) == SUCCESS)

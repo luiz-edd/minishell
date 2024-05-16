@@ -6,77 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/15 20:18:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:25:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_env(char *new_str, char *key)
-{
-	int		i;
-	char	*env_key;
-	char	*aux;
-
-	i = -1;
-	while (__environ[++i])
-	{
-		env_key = get_key(__environ[i]);
-		if (!ft_strcmp(key, env_key))
-		{
-			aux = __environ[i];
-			__environ[i] = ft_strdup_calloc(new_str);
-			free(aux);
-			break ;
-		}
-	}
-}
-
-int	is_key_exist(char *key)
-{
-	int		i;
-	char	*env_key;
-
-	i = -1;
-	while (__environ[++i])
-	{
-		env_key = get_key(__environ[i]);
-		if (!ft_strcmp(key, env_key))
-			return (1);
-	}
-	return (0);
-}
-
-int	is_key_exist_whitout_content(char *key)
-{
-	int		i;
-	char	*env_key;
-
-	i = -1;
-	while (__environ[++i])
-	{
-		if (!ft_strchr(__environ[i], '='))
-		{
-			env_key = get_key(__environ[i]);
-			if (!ft_strcmp(key, env_key))
-				return (1);
-		}
-	}
-	return (0);
-}
-
-static void	ft_set_env(char *new_str, char *key, char *content)
-{
-	char	*env_var;
-
-	env_var = getenv(key);
-	if ((env_var || is_key_exist_whitout_content(key)) && content != NULL)
-		update_env(new_str, key);
-	else if (!is_key_exist(key))
-		(add_to_env(new_str));
-}
-
-// export key=content
 int	execute_export(t_token *cmd)
 {
 	int		i;
@@ -97,9 +32,67 @@ int	execute_export(t_token *cmd)
 		key = get_key(args[i]);
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
-			ft_set_env(args[i], key, equal_sign + 1);
+			set_env(args[i], key, equal_sign + 1);
 		else
-			ft_set_env(args[i], key, NULL);
+			set_env(args[i], key, NULL);
 	}
 	return (set_exit_status(!!status));
+}
+
+char	*get_key(char *arg)
+{
+	char	*equal_sign;
+
+	equal_sign = ft_strchr(arg, '=');
+	if (!equal_sign)
+		return (ft_strdup(arg));
+	else
+		return (ft_strndup(arg, equal_sign - arg));
+}
+
+int	is_valid_identifier(char *str)
+{
+	if (*str != '=' && !ft_isdigit(*str))
+	{
+		while (*str && *str != '=' && (ft_isalnum(*str) || *str == '_'))
+			str++;
+		if (*str == '=' || !*str)
+			return (1);
+	}
+	write(STDERR_FILENO, "export: not a valid identifier\n", 32);
+	set_exit_status(FAILURE);
+	return (0);
+}
+
+int	is_env_key_present(char *key)
+{
+	int		i;
+	char	*env_key;
+
+	i = -1;
+	while (__environ[++i])
+	{
+		env_key = get_key(__environ[i]);
+		if (!ft_strcmp(key, env_key))
+			return (1);
+	}
+	return (0);
+}
+
+int	is_key_without_value(char *key)
+{
+	int		i;
+	char	*env_key;
+
+	i = -1;
+	while (__environ[++i])
+	{
+		if (!ft_strchr(__environ[i], '='))
+		{
+			env_key = get_key(__environ[i]);
+			if (!ft_strcmp(key, env_key))
+				return (1);
+		}
+	}
+	return (0);
 }

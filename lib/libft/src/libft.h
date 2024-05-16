@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:32:55 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/15 16:42:54 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:28:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_arrstr_len(char **str);
 int					ft_fprintf(int fd, const char *format, ...);
 char				*ft_strndup(char *s, int n);
+char				*ft_strdup_calloc(const char *s);
+char				*ft_strchr_quote_aware(const char *s, int c);
 
 // SPLIT_QUOTE
 void				ft_add_word(char *str, char delimiter, char *dst);

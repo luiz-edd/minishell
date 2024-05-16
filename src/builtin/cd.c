@@ -6,13 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/04/30 15:58:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:46:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// cd precisa mudar a variavel da env (PWD e OLDPWD)
 int	execute_cd(t_token *cmd)
 {
 	char	**args;
@@ -28,12 +27,17 @@ int	execute_cd(t_token *cmd)
 int	change_to_home(void)
 {
 	char	*home;
+	char	*cur_dir;
 
+	cur_dir = getcwd(NULL, 0);
+	ft_collect_mem(cur_dir);
 	home = getenv("HOME");
 	if (home)
 	{
 		if (chdir(home) == -1)
 			return (handle_error(home));
+		set_env(ft_strjoin("OLDPWD=", cur_dir), "OLDPWD", cur_dir);
+		set_env(ft_strjoin("PWD=", getcwd(NULL, 0)), "PWD", getcwd(NULL, 0));
 		return (SUCCESS);
 	}
 	else
@@ -42,16 +46,18 @@ int	change_to_home(void)
 
 int	change_dir(char *path)
 {
-	char	*work_dir;
+	char	*cur_dir;
 
-	work_dir = getcwd(NULL, 4096);
-	if (!work_dir)
+	cur_dir = getcwd(NULL, 4096);
+	if (!cur_dir)
 		return (handle_error("cd"));
-	ft_collect_mem(work_dir);
+	ft_collect_mem(cur_dir);
 	if (check_access(path) == FAILURE)
 		return (FAILURE);
 	if (chdir(path) == -1)
 		return (handle_error(path));
+	set_env(ft_strjoin("OLDPWD=", cur_dir), "OLDPWD", cur_dir);
+	set_env(ft_strjoin("PWD=", getcwd(NULL, 0)), "PWD", getcwd(NULL, 0));
 	return (SUCCESS);
 }
 
