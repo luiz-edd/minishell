@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 17:08:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:23:59 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,8 @@ void		sort_token_lst(t_token **matched);
 
 /**************** environ.c ****************/
 
+
+char		***get_my_env(void);
 void		init_environ(void);
 void		free_env(void);
 void		set_env(char *new_str, char *key, char *content);

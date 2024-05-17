@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 18:58:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:54:02 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int		leave_program(int status);
 
 int	main(void)
 {
-	char			*line;
-	t_token			*list;
-	t_tree_node		*root;
-	struct termios	term;
+	char					*line;
+	t_token					*list;
+	t_tree_node				*root;
+	static struct termios	term;
 
-	init_shell(&term);
+	// init_shell(&term);
+	tcgetattr(STDIN_FILENO, &term);
 	while (42)
 	{
 		line = init_and_wait_input(&term, &list);
@@ -38,30 +39,33 @@ int	main(void)
 					set_exit_status(executor(root));
 			}
 		}
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		reset_for_next_iteration(line);
 	}
 	return (leave_program(SUCCESS));
 }
 
-int	init_shell(struct termios *term)
-{
-	init_environ();
-	if (tcgetattr(STDIN_FILENO, term) == -1)
-	{
-		write(STDERR_FILENO, "minishell: error getting terminal attributes\n",
-			46);
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
+// int	init_shell(struct termios *term)
+// {
+// 	init_environ();
+// 	(void)term;
+// 	// if (tcgetattr(STDIN_FILENO, term) == -1)
+// 	// {
+// 	// 	write(STDERR_FILENO, "minishell: error getting terminal attributes\n",
+// 	// 			46);
+// 	// 	return (FAILURE);
+// 	// }
+// 	return (SUCCESS);
+// }
 
 char	*init_and_wait_input(struct termios *term, t_token **list)
 {
 	char	*line;
 
+	(void)term;
 	if (setup_signal_handler(main_signal_handler) != SUCCESS)
 		exit(signal_error());
-	tcsetattr(STDIN_FILENO, TCSANOW, term);
+	// tcsetattr(STDIN_FILENO, TCSANOW, term);
 	*list = NULL;
 	line = readline("minishell> ");
 	return (line);

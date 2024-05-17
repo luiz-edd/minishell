@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/16 16:25:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:39:12 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ int	is_env_key_present(char *key)
 {
 	int		i;
 	char	*env_key;
+	char 	**env;
 
+	env = *get_my_env();
 	i = -1;
-	while (__environ[++i])
+	while (env[++i])
 	{
-		env_key = get_key(__environ[i]);
+		env_key = get_key(env[i]);
 		if (!ft_strcmp(key, env_key))
 			return (1);
 	}
@@ -83,13 +85,15 @@ int	is_key_without_value(char *key)
 {
 	int		i;
 	char	*env_key;
+	char 	**env;
 
+	env = *get_my_env();
 	i = -1;
-	while (__environ[++i])
+	while (env[++i])
 	{
-		if (!ft_strchr(__environ[i], '='))
+		if (!ft_strchr(env[i], '='))
 		{
-			env_key = get_key(__environ[i]);
+			env_key = get_key(env[i]);
 			if (!ft_strcmp(key, env_key))
 				return (1);
 		}
