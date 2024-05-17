@@ -6,7 +6,7 @@
 /*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 17:54:02 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:42:21 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(void)
 	static struct termios	term;
 
 	// init_shell(&term);
+	init_environ();
 	tcgetattr(STDIN_FILENO, &term);
 	while (42)
 	{
@@ -64,7 +65,11 @@ char	*init_and_wait_input(struct termios *term, t_token **list)
 
 	(void)term;
 	if (setup_signal_handler(main_signal_handler) != SUCCESS)
+	{
+		free_env();
+		ft_free_memory();
 		exit(signal_error());
+	}
 	// tcsetattr(STDIN_FILENO, TCSANOW, term);
 	*list = NULL;
 	line = readline("minishell> ");
@@ -73,7 +78,9 @@ char	*init_and_wait_input(struct termios *term, t_token **list)
 
 int	leave_program(int status)
 {
+	// printf("leaving program\n");
 	free_env();
+	ft_free_memory();
 	write(STDOUT_FILENO, "exit\n", 5);
 	return (status);
 }

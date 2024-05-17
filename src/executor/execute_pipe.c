@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:11:20 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 18:56:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:15:20 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int	execute_child(int fd, int *pipe, t_tree_node *node)
 	close_pipe(pipe);
 	exit_status = executor(node);
 	ft_free_memory();
+	free_env();
 	exit(exit_status);
 }

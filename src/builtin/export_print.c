@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:16 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/16 16:18:57 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:57:05 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void	print_environ_sorted(void)
 {
 	char	*printed;
 	size_t	size;
+	char	**env;
 
+	env = *get_my_env();
 	size = 0;
-	while (__environ[size])
+	while (env[size])
 		size++;
 	printed = ft_calloc(size + 1, sizeof(char));
-	while (print_smallest_unprinted(__environ, size, printed))
+	while (print_smallest_unprinted(env, size, printed))
 		;
 	free(printed);
 }
