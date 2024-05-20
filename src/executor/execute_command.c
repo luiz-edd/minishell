@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 16:29:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:40:00 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*search_in_path(t_token *cmd)
 
 	path_env = getenv("PATH");
 	if (!path_env)
-		exit(!!write(STDERR_FILENO, "minishell: PATH not set\n", 24));
+		return (cmd->value);
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		exit(!!write(STDERR_FILENO, "minishell: failed to retrieve PATH\
