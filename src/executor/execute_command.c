@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 16:40:00 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:00:33 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,16 @@ void	run_command_in_child_process(t_token *cmd)
 {
 	char	**cmd_and_args;
 	char	*cmd_path;
+	int		exit_status;
 
 	cmd_path = get_cmd_path(cmd);
 	cmd_and_args = get_cmd_and_args(cmd);
 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 	{
+		exit_status = throw_error(cmd_path);
 		free_env();
 		ft_free_memory();
-		exit(throw_error(cmd_path));
+		exit(exit_status);
 	}
 }
 
