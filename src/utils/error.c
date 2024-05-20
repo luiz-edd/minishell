@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 16:55:16 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:51:25 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	handle_error(char *message)
 
 int	signal_error(void)
 {
-	ft_fprintf(STDERR_FILENO, "minishell: failed to set signal handler\n");
+	ft_fprintf(STDERR_FILENO, "minishell: failed to install signal handler\n");
 	return (FAILURE);
 }

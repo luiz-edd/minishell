@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:29:57 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 15:40:44 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:40:13 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	execute_env(t_token *cmd)
 {
-	int	i;
-	char **env;
+	int		i;
+	char	**env;
 
 	env = *get_my_env();
 	if (cmd->next)

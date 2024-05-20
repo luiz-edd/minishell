@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:11:20 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 19:15:20 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:15:59 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,19 @@ int	execute_child(int fd, int *pipe, t_tree_node *node)
 	ft_free_memory();
 	free_env();
 	exit(exit_status);
+}
+
+void	wait_child_status(pid_t pid, int *status)
+{
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	else if (*status == 1)
+		return ;
+	else if (WIFSIGNALED(*status))
+	{
+		if (*status == SIGINT)
+			write(STDIN_FILENO, "\n", 1);
+		*status = WTERMSIG(*status) + 128;
+	}
 }

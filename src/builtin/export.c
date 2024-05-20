@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/17 15:39:12 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:41:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	is_env_key_present(char *key)
 {
 	int		i;
 	char	*env_key;
-	char 	**env;
+	char	**env;
 
 	env = *get_my_env();
 	i = -1;
@@ -85,7 +85,7 @@ int	is_key_without_value(char *key)
 {
 	int		i;
 	char	*env_key;
-	char 	**env;
+	char	**env;
 
 	env = *get_my_env();
 	i = -1;

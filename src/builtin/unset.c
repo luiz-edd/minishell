@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:10 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/17 15:51:36 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:12:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ void	delete_env_key(char *key_to_delete)
 	int		j;
 	char	*env_key;
 	char	**new_env;
-	char	**env;
+	char	**cur_env;
 
-	env = *get_my_env();
+	cur_env = *get_my_env();
 	i = 0;
-	while (env[i])
+	while (cur_env[i])
 		i++;
-	new_env = (char **)ft_calloc(i, (sizeof(char *)));
+	new_env = (char **)ft_calloc(i + 1, (sizeof(char *)));
 	i = -1;
 	j = -1;
-	while (env[++i])
+	while (cur_env[++i])
 	{
-		env_key = get_key(env[i]);
+		env_key = get_key(cur_env[i]);
 		if (ft_strcmp(key_to_delete, env_key))
-			new_env[++j] = env[i];
+			new_env[++j] = cur_env[i];
+		else
+			free(cur_env[i]);
 	}
-	new_env[j + 1] = NULL;
+	free(cur_env);
+	new_env[++j] = NULL;
 	*get_my_env() = new_env;
 	__environ = new_env;
-	i = -1;
 }
-
-// export aaa=10 && export bbb=20 && export ccc=30 && export ddd=40

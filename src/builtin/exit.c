@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/15 15:17:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:18:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	execute_exit(t_token *cmd)
 		if (validate_argument(cmd->next->value) == FAILURE
 			|| check_limits(status) == FAILURE)
 		{
-			ft_fprintf(STDERR_FILENO, "exit\nexit:\
+			ft_fprintf(STDERR_FILENO, "exit\nexit: \
 %s: numeric argument required\n", cmd->next->value);
 			exit(SYNTAX_ERROR);
 		}

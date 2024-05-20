@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 20:00:29 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:29:16 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// need to free everthing before exit in a fork
 int	execute_command(t_tree_node *cmd_node)
 {
 	int	pid;
@@ -47,7 +45,6 @@ void	run_command_in_child_process(t_token *cmd)
 	cmd_and_args = get_cmd_and_args(cmd);
 	if (execve(cmd_path, cmd_and_args, __environ) == -1)
 	{
-		ft_printf("reseting!!!!!!!!!!!!!!!!!!!!!!\n");
 		free_env();
 		ft_free_memory();
 		exit(throw_error(cmd_path));
@@ -83,8 +80,7 @@ char	*search_in_path(t_token *cmd)
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		exit(!!write(STDERR_FILENO, "minishell: failed to retrieve PATH\
- directories\n",
-						47));
+ directories\n", 47));
 	i = 0;
 	while (paths[i])
 	{

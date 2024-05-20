@@ -3,33 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:18:32 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 16:02:23 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:46:56 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	***get_my_env(void)
-{
-	static char	**env;
-
-	return (&env);
-}
-
 void	init_environ(void)
 {
-	int		i;
 	char	**env_copy;
+	int		i;
 
 	i = 0;
 	while (__environ[i])
-	{
-		// printf("%s\n", __environ[i]);
 		i++;
-	}
 	*get_my_env() = malloc(sizeof(char *) * (i + 1));
 	env_copy = *get_my_env();
 	i = -1;
@@ -37,13 +27,6 @@ void	init_environ(void)
 		env_copy[i] = ft_strdup_calloc(__environ[i]);
 	env_copy[i] = NULL;
 	__environ = env_copy;
-	// 	i = 0;
-	// 	while (env_copy[i])
-	// 	{
-	// 		printf("%s\n", env_copy[i]);
-	// 		printf("i: %d\n", i);
-	// 		i++;
-	// 	}
 }
 
 void	free_env(void)
@@ -54,9 +37,7 @@ void	free_env(void)
 	i = -1;
 	env = *get_my_env();
 	while (env[++i])
-	{
 		free(env[i]);
-	}
 	free(env);
 }
 

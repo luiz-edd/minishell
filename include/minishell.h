@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/17 15:23:59 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:20:17 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ char		**get_cmd_and_args(t_token *cmd);
 
 int			execute_pipe(t_tree_node *left, t_tree_node *right);
 int			execute_child(int fd, int *pipe, t_tree_node *node);
+void		wait_child_status(pid_t pid, int *status);
 
 /*********** execute_redirect.c ***********/
 
@@ -254,10 +255,9 @@ int			signal_error(void);
 
 /**************** helper.c ****************/
 
+char		***get_my_env(void);
 int			*get_exit_status(void);
 int			set_exit_status(int status);
-void		wait_child_status(pid_t pid, int *status);
-void		reset_for_next_iteration(char *line);
 void		close_pipe(int *pipe_fd);
 
 /************** token_list.c **************/
@@ -270,8 +270,6 @@ void		sort_token_lst(t_token **matched);
 
 /**************** environ.c ****************/
 
-
-char		***get_my_env(void);
 void		init_environ(void);
 void		free_env(void);
 void		set_env(char *new_str, char *key, char *content);
