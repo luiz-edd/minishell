@@ -509,6 +509,9 @@ output_exit_code.append("X\n") #159
 #         # lines.pop()
 #     return lines
 
+file_path = ["log_file"]
+rm_command = ["rm", "-f"] + file_path
+subprocess.run(rm_command)	
 i = 1
 for command, reference, reference_exit_code in zip(input_list, output_ref_list, output_exit_code):
     command_exit_code = "\necho $?"
@@ -541,6 +544,6 @@ for command, reference, reference_exit_code in zip(input_list, output_ref_list, 
     with open("log_file", "a") as log_file:
         log_file.write(f"{i}.\ncommand:\n{command}\nexpected output:\n{reference}\noutput received:\n{result_command}\nexpected status: {reference_exit_code}\nstatus received: {status_result}\n\n")
     i = i + 1
-file_paths = [" ", "filename", "fdasdfsa", "file", "infile1", "infile2", "outfile1", "tudo", "outfile3", "ref_file", "outfile", "result", "status_file", "status_outfile", "status_ref_file", "status_result", "valgrind.log"]
+file_paths = [" ", "filename", "fdasdfsa", "file", "infile1", "infile2", "outfile1", "tudo", "outfile3", "ref_file", "outfile_final", "result", "status_file", "status_outfile", "status_ref_file", "status_result", "valgrind.log"]
 rm_command = ["rm", "-f"] + file_paths
 subprocess.run(rm_command)	

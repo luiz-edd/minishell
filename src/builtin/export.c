@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/20 14:41:04 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:04:50 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_key(char *arg)
 
 int	is_valid_identifier(char *str)
 {
-	if (*str != '=' && !ft_isdigit(*str))
+	if (*str != '=' && !ft_isdigit(*str) && *str != '\0')
 	{
 		while (*str && *str != '=' && (ft_isalnum(*str) || *str == '_'))
 			str++;

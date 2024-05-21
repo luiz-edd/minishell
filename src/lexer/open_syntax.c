@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_syntax.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 13:08:58 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/21 15:24:15 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:40:22 by leduard2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	check_open_syntax(char *str)
 {
-	int		index;
-	int		brackets;
-	int		single_quote;
-	int		double_quote;
+	int	index;
+	int	brackets;
+	int	single_quote;
+	int	double_quote;
 
 	index = 0;
 	brackets = 0;
@@ -34,13 +34,12 @@ int	check_open_syntax(char *str)
 		index++;
 	}
 	if (brackets != 0 || single_quote != 0 || double_quote != 0)
-		return (SYNTAX_ERROR + !write(STDERR_FILENO, "Invalid syntax, check input for open\
- quotes or brackets.\n", 58));
+		return (SYNTAX_ERROR + !write(STDERR_FILENO, "Invalid syntax, check input for open quotes or brackets.\n", 57));
 	return (SUCCESS);
 }
 
 void	move_to_next_quote(char *str, int *index, int *single_quote,
-	int *double_quote)
+		int *double_quote)
 {
 	if (str[*index] == '\'')
 	{
