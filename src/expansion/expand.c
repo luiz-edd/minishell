@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 18:13:31 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:34:30 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,25 @@ void	expand_command(t_tree_node *cmd_node)
 	while (current)
 	{
 		current->value = expand_vars(current->value);
-		if (ft_strchr_quote_aware(current->value, '*'))
-			expand_wildcards(&current, &cmd_node->cmd);
-		if (ft_strchr_quote_aware(current->value, ' '))
-			retokenize(&current);
 		if (*(current->value) == '\0')
 		{
 			if (current->prev)
 				current->prev->next = current->next;
 			if (current->next)
 				current->next->prev = current->prev;
+			if (*(cmd_node->cmd->value) == '\0')
+			{
+				cmd_node->cmd = cmd_node->cmd->next;
+				if (cmd_node->cmd)
+					cmd_node->cmd->prev = NULL;
+			}
 		}
+		if (ft_strchr_quote_aware(current->value, '*'))
+			expand_wildcards(&current, &cmd_node->cmd);
+		if (ft_strchr_quote_aware(current->value, ' '))
+			retokenize(&current);
 		current->value = remove_quotes(current->value);
 		current = current->next;
-	}
-	if (!*(cmd_node->cmd->value) && cmd_node->cmd->next)
-	{
-		cmd_node->cmd = cmd_node->cmd->next;
-		cmd_node->cmd->prev = NULL;
 	}
 }
 

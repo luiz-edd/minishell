@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 15:17:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:44:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	leave_program(int status)
 {
 	free_env();
 	ft_free_memory();
-	write(STDOUT_FILENO, "exit\n", 5);
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "exit\n", 5);
 	return (status);
 }

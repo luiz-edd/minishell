@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:47:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 18:00:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:27:38 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	execute_command(t_tree_node *cmd_node)
 
 	exit_status = 0;
 	expand_command(cmd_node);
-	if (*(cmd_node->cmd->value) == '\0')
-		return (exit_status);
+	if (cmd_node->cmd == NULL)
+		return (SUCCESS);
 	if (is_builtin(cmd_node->cmd))
 		return (execute_builtin(cmd_node->cmd));
 	else
@@ -59,6 +59,8 @@ char	*get_cmd_path(t_token *cmd)
 
 	if (ft_strcmp(cmd->value, ".") == 0)
 		exit(!!write(STDERR_FILENO, ".: filename argument required\n", 31));
+	else if (*(cmd->value) == '\0')
+		cmd_path = cmd->value;
 	else if (ft_strchr(cmd->value, '/'))
 	{
 		cmd_path = cmd->value;
@@ -111,8 +113,7 @@ char	**get_cmd_and_args(t_token *cmd)
 	current = cmd;
 	while (current)
 	{
-		if (*(current->value) != '\0')
-			cmd_and_args[i++] = current->value;
+		cmd_and_args[i++] = current->value;
 		current = current->next;
 	}
 	cmd_and_args[i] = NULL;

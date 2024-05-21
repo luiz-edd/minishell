@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:16 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/17 18:57:05 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:32:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	format_and_print(const char *env_var)
 	copy = ft_strdup_calloc(env_var);
 	equal = ft_strchr(copy, '=');
 	if (!equal)
-		printf("declare -x %s\n", copy);
+		ft_fprintf(STDIN_FILENO, "declare -x %s\n", copy);
 	else
 	{
 		*equal = '\0';
 		name = copy;
 		value = equal + 1;
-		printf("declare -x %s=\"%s\"\n", name, value);
+		ft_fprintf(STDOUT_FILENO, "declare -x %s=\"%s\"\n", name, value);
 	}
 	free(copy);
 }

@@ -6,12 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:35:23 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/15 16:10:55 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:16:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//testar expansao de redirect
 int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 {
 	int		fd;
@@ -24,7 +25,9 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 	fd = -1;
 	before_expansion = right->cmd->value;
 	expand_command(right);
-	if (right->cmd->next || *(right->cmd->value) == '\0')
+	if (right->cmd == NULL)
+		return (SUCCESS);
+	if (right->cmd->next)
 		return (!!ft_fprintf(STDERR_FILENO, "%s: ambiguous redirect\n",
 				before_expansion));
 	if (open_redir_file(right, redir_type, &fd) != SUCCESS)

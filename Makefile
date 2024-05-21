@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/16 18:33:40 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/21 15:54:10 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ FILES				= 	main.c \
 						environ.c \
 						error.c \
 						helper.c \
-						token_list.c
+						token_list.c \
+						debug.c #deletethis
 
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj
