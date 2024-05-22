@@ -6,13 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 15:36:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:31:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_command(t_tree_node *cmd_node)
+void	expand_tokens(t_tree_node *cmd_node)
 {
 	t_token	*current;
 
@@ -21,18 +21,7 @@ void	expand_command(t_tree_node *cmd_node)
 	{
 		current->value = expand_vars(current->value);
 		if (*(current->value) == '\0')
-		{
-			if (current->prev)
-				current->prev->next = current->next;
-			if (current->next)
-				current->next->prev = current->prev;
-			if (*(cmd_node->cmd->value) == '\0')
-			{
-				cmd_node->cmd = cmd_node->cmd->next;
-				if (cmd_node->cmd)
-					cmd_node->cmd->prev = NULL;
-			}
-		}
+			handle_empty_value(&current, &cmd_node);
 		if (ft_strchr_quote_aware(current->value, '*'))
 			expand_wildcards(&current, &cmd_node->cmd);
 		if (ft_strchr_quote_aware(current->value, ' '))
@@ -80,17 +69,7 @@ char	*handle_dollar(char *start, char **str)
 	char	*result;
 
 	dollar = (*str)++;
-	if (*(dollar + 1) == '?')
-	{
-		expanded_var = ft_itoa(*get_exit_status());
-		after_var = ++(*str);
-	}
-	else if (*(dollar + 1) == '\'' || *(dollar + 1) == '\"')
-	{
-		after_var = *str;
-		expanded_var = ft_strdup("");
-	}
-	else
+	if (!handle_special_cases(dollar, str, &after_var, &expanded_var))
 	{
 		while (**str && (ft_isalnum(**str) || **str == '_'))
 			(*str)++;
@@ -104,51 +83,20 @@ char	*handle_dollar(char *start, char **str)
 	return (result);
 }
 
-char	*remove_quotes(char *str)
+char	*handle_special_cases(char *dollar, char **str, char **after_var,
+		char **expanded_var)
 {
-	int		i;
-	int		j;
-	char	*tmp;
-	char	quote;
-
-	i = 0;
-	j = 0;
-	quote = '\0';
-	tmp = ft_dalloc(ft_strlen(str) + 1, sizeof(char));
-	while (str[i])
+	if (*(dollar + 1) == '?')
 	{
-		if ((str[i] == '\"' || str[i] == '\'') && quote == str[i])
-			quote = '\0';
-		else if ((str[i] == '\"' || str[i] == '\'') && quote == '\0')
-			quote = str[i];
-		else
-			tmp[j++] = str[i];
-		i++;
+		*expanded_var = ft_itoa(*get_exit_status());
+		*after_var = ++(*str);
 	}
-	tmp[j] = '\0';
-	return (tmp);
-}
-
-void	retokenize(t_token **token)
-{
-	t_token	*next;
-	char	**tokens;
-	int		i;
-
-	next = (*token)->next;
-	tokens = ft_split((*token)->value, ' ');
-	if (*tokens)
+	else if (*(dollar + 1) == '\'' || *(dollar + 1) == '\"')
 	{
-		(*token)->value = *tokens;
-		i = 1;
-		while (tokens[i])
-		{
-			(*token)->next = token_lst_new(tokens[i], WORD);
-			(*token) = (*token)->next;
-			i++;
-		}
-		(*token)->next = next;
+		*after_var = *str;
+		*expanded_var = ft_strdup("");
 	}
 	else
-		(*token)->value = "\0";
+		return (NULL);
+	return (*expanded_var);
 }

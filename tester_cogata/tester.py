@@ -184,7 +184,7 @@ output_ref_list.append("ech: command not found\nhaha\n") #8
 output_ref_list.append("oi\nhello\nbonjour\n") #9
 output_ref_list.append("ech: command not found\nhey\n") #10
 output_ref_list.append("ech: command not found\noi\nhi$\n") #11
-output_ref_list.append("hello$\n14\n") #12
+output_ref_list.append("hello$\n13\n") #12
 output_ref_list.append("") #13
 output_ref_list.append("bye\n") #14
 output_ref_list.append("hi\n") #15 

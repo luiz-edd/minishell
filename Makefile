@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/21 15:54:10 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/22 20:30:53 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ FILES				= 	main.c \
 						execute_pipe.c \
 						execute_redirect.c \
 						executor.c \
+						expand_utils.c \
 						expand.c \
 						wildcard.c \
 						lexer.c \

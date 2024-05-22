@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 15:41:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:52:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 # define MINISHELL_H
 
 # include "libft.h"
+
 # include <dirent.h>
 # include <errno.h>
 # include <limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include <stdio.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <termios.h>
 # include <unistd.h>
 # include <wait.h>
+
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -157,11 +159,17 @@ int			execute_block(t_tree_node *root);
 
 /**************** expand.c ****************/
 
-void		expand_command(t_tree_node *cmd_node);
+void		expand_tokens(t_tree_node *cmd_node);
 char		*expand_vars(char *str);
 char		*handle_dollar(char *start, char **str);
+char		*handle_special_cases(char *dollar, char **str, char **after_var,
+				char **expanded_var);
+
+/**************** expand_utils.c ***********/
+
 char		*remove_quotes(char *str);
 void		retokenize(t_token **token);
+void		handle_empty_value(t_token **current, t_tree_node **cmd_node);
 
 /************* wildcard.c ****************/
 void		expand_wildcards(t_token **token, t_token **cmd);
