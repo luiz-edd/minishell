@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:29 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/21 18:04:50 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:50:05 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute_export(t_token *cmd)
 		print_environ_sorted();
 	while (args[++i])
 	{
-		if (!is_valid_identifier(args[i]) && status++)
+		if (!is_valid_identifier(args[i], args[0]) && ++status)
 			continue ;
 		key = get_key(args[i]);
 		equal_sign = ft_strchr(args[i], '=');
@@ -50,7 +50,7 @@ char	*get_key(char *arg)
 		return (ft_strndup(arg, equal_sign - arg));
 }
 
-int	is_valid_identifier(char *str)
+int	is_valid_identifier(char *str, char *cmd_name)
 {
 	if (*str != '=' && !ft_isdigit(*str) && *str != '\0')
 	{
@@ -59,7 +59,7 @@ int	is_valid_identifier(char *str)
 		if (*str == '=' || !*str)
 			return (1);
 	}
-	write(STDERR_FILENO, "export: not a valid identifier\n", 32);
+	ft_fprintf(STDERR_FILENO, "%s: not a valid identifier\n", cmd_name);
 	set_exit_status(FAILURE);
 	return (0);
 }

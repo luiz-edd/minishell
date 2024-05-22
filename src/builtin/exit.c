@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 16:18:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:21:50 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	execute_exit(t_token *cmd)
 		}
 		if (cmd->next->next)
 		{
-			write(STDERR_FILENO, "exit\nexit: too many arguments\n", 31);
+			write(STDERR_FILENO, "exit\nexit: too many arguments\n", 30);
 			exit(EXIT_FAILURE);
 		}
 	}

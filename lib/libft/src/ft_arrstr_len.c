@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrstr_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:32:49 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/02 14:33:54 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:28:24 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_arrstr_len(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

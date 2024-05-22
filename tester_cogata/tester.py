@@ -237,7 +237,7 @@ output_ref_list.append("usr/local/bin: No such file or directory\n") #61
 output_ref_list.append("") #62
 output_ref_list.append("hi\n") #63
 output_ref_list.append(" : No such file or directory\n") #64
-output_ref_list.append("ambiguous redirect\n") #65
+output_ref_list.append("$vor: ambiguous redirect\n") #65
 output_ref_list.append(" USER\n") #66
 output_ref_list.append(" USER \n") #67
 output_ref_list.append("                  USER  hi\n") #68
@@ -278,7 +278,7 @@ output_ref_list.append("abc def\n") #102
 output_ref_list.append("\n") #103
 output_ref_list.append("") #104
 output_ref_list.append("$%342342: command not found\n") #105
-output_ref_list.append("Syntax error\n") #106
+output_ref_list.append("Invalid syntax, check input for open quotes or brackets.\n") #106
 output_ref_list.append("export: not a valid identifier\n") #107
 output_ref_list.append("declare -x var30\n") #108
 output_ref_list.append("declare -x var30=\"carol\"\n") #109
@@ -304,10 +304,10 @@ output_ref_list.append(f"{user}55: command not found\n") #128
 output_ref_list.append(f"{user}variable: command not found\n") #129
 output_ref_list.append("oitudobem: command not found\n") #130
 output_ref_list.append("") #131
-output_ref_list.append("Syntax error\n") #132
+output_ref_list.append("Invalid syntax, check input for open quotes or brackets.\n") #132
 output_ref_list.append(f"{user}: command not found\n") #133
 output_ref_list.append("$USER: command not found\n") #134
-output_ref_list.append("Syntax error\n") #135
+output_ref_list.append("Invalid syntax, check input for open quotes or brackets.\n") #135
 output_ref_list.append("$: command not found\n") #136
 output_ref_list.append("$$: command not found\n") #137
 output_ref_list.append("$$$: command not found\n") #138
@@ -325,8 +325,8 @@ output_ref_list.append("") #149
 output_ref_list.append("ech: command not found\nbia$\nbye\n") #150
 output_ref_list.append("ech: command not found\nbia$\nbye\n") #151
 output_ref_list.append("ech: command not found\nbia$\nbye\n") #152
-output_ref_list.append("Syntax error\n") #153
-output_ref_list.append("Syntax error\n") #154
+output_ref_list.append("minishell: syntax error near unexpected token `)'\n") #153
+output_ref_list.append("minishell: syntax error near unexpected token `('\n") #154
 output_ref_list.append("hi$$\n") #155
 output_ref_list.append("") #156
 output_ref_list.append("") #157

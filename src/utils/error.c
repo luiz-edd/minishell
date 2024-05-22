@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:21:11 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 14:51:25 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:10:03 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	syntax_error(char *token)
 
 int	throw_error(char *cmd_path)
 {
+	if (*cmd_path == '\0')
+		cmd_path = " ";
 	if (access(cmd_path, X_OK) == -1 && !access(cmd_path, F_OK))
 	{
 		ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd_path);
@@ -43,7 +45,9 @@ int	throw_error(char *cmd_path)
 
 int	handle_error(char *message)
 {
-	perror(message);
+	if (*message == '\0')
+		message = " ";
+	ft_fprintf(STDERR_FILENO, "%s: %s\n", message, strerror(errno));
 	ft_free_memory();
 	return (!!errno);
 }

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:29:57 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/20 14:40:13 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:21:40 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_env(t_token *cmd)
 
 	env = *get_my_env();
 	if (cmd->next)
-		return (!!write(STDERR_FILENO, "env: too many arguments", 24));
+		return (!!write(STDERR_FILENO, "env: too many arguments", 23));
 	i = -1;
 	while (env[++i])
 	{

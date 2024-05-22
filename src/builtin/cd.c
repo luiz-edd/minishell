@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:59 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/16 16:46:33 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:21:32 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	change_to_home(void)
 		return (SUCCESS);
 	}
 	else
-		return (!!write(STDERR_FILENO, "cd: HOME not set\n", 18));
+		return (!!write(STDERR_FILENO, "cd: HOME not set\n", 17));
 }
 
 int	change_dir(char *path)

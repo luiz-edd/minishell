@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/21 18:41:35 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:41:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*init_and_wait_input(t_token **list);
 void	reset_for_next_iteration(char *line);
 int		leave_program(int status);
 
-//verificar todos os write 
 int	main(void)
 {
 	char					*line;
@@ -88,5 +87,6 @@ int	leave_program(int status)
 	ft_free_memory();
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "exit\n", 5);
+	rl_clear_history();
 	return (status);
 }

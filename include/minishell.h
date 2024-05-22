@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/21 15:53:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:41:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			check_limits(long number);
 
 int			execute_export(t_token *cmd);
 char		*get_key(char *arg);
-int			is_valid_identifier(char *str);
+int			is_valid_identifier(char *str, char *cmd_name);
 int			is_env_key_present(char *key);
 int			is_key_without_value(char *key);
 

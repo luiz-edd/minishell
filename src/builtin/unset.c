@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:10 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/20 16:12:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:46:08 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_unset(t_token *cmd)
 		return (set_exit_status(status));
 	while (args[++i])
 	{
-		if (!is_valid_identifier(args[i]) && status++)
+		if (!is_valid_identifier(args[i], args[0]) && ++status)
 			continue ;
 		delete_env_key(get_key(args[i]));
 	}

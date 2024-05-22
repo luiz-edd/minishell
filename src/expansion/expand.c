@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/21 17:34:30 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:36:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ char	*expand_vars(char *str)
 					start = handle_dollar(start, &str);
 			}
 		}
-		else if (*str == '$' && str[1] && (ft_isalnum(str[1]) || ft_strchr("_?",
-					str[1])))
+		else if (*str == '$' && str[1] && (ft_isalnum(str[1])
+				|| ft_strchr("_?\'\"", str[1])))
 			start = handle_dollar(start, &str);
 		str++;
 	}
@@ -84,6 +84,11 @@ char	*handle_dollar(char *start, char **str)
 	{
 		expanded_var = ft_itoa(*get_exit_status());
 		after_var = ++(*str);
+	}
+	else if (*(dollar + 1) == '\'' || *(dollar + 1) == '\"')
+	{
+		after_var = *str;
+		expanded_var = ft_strdup("");
 	}
 	else
 	{
