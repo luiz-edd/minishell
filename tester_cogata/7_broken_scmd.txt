@@ -1,0 +1,33 @@
+"."
+
+.ls
+
+./ls
+
+"./"ls
+
+"./""ls"
+
+"./"''"ls"
+
+3123
+
+lsa
+
+/ls
+
+EechoE
+
+/ls/
+
+/bin/
+
+/bin/cats
+
+./4242424242.sh
+
+rm -f something
+
+| echo -n oui
+
+| | |

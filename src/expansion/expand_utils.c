@@ -6,25 +6,11 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:25:05 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 20:29:23 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:37:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	handle_empty_value(t_token **current, t_tree_node **cmd_node)
-{
-	if ((*current)->prev)
-		(*current)->prev->next = (*current)->next;
-	if ((*current)->next)
-		(*current)->next->prev = (*current)->prev;
-	if (*((*cmd_node)->cmd->value) == '\0')
-	{
-		(*cmd_node)->cmd = (*cmd_node)->cmd->next;
-		if ((*cmd_node)->cmd)
-			(*cmd_node)->cmd->prev = NULL;
-	}
-}
 
 char	*remove_quotes(char *str)
 {
@@ -54,9 +40,11 @@ char	*remove_quotes(char *str)
 void	retokenize(t_token **token)
 {
 	t_token	*next;
+	t_token	*current;
 	char	**tokens;
 	int		i;
 
+	current = *token;
 	next = (*token)->next;
 	tokens = ft_split((*token)->value, ' ');
 	if (*tokens)
@@ -70,7 +58,22 @@ void	retokenize(t_token **token)
 			i++;
 		}
 		(*token)->next = next;
+		(*token) = current;
 	}
 	else
 		(*token)->value = "\0";
+}
+
+void	handle_empty_value(t_token **current, t_tree_node **cmd_node)
+{
+	if ((*current)->prev)
+		(*current)->prev->next = (*current)->next;
+	if ((*current)->next)
+		(*current)->next->prev = (*current)->prev;
+	if (*((*cmd_node)->cmd->value) == '\0')
+	{
+		(*cmd_node)->cmd = (*cmd_node)->cmd->next;
+		if ((*cmd_node)->cmd)
+			(*cmd_node)->cmd->prev = NULL;
+	}
 }

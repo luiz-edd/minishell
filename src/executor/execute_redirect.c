@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:35:23 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 20:20:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:07:58 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 	int		exit_status;
 	char	*before_expansion;
 
+	exit_status = SUCCESS;
 	std_fd[0] = dup(STDIN_FILENO);
 	std_fd[1] = dup(STDOUT_FILENO);
 	fd = -1;
@@ -31,9 +32,8 @@ int	execute_redirect(t_tree_node *left, t_tree_node *right, int redir_type)
 		return (FAILURE);
 	if (dup2_redir_file(redir_type, &fd) != SUCCESS)
 		return (FAILURE);
-	if (!left->cmd)
-		return (SUCCESS);
-	exit_status = executor(left);
+	if (left->cmd)
+		exit_status = executor(left);
 	dup2(std_fd[0], STDIN_FILENO);
 	dup2(std_fd[1], STDOUT_FILENO);
 	return (exit_status);
