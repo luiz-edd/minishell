@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 17:41:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:52:42 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,21 @@ char	*init_and_wait_input(t_token **list)
 		exit(signal_error());
 	}
 	*list = NULL;
-	line = readline("minishell> ");
+	if (isatty(fileno(stdin)))
+		line = readline("minishell> ");
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		line = ft_strtrim(line, "\n");
+	}
 	return (line);
 }
 
 void	reset_for_next_iteration(char *line)
 {
 	term_properties();
-	free(line);
+	//free(line);
+	(void)line;
 	delete_heredoc_files();
 	ft_free_memory();
 }
