@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leduard2 <leduard2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:16:16 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/21 18:00:19 by leduard2         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:02:45 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,25 @@ void	print_environ_sorted(void)
 
 int	print_smallest_unprinted(char **env, size_t env_size, char *printed)
 {
-	int	small_pos;
+	int	smallest_pos;
 
-	small_pos = -1;
+	smallest_pos = -1;
 	while (env_size-- > 0)
 	{
 		if (printed[env_size])
 			continue ;
-		if (small_pos == -1)
-			small_pos = env_size;
+		if (smallest_pos == -1)
+			smallest_pos = env_size;
 		else
 		{
-			if (ft_strcmp(env[small_pos], env[env_size]) > 0)
-				small_pos = env_size;
+			if (ft_strcmp(env[smallest_pos], env[env_size]) > 0)
+				smallest_pos = env_size;
 		}
 	}
-	if (small_pos != -1)
+	if (smallest_pos != -1)
 	{
-		format_and_print(env[small_pos]);
-		printed[small_pos]++;
+		format_and_print(env[smallest_pos]);
+		printed[smallest_pos]++;
 		return (1);
 	}
 	return (0);
