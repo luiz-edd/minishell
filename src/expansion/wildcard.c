@@ -6,13 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/16 16:06:09 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:04:06 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_wildcards(t_token **token, t_token **head)
+void	expand_wildcards(t_token **token, t_tree_node **node)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -34,7 +34,7 @@ void	expand_wildcards(t_token **token, t_token **head)
 	if (!matched)
 		return ;
 	if ((*token)->prev == NULL)
-		*head = matched;
+		(*node)->cmd = matched;
 	sort_token_lst(&matched);
 	update_token_list(token, matched);
 }

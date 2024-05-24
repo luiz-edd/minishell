@@ -6,12 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 17:52:42 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:58:52 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//parei em PATH_FAILS
 void	term_properties(void);
 char	*init_and_wait_input(t_token **list);
 void	reset_for_next_iteration(char *line);

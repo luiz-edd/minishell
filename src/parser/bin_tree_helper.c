@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:47:59 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/07 15:18:22 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:41:01 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_tree_node	*get_redir_filename(t_token *redir)
 	else
 	{
 		filename->cmd = redir;
+		filename->cmd->prev = NULL;
 		filename->left = NULL;
 		filename->right = NULL;
 	}

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:53 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 20:31:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:54:34 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	expand_tokens(t_tree_node *cmd_node)
 		if (*(current->value) == '\0')
 			handle_empty_value(&current, &cmd_node);
 		if (ft_strchr_quote_aware(current->value, '*'))
-			expand_wildcards(&current, &cmd_node->cmd);
+			expand_wildcards(&current, &cmd_node);
 		if (ft_strchr_quote_aware(current->value, ' '))
 			retokenize(&current);
 		current->value = remove_quotes(current->value);

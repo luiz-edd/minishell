@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/22 20:52:19 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:27:39 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			execute_env(t_token *cmd);
 
 int			execute_exit(t_token *cmd);
 int			validate_argument(char *arg);
-int			check_limits(long number);
+int			check_limits(char *arg, char sign);
 
 /***************** export.c ******************/
 
@@ -172,7 +172,7 @@ void		retokenize(t_token **token);
 void		handle_empty_value(t_token **current, t_tree_node **cmd_node);
 
 /************* wildcard.c ****************/
-void		expand_wildcards(t_token **token, t_token **cmd);
+void		expand_wildcards(t_token **token, t_tree_node **node);
 bool		is_match(char *text, char *pattern);
 bool		**init_lookup_table(char *text, int *text_length,
 				char *pattern, int *pattern_length);
