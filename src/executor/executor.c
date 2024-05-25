@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:17:49 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/07 15:22:26 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:00:17 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	executor(t_tree_node *root)
 {
+	if (!root->cmd)
+		return (SUCCESS);
 	if (root->cmd->type == AND)
 		return (execute_and(root->left, root->right));
 	else if (root->cmd->type == OR)

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:56:37 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 19:27:39 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:11:19 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,9 +283,5 @@ void		free_env(void);
 void		set_env(char *new_str, char *key, char *content);
 void		add_to_env(char *str);
 void		update_env(char *new_str, char *key);
-
-/* DEBUG*/
-
-void		print_list(t_token *list);
 
 #endif

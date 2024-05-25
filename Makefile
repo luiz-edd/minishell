@@ -6,7 +6,7 @@
 #    By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 12:13:03 by pehenri2          #+#    #+#              #
-#    Updated: 2024/05/22 20:30:53 by pehenri2         ###   ########.fr        #
+#    Updated: 2024/05/25 16:19:53 by pehenri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,7 @@ FILES				= 	main.c \
 						environ.c \
 						error.c \
 						helper.c \
-						token_list.c \
-						debug.c #deletethis
+						token_list.c
 
 OBJS				= 	$(FILES:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR				= 	obj
@@ -58,10 +57,13 @@ all: $(NAME)
 $(NAME): $(OBJS) libft
 	@$(CC) $(CFLAGS) $(LIBFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME)
 
+bonus: $(OBJS) libft
+	@$(CC) $(CFLAGS) $(LIBFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o minishell_bonus
+
 libft:
 	@make -C $(LIBFT_PATH) --silent
 
-$(OBJ_DIR)/%.o : %.c
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ && printf "Compiling: $(notdir $<\n)"
 
@@ -71,7 +73,7 @@ clean:
 	@echo "Deleted object files"
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) minishell_bonus
 	@make -C $(LIBFT_PATH) fclean --silent
 	@echo "Deleted executable files and static libraries"
 
