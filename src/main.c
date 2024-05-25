@@ -6,13 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:57:52 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 19:58:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 14:24:15 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//parei em PATH_FAILS
 void	term_properties(void);
 char	*init_and_wait_input(t_token **list);
 void	reset_for_next_iteration(char *line);
@@ -70,20 +69,14 @@ char	*init_and_wait_input(t_token **list)
 		exit(signal_error());
 	}
 	*list = NULL;
-	if (isatty(fileno(stdin)))
-		line = readline("minishell> ");
-	else
-	{
-		line = get_next_line(fileno(stdin));
-		line = ft_strtrim(line, "\n");
-	}
+	line = readline("minishell> ");
 	return (line);
 }
 
 void	reset_for_next_iteration(char *line)
 {
 	term_properties();
-	//free(line);
+	free(line);
 	(void)line;
 	delete_heredoc_files();
 	ft_free_memory();
@@ -93,7 +86,7 @@ int	leave_program(int status)
 {
 	free_env();
 	ft_free_memory();
-	if (isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
 		write(STDOUT_FILENO, "exit\n", 5);
 	rl_clear_history();
 	return (status);

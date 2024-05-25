@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:56:31 by leduard2          #+#    #+#             */
-/*   Updated: 2024/05/24 17:52:21 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 14:24:04 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_collect_mem_arr(void **content)
 
 void	ft_free_memory(void)
 {
-	//get_next_line(-1);
-	//ft_lstclear(ft_get_memory_lst(), &free);
+	get_next_line(-1);
+	ft_lstclear(ft_get_memory_lst(), &free);
 }
 
 void	*ft_dalloc(size_t nmemb, size_t size)

@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 18:59:52 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:26:11 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	execute_exit(t_token *cmd)
 	long	status;
 
 	status = 0;
-	printf("exit\n");
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+		ft_fprintf(STDOUT_FILENO, "exit\n");
 	if (cmd->next)
 	{
 		status = ft_atol(cmd->next->value);
@@ -28,10 +29,7 @@ cmd->next->value);
 			exit(SYNTAX_ERROR);
 		}
 		if (cmd->next->next)
-		{
-			write(STDERR_FILENO, "exit: too many arguments\n", 25);
-			return (FAILURE);
-		}
+			return (!!write(STDERR_FILENO, "exit: too many arguments\n", 25));
 	}
 	delete_heredoc_files();
 	ft_free_memory();

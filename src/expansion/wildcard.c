@@ -6,12 +6,13 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/24 20:04:06 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 14:13:07 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// mudar como lidamos com arquivos ocultos?
 void	expand_wildcards(t_token **token, t_tree_node **node)
 {
 	DIR				*dir;
@@ -48,10 +49,10 @@ bool	is_match(char *text, char *pattern)
 	bool	**lookup;
 
 	lookup = init_lookup_table(text, &text_length, pattern, &pattern_length);
-	row = true;
+	row = 1;
 	while (row <= text_length)
 	{
-		col = true;
+		col = 1;
 		while (col <= pattern_length)
 		{
 			if (pattern[col - 1] == '*')
@@ -75,7 +76,7 @@ bool	**init_lookup_table(char *text, int *text_length, char *pattern,
 	*text_length = ft_strlen(text);
 	*pattern_length = ft_strlen(pattern);
 	lookup = (bool **)ft_calloc((*text_length + 1), sizeof(bool *));
-	row = false;
+	row = 0;
 	while (row <= *text_length)
 	{
 		lookup[row] = (bool *)ft_calloc((*pattern_length + 1), sizeof(bool));
