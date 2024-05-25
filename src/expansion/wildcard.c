@@ -6,13 +6,12 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:28:22 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/25 14:13:07 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:52:17 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// mudar como lidamos com arquivos ocultos?
 void	expand_wildcards(t_token **token, t_tree_node **node)
 {
 	DIR				*dir;
