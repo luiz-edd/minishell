@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/25 13:26:11 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:55:47 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ cmd->next->value);
 	}
 	delete_heredoc_files();
 	ft_free_memory();
+	free_env();
 	if (status)
 		exit(status % 256);
 	exit(*get_exit_status());
