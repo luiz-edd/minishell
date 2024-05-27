@@ -6,7 +6,7 @@
 /*   By: pehenri2 <pehenri2@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 15:03:10 by pehenri2          #+#    #+#             */
-/*   Updated: 2024/05/27 14:55:47 by pehenri2         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:12:48 by pehenri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ int	check_limits(char *arg, char sign)
 		arg++;
 	if (ft_strlen(arg) > 19)
 		return (FAILURE);
-	if ((ft_strcmp(arg, "9223372036854775807") > 0 && sign == '+')
-		|| (ft_strcmp(arg, "9223372036854775808") > 0 && sign == '-'))
+	if (ft_strlen(arg) == 19
+		&& ((ft_strcmp(arg, "9223372036854775807") > 0 && sign == '+')
+			|| (ft_strcmp(arg, "9223372036854775808") > 0 && sign == '-')))
 		return (FAILURE);
 	return (SUCCESS);
 }
